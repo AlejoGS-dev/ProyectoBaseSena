@@ -1,61 +1,61 @@
 @extends('autenticacion.app')
 @section('titulo', 'Sistema - Login')
-@section('contenido')
-<div class="card card-outline card-primary">
-  <div class="card-header">
-    <a
-      href="/"
-      class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover"
-    >
-      <h1 class="mb-0"><b>Sistema</b>LTE</h1>
-    </a>
-  </div>
-  <div class="card-body login-card-body">
-    <p class="login-box-msg">Ingrese sus credenciales</p>
-    @if(session('error'))
-      <div class="alert alert-danger">
-        {{session('error')}}
-      </div>
-    @endif
-    @if(Session::has('mensaje'))
-        <div class="alert alert-info alert-dismissible fade show mt-2">
-            {{Session::get('mensaje')}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-        </div>
-    @endif
-    <form action="{{route('login.post')}}" method="post">
-      @csrf
-      <div class="input-group mb-1">
-        <div class="form-floating">
-          <input id="loginEmail" type="email" name="email" value="{{old('email')}}" class="form-control" value="" placeholder="" />
-          <label for="loginEmail">Email</label>
-        </div>
-        <div class="input-group-text"><span class="bi bi-envelope"></span></div>
-      </div>
-      <div class="input-group mb-1">
-        <div class="form-floating">
-          <input id="loginPassword" type="password" name="password" class="form-control" placeholder="" />
-          <label for="loginPassword">Password</label>
-        </div>
-        <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
-      </div>
-      <p class="mb-1"><a href="{{route('password.request')}}">Recuperar password</a></p>
-      <!--begin::Row-->
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-4">
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Acceder</button>
-          </div>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!--end::Row-->
-    </form>
-    <!-- /.social-auth-links -->
-  </div>
-  <!-- /.login-card-body -->
-</div>
-@endsection
 
-      
+{{-- ======================================================
+     ACÁ VA TU CSS PERSONALIZADO
+     Copiá la línea de abajo dentro del <head> de autenticacion/app.blade.php,
+     justo DESPUÉS de la línea que carga adminlte.css:
+     <link rel="stylesheet" href="{{ asset('assets/css/ingresar.css') }}">
+     (el archivo debe estar en public/assets/css/ingresar.css)
+   ====================================================== --}}
+
+
+    
+@section('contenido')
+<section class="login" id="login">
+    <div class="contenedorT">
+        <br>
+        <h2 class="titulo">Ingreso de usuario</h2>
+
+        {{-- Mensajes de error o éxito --}}
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        @if(Session::has('mensaje'))
+            <div class="alert alert-info alert-dismissible fade show mt-2">
+                {{ Session::get('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+            </div>
+        @endif
+
+        <form action="{{ route('login.post') }}" method="POST">
+            @csrf
+            <div class="contenedorimg">
+                <img src="{{ asset('assets/img/icono.png') }}" alt="No se encuentra imagen" class="logo">
+            </div>
+
+            <div class="contenedor">
+                <label for="loginEmail">Correo electrónico</label>
+                <input class="texto" id="loginEmail" type="email" name="email" placeholder="Ingresar correo" value="{{ old('email') }}" required>
+
+                <label for="loginPassword">Contraseña</label>
+                <input class="textoC" id="loginPassword" type="password" name="password" placeholder="Ingresar contraseña" required>
+
+                <div class="mb-3">
+                    <label>
+                        <input class="boton" type="checkbox" name="remember"> Recordar contraseña
+                    </label>
+                </div>
+
+                <button type="submit">Entrar</button>
+            </div>
+
+            <div class="contenedor">
+                <button type="button" class="cancelar" onclick="window.location='#">Crear una nueva cuenta</button>
+                <button type="button" class="Olvidar" onclick="window.location='{{ route('password.request') }}'">¿Olvidaste tu contraseña?</button>
+            </div>
+        </form>
+    </div>
+</section>
+@endsection

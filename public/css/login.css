@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+  margin: 10px;
+  padding: 0;
+  text-align: center;
+}
+
+.titulo{
+  font-family:Georgia, 'Times New Roman', Times, serif,  sans-serif;
+}
+
+h1{
+  font-family:Georgia, 'Times New Roman', Times, serif, sans-serif;
+}
+
+.correo, .contraseña, .nombre , .apellido, select {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  border-color: #660099;
+}
+
+.contraseña, .rcontraseña, .documento, .telefono {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  border-color: #660099;
+}
+
+.correo:hover, .contraseña:hover, .repetir:hover, select:hover {
+  border: 2px solid #168adb;
+}
+.nombre:hover, .apellido:hover, .rcontraseña:hover, .telefono:hover {
+  border: 2px solid #168adb;
+}
+.correo:focus, .contraseña:focus, .telefono:focus {
+  background-color: #ffffff;
+  outline: none;
+}
+.repetir {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+.recordar {
+  margin-bottom:15px
+}
+button {
+  background-color: rgb(46, 12, 130);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+
+.cancelar {
+  padding: 14px 20px;
+  background-color:  #fb0000;
+
+}
+
+ .ingresar {
+  background-color: blue;
+ }
+
+.cancelar, .ingresar {
+  float: left;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.contenedor {
+  padding: 16px;
+}
+
+.contenedorP {
+  
+  width : 100%;
+  height : 300px;
+  overflow : auto;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+  border-radius: 20px;
+}
+
+#contenedorR {
+  border-radius: 10px;
+  margin: auto;
+  width: 50%;
+  max-width: 400px;
+  font-family: 'Rokkitt', serif;
+  color:white;
+  background-image: linear-gradient( #660099, #ce0981);
+  /* float: left; */
+  margin-left: 120px;
+  margin-top: 120px;
+}
+
+@media (max-width:768px){
+  #contenedorR{
+     width: 75%;
+  }
+}
+
+@media (max-width:480px){
+  #contenedorR{
+     width: 95%;
+  }
+}
+
+body {
+  background-image: url(../css/imagenes/Fondo3.gif);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
