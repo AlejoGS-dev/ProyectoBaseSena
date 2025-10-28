@@ -1,5 +1,8 @@
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; ArtCode.com 2025</p>
-    </div>
-</footer>
+    <footer>
+        <p>
+            <a href="#">Política de privacidad</a>
+        </p>
+        <p>
+            © Copyright Freeland 2025
+        </p>
+    </footer>
