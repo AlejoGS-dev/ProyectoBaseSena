@@ -6,10 +6,11 @@
             </div>
 
             <menu class="menu1">
-                <a href="registrar.html" target="_blank">
+                <a href="{{ route('registro') }}">
                     <span class="item">Registrar</span></a>
-                <a href="ingresar.html" target="_blank">
+                <a href="{{ route('login') }}">
                     <span class="item">Ingresar</span></a>
+
             </menu>
         </nav>
 

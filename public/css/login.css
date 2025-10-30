@@ -1,62 +1,83 @@
+/* Reinicio y estructura base */
 * {
   box-sizing: border-box;
-  margin: 10px;
+  margin: 0;
   padding: 0;
+}
+
+body {
+  background-image: url('../css/imagenes/Fondo3.gif');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: white;
   text-align: center;
 }
 
-.titulo{
-  font-family:Georgia, 'Times New Roman', Times, serif,  sans-serif;
+/* Contenedor principal del login */
+.login .contenedorT {
+  margin: 100px auto;
+  max-width: 420px;
+  background: linear-gradient(#660099, #ce0981);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
-h1{
-  font-family:Georgia, 'Times New Roman', Times, serif, sans-serif;
-}
-
-.correo, .contraseña, .nombre , .apellido, select {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  border-color: #660099;
-}
-
-.contraseña, .rcontraseña, .documento, .telefono {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  border-color: #660099;
-}
-
-.correo:hover, .contraseña:hover, .repetir:hover, select:hover {
-  border: 2px solid #168adb;
-}
-.nombre:hover, .apellido:hover, .rcontraseña:hover, .telefono:hover {
-  border: 2px solid #168adb;
-}
-.correo:focus, .contraseña:focus, .telefono:focus {
-  background-color: #ffffff;
-  outline: none;
-}
-.repetir {
-  background-color: #ddd;
-  outline: none;
-}
-
-hr {
-  border: 1px solid #f1f1f1;
+/* Título */
+.login .titulo {
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 25px;
+  color: #fff;
 }
 
-.recordar {
-  margin-bottom:15px
+/* Imagen del logo */
+.login .contenedorimg img.logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
 }
-button {
+
+/* Contenedores internos */
+.login .contenedor {
+  padding: 16px;
+}
+
+/* Inputs principales */
+.login .texto,
+.login .textoC {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0 20px 0;
+  border: 2px solid #660099;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  color: #000;
+  outline: none;
+  display: block;
+}
+
+.login .texto:hover,
+.login .textoC:hover {
+  border-color: #168adb;
+}
+
+.login .texto:focus,
+.login .textoC:focus {
+  background-color: #ffffff;
+  border-color: #168adb;
+}
+
+/* Checkbox y label */
+.login label {
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Botones */
+.login button {
   background-color: rgb(46, 12, 130);
   color: white;
   padding: 14px 20px;
@@ -64,77 +85,35 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-  opacity: 0.9;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
-button:hover {
-  opacity:1;
+.login button:hover {
+  background-color: rgb(72, 26, 180);
+  opacity: 1;
 }
 
-
-.cancelar {
-  padding: 14px 20px;
-  background-color:  #fb0000;
-
+/* Botones secundarios */
+.login .cancelar {
+  background-color: #fb0000;
 }
 
- .ingresar {
-  background-color: blue;
- }
-
-.cancelar, .ingresar {
-  float: left;
-  width: 50%;
-  border-radius: 10px;
+.login .Olvidar {
+  background-color: #168adb;
+  margin-top: 10px;
 }
 
-.contenedor {
-  padding: 16px;
-}
-
-.contenedorP {
-  
-  width : 100%;
-  height : 300px;
-  overflow : auto;
-}
-
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-  border-radius: 20px;
-}
-
-#contenedorR {
-  border-radius: 10px;
-  margin: auto;
-  width: 50%;
-  max-width: 400px;
-  font-family: 'Rokkitt', serif;
-  color:white;
-  background-image: linear-gradient( #660099, #ce0981);
-  /* float: left; */
-  margin-left: 120px;
-  margin-top: 120px;
-}
-
-@media (max-width:768px){
-  #contenedorR{
-     width: 75%;
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .login .contenedorT {
+    width: 80%;
   }
 }
 
-@media (max-width:480px){
-  #contenedorR{
-     width: 95%;
+@media (max-width: 480px) {
+  .login .contenedorT {
+    width: 95%;
   }
 }
-
-body {
-  background-image: url(../css/imagenes/Fondo3.gif);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-}
-

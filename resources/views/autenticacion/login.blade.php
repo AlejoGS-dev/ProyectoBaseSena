@@ -1,4 +1,4 @@
-@extends('autenticacion.app')
+@extends('layouts.login-layout')
 @section('titulo', 'Sistema - Login')
 
 {{-- ======================================================
