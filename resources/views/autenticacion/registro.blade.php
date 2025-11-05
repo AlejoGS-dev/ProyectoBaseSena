@@ -1,5 +1,11 @@
-@extends('autenticacion.app')
+@extends('layouts.login-layout')
 @section('titulo', 'Sistema - Registro')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/registro.css') }}">
+@endpush
+
+
 @section('contenido')
 <div class="card card-outline card-primary">
   <div class="card-header">
