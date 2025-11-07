@@ -52,7 +52,7 @@
             </div>
 
             <div class="contenedor">
-                <button type="button" class="cancelar" onclick="window.location='#">Crear una nueva cuenta</button>
+                <button type="button" class="cancelar" onclick="window.location='{{ route('registro') }}'">Crear una nueva cuenta</button>
                 <button type="button" class="Olvidar" onclick="window.location='{{ route('password.request') }}'">¿Olvidaste tu contraseña?</button>
             </div>
         </form>

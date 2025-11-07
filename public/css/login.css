@@ -17,40 +17,43 @@ body {
 
 /* Contenedor principal del login */
 .login .contenedorT {
-  margin: 100px auto;
+  margin: 80px auto; /* un poco menos que antes */
   max-width: 420px;
   background: linear-gradient(#660099, #ce0981);
   border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  padding: 20px; /* reducido */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* sombra ligeramente más ligera */
 }
 
 /* Título */
 .login .titulo {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   color: #fff;
 }
 
 /* Imagen del logo */
 .login .contenedorimg img.logo {
-  width: 100px;
+  width: 90px; /* ligeramente más pequeño */
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 /* Contenedores internos */
 .login .contenedor {
-  padding: 16px;
+  padding: 12px; /* menos padding */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* separación controlada entre inputs */
 }
 
 /* Inputs principales */
 .login .texto,
 .login .textoC {
   width: 100%;
-  padding: 14px;
-  margin: 8px 0 20px 0;
+  padding: 12px;
+  margin: 0; /* margin controlado por gap */
   border: 2px solid #660099;
   border-radius: 6px;
   background-color: #f1f1f1;
@@ -80,8 +83,7 @@ body {
 .login button {
   background-color: rgb(46, 12, 130);
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -102,7 +104,7 @@ body {
 
 .login .Olvidar {
   background-color: #168adb;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 /* Ajustes responsive */

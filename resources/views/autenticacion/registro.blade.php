@@ -1,86 +1,62 @@
 @extends('layouts.login-layout')
 @section('titulo', 'Sistema - Registro')
 
-@push('styles')
-<link rel="stylesheet" href="{{ asset('css/registro.css') }}">
-@endpush
-
-
 @section('contenido')
-<div class="card card-outline card-primary">
-  <div class="card-header">
-    <a
-      href="/"
-      class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover"
-    >
-      <h1 class="mb-0"><b>Sistema</b>LTE</h1>
-    </a>
-  </div>
-  <div class="card-body login-card-body">
-    <p class="login-box-msg">Registro</p>
-    @if(session('error'))
-      <div class="alert alert-danger">
-        {{session('error')}}
-      </div>
-    @endif
-    <form action="{{route('registro.store')}}" method="post">
-      @csrf
-      <div class="input-group mb-1">
-        <div class="form-floating">
-          <input id="name" type="text" name="name" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror" placeholder="Ingrese nombre" />
-          <label for="name">Nombre</label>
-        </div>
-        <div class="input-group-text"><span class="bi bi-envelope"></span></div>
-        @error('name')
-          <div class="invalid-feedback d-block">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="input-group mb-1">
-        <div class="form-floating">
-          <input id="loginEmail" type="email" name="email" value="{{old('email')}}" class="form-control @error('email') is-invalid @enderror" placeholder="" />
-          <label for="loginEmail">Email</label>
-        </div>
-        <div class="input-group-text"><span class="bi bi-envelope"></span></div>
-        @error('email')
-          <div class="invalid-feedback d-block">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="input-group mb-1">
-        <div class="form-floating">
-          <input id="loginPassword" type="text" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="" />
-          <label for="loginPassword">Password</label>
-        </div>
-        <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
-        @error('password')
-          <div class="invalid-feedback d-block">{{ $message }}</div>
-        @enderror
-      </div>
-      <div class="input-group mb-1">
-        <div class="form-floating">
-          <input id="password_confirmation" type="text" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="" />
-          <label for="password_confirmation">Confirme su password</label>
-        </div>
-        <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
-        @error('password_confirmation')
-          <div class="invalid-feedback d-block">{{ $message }}</div>
-        @enderror
-      </div>
-      <!--begin::Row-->
-      <div class="row">
-        <!-- /.col -->
-        <div class="col-4">
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Registrar</button>
-          </div>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!--end::Row-->
-    </form>
-    <!-- /.social-auth-links -->
-  </div>
-  <!-- /.login-card-body -->
-</div>
-@endsection
+<section class="login" id="registro">
+    <div class="contenedorT">
+        <br>
+        <h2 class="titulo">Registro de usuario</h2>
 
-      
+        {{-- Mensajes de error o éxito --}}
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        @if(Session::has('mensaje'))
+            <div class="alert alert-info alert-dismissible fade show mt-2">
+                {{ Session::get('mensaje') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+            </div>
+        @endif
+
+        <form action="{{ route('registro.store') }}" method="POST">
+            @csrf
+            <div class="contenedorimg">
+                <img src="{{ asset('assets/img/icono.png') }}" alt="No se encuentra imagen" class="logo">
+            </div>
+
+            <div class="contenedor">
+                <label for="name">Nombre completo</label>
+                <input class="texto" id="name" type="text" name="name" placeholder="Ingrese su nombre" value="{{ old('name') }}" required>
+                @error('name')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+
+                <label for="email">Correo electrónico</label>
+                <input class="texto" id="email" type="email" name="email" placeholder="Ingrese su correo" value="{{ old('email') }}" required>
+                @error('email')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+
+                <label for="password">Contraseña</label>
+                <input class="textoC" id="password" type="password" name="password" placeholder="Ingrese su contraseña" required>
+                @error('password')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+
+                <label for="password_confirmation">Confirmar contraseña</label>
+                <input class="textoC" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirme su contraseña" required>
+                @error('password_confirmation')
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                @enderror
+
+                <button type="submit">Registrar</button>
+            </div>
+
+            <div class="contenedor">
+                <button type="button" class="cancelar" onclick="window.location='{{ route('login') }}'">Volver al login</button>
+            </div>
+        </form>
+    </div>
+</section>
+@endsection
