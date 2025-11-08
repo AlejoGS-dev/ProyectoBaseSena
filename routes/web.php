@@ -44,6 +44,9 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
     Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
+
+    Route::get('/inicio', function () { return view('home.inicio.inicio'); })->name('inicio');
+
 });
 
 Route::middleware('guest')->group(function(){

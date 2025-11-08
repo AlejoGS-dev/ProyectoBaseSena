@@ -30,6 +30,6 @@ class RegisterController extends Controller
             $usuario->assignRole($clienteRol);
         }
         Auth::login($usuario);
-        return redirect()->route('dashboard')->with('mensaje', 'Registro exitoso. ¡Bienvenido!');
+        return redirect()->route('inicio')->with('mensaje', 'Registro exitoso. ¡Bienvenido!');
     }
 }
