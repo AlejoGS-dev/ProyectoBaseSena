@@ -2,25 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-
 class RolesAndPermissionsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Crear los roles
+        // Crear roles base
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $clienteRole = Role::firstOrCreate(['name' => 'cliente']);
-        
-        // Definir permisos
+        $freelancerRole = Role::firstOrCreate(['name' => 'freelancer']);
+
+        // Definir permisos solo para admin (los otros no tienen ninguno)
         $adminPermissions = [
             'user-list', 'user-create', 'user-edit', 'user-delete', 'user-activate',
             'rol-list', 'rol-create', 'rol-edit', 'rol-delete',
@@ -28,20 +24,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'pedido-list', 'pedido-anulate'
         ];
 
-        $clientePermissions = ['pedido-view', 'pedido-cancel','perfil'];
-
-        // Crear y asignar permisos
+        // Crear permisos y asignarlos al rol admin
         foreach ($adminPermissions as $permiso) {
             $permission = Permission::firstOrCreate(['name' => $permiso]);
             $adminRole->givePermissionTo($permission);
         }
 
-        foreach ($clientePermissions as $permiso) {
-            $permission = Permission::firstOrCreate(['name' => $permiso]);
-            $clienteRole->givePermissionTo($permission);
-        }
-
-        // Crear usuarios y asignar roles
+        // Crear usuarios base
         $adminUser = User::firstOrCreate(
             ['email' => 'admin@prueba.com'],
             ['name' => 'Admin', 'password' => bcrypt('admin123456')]
@@ -53,5 +42,12 @@ class RolesAndPermissionsSeeder extends Seeder
             ['name' => 'Cliente', 'password' => bcrypt('cliente123456')]
         );
         $clienteUser->assignRole($clienteRole);
+
+        // Crear usuario con doble rol: cliente + freelancer
+        $multiRolUser = User::firstOrCreate(
+            ['email' => 'dual@prueba.com'],
+            ['name' => 'Dual Rol', 'password' => bcrypt('dual123456')]
+        );
+        $multiRolUser->syncRoles([$clienteRole, $freelancerRole]);
     }
 }

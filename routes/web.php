@@ -39,7 +39,15 @@ Route::middleware('guest')->group(function(){
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:cliente'])->group(function(){
-    Route::get('/inicio', function(){ return view('home.inicio.inicio'); })->name('inicio');
+
+
+Route::get('/inicio', function () {
+    return view('home.home.inicio');
+})->name('inicio');
+
+
+
+
 });
 
 /*
@@ -84,7 +92,7 @@ Route::middleware('auth')->group(function(){
         return redirect('/login');
     })->name('logout');
 
-        Route::get('/403', function(){ return view('errors.403_view'); })->name('403');
+    Route::get('/403', function(){ return view('errors.403_view'); })->name('403');
 
 });
 
