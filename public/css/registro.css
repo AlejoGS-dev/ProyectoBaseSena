@@ -1,0 +1,121 @@
+/* Reinicio y base idéntica a login */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url('../css/imagenes/Fondo3.gif');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: white;
+  text-align: center;
+}
+
+/* Contenedor principal */
+.login .contenedorT {
+  margin: 80px auto;
+  max-width: 420px;
+  background: linear-gradient(#660099, #ce0981);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Título */
+.login .titulo {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Logo */
+.login .contenedorimg img.logo {
+  width: 90px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+/* Contenedor interno */
+.login .contenedor {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs */
+.login .texto,
+.login .textoC {
+  width: 100%;
+  padding: 12px;
+  margin: 0;
+  border: 2px solid #660099;
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  color: #000;
+  outline: none;
+  display: block;
+}
+
+.login .texto:hover,
+.login .textoC:hover {
+  border-color: #168adb;
+}
+
+.login .texto:focus,
+.login .textoC:focus {
+  background-color: #ffffff;
+  border-color: #168adb;
+}
+
+/* Labels */
+.login label {
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Botones */
+.login button {
+  background-color: rgb(46, 12, 130);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.login button:hover {
+  background-color: rgb(72, 26, 180);
+  opacity: 1;
+}
+
+/* Botón secundario */
+.login .cancelar {
+  background-color: #fb0000;
+}
+
+.login .Olvidar {
+  background-color: #168adb;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login .contenedorT {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .login .contenedorT {
+    width: 95%;
+  }
+}
