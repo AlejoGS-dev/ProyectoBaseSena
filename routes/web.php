@@ -19,9 +19,11 @@ use Chatify\Http\Controllers\MessagesController;
 /*
 |--------------------------------------------------------------------------
 | Ruta pública para avatares (sin auth, sin roles)
+| GET /user-avatar/{filename}
 |--------------------------------------------------------------------------
 */
-Route::get('storage/users-avatar/{filename}', function ($filename) {
+Route::get('user-avatar/{filename}', function ($filename) {
+    // Buscamos el archivo SOLO en storage/app/public/users-avatar
     $path = storage_path('app/public/users-avatar/' . $filename);
 
     if (!File::exists($path)) {
@@ -29,7 +31,7 @@ Route::get('storage/users-avatar/{filename}', function ($filename) {
     }
 
     return Response::file($path);
-})->name('user.avatar.public');
+})->name('user.avatar');
 
 /*
 |--------------------------------------------------------------------------

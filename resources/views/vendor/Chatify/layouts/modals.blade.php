@@ -45,29 +45,20 @@
                         $avatarFile = $theUser->avatar ?? null;
 
                         if ($avatarFile) {
-                            // quitar barras iniciales
                             $avatarFile = ltrim($avatarFile, '/');
 
-                            // si ya viene como "storage/..." lo respetamos
-                            if (strpos($avatarFile, 'storage/') === 0) {
-                                $avatarUrl = asset($avatarFile);
+                            if ($avatarFile === 'avatar.png') {
+                                $avatarUrl = asset('chatify/images/avatar.png');
                             } else {
-                                // si no viene con la carpeta, se la agregamos
-                                if (strpos($avatarFile, 'users-avatar/') === false) {
-                                    $avatarFile = 'users-avatar/'.$avatarFile;
-                                }
-
-                                // URL pública final
-                                $avatarUrl = asset('storage/'.$avatarFile);
+                                $avatarUrl = route('user.avatar', $avatarFile);
                             }
                         } else {
-                            // avatar por defecto
                             $avatarUrl = asset('chatify/images/avatar.png');
                         }
                     @endphp
 
                     <div class="avatar av-l upload-avatar-preview chatify-d-flex"
-                        style="background-image: url('{{ $avatarUrl }}');">
+                         style="background-image: url('{{ $avatarUrl }}');">
                     </div>
 
                     <p class="upload-avatar-details"></p>
@@ -77,37 +68,31 @@
                         <input class="upload-avatar chatify-d-none" accept="image/*" name="avatar" type="file" />
                     </label>
 
-                    {{-- Divider --}}
+                    {{-- Dark/Light Mode  --}}
                     <p class="divider"></p>
-
-                    {{-- Dark/Light Mode --}}
                     <p class="app-modal-header">
                         Dark Mode
-                        <span class="{{ Auth::user()->dark_mode ? 'fas' : 'far' }} fa-moon dark-mode-switch"
-                              data-mode="{{ Auth::user()->dark_mode ? 1 : 0 }}">
+                        <span class="{{ Auth::user()->dark_mode > 0 ? 'fas' : 'far' }} fa-moon dark-mode-switch"
+                              data-mode="{{ Auth::user()->dark_mode > 0 ? 1 : 0 }}">
                         </span>
                     </p>
 
-                    {{-- Divider --}}
+                    {{-- change messenger color  --}}
                     <p class="divider"></p>
-
-                    {{-- Messenger colors --}}
                     <div class="update-messengerColor">
                         @foreach (config('chatify.colors') as $color)
                             <span style="background-color: {{ $color }}" data-color="{{ $color }}" class="color-btn"></span>
                             @if (($loop->index + 1) % 5 == 0)
-                                <br>
+                                <br/>
                             @endif
                         @endforeach
                     </div>
-
                 </div>
 
                 <div class="app-modal-footer">
                     <a href="javascript:void(0)" class="app-btn cancel">Cancel</a>
                     <input type="submit" class="app-btn a-btn-success update" value="Save Changes" />
                 </div>
-
             </form>
         </div>
     </div>

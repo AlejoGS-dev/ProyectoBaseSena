@@ -10,7 +10,9 @@
             </td>
             {{-- center side --}}
             <td>
-                <p data-id="{{ Auth::user()->id }}" data-type="user">Saved Messages <span>You</span></p>
+                <p data-id="{{ Auth::user()->id }}" data-type="user">
+                    Saved Messages <span>You</span>
+                </p>
                 <span>Save messages secretly</span>
             </td>
         </tr>
@@ -19,35 +21,12 @@
 
 {{-- -------------------- Contact list -------------------- --}}
 @if($get == 'users' && !!$lastMessage)
-@php
+<?php
     $lastMessageBody = mb_convert_encoding($lastMessage->body, 'UTF-8', 'UTF-8');
     $lastMessageBody = strlen($lastMessageBody) > 30
         ? mb_substr($lastMessageBody, 0, 30, 'UTF-8').'..'
         : $lastMessageBody;
-
-    // Resolver avatar del usuario
-    $avatarFile = $user->avatar ?? null;
-
-    if ($avatarFile) {
-        $avatarFile = ltrim($avatarFile, '/');
-
-        // si ya viene como "storage/..." lo usamos tal cual
-        if (strpos($avatarFile, 'storage/') === 0) {
-            $avatarUrl = asset($avatarFile);
-        } else {
-            // si no trae la carpeta, se la agregamos
-            if (strpos($avatarFile, 'users-avatar/') === false) {
-                $avatarFile = 'users-avatar/'.$avatarFile;
-            }
-            // URL pública real (public/storage/users-avatar/...)
-            $avatarUrl = asset('storage/'.$avatarFile);
-        }
-    } else {
-        // avatar por defecto
-        $avatarUrl = asset('chatify/images/avatar.png');
-    }
-@endphp
-
+?>
 <table class="messenger-list-item" data-contact="{{ $user->id }}">
     <tr data-action="0">
         {{-- Avatar side --}}
@@ -56,7 +35,7 @@
                 <span class="activeStatus"></span>
             @endif
             <div class="avatar av-m"
-                 style="background-image: url('{{ $avatarUrl }}');">
+                 style="background-image: url('{{ $user->avatar }}');">
             </div>
         </td>
         {{-- center side --}}
@@ -68,10 +47,12 @@
                 </span>
             </p>
             <span>
+                {{-- Last Message user indicator --}}
                 {!! $lastMessage->from_id == Auth::user()->id
                     ? '<span class="lastMessageIndicator">You :</span>'
                     : '' !!}
 
+                {{-- Last message body --}}
                 @if($lastMessage->attachment == null)
                     {!! $lastMessageBody !!}
                 @else
@@ -79,6 +60,7 @@
                 @endif
             </span>
 
+            {{-- New messages counter --}}
             {!! $unseenCounter > 0 ? "<b>".$unseenCounter."</b>" : '' !!}
         </td>
     </tr>
@@ -87,31 +69,12 @@
 
 {{-- -------------------- Search Item -------------------- --}}
 @if($get == 'search_item')
-@php
-    $avatarFile = $user->avatar ?? null;
-
-    if ($avatarFile) {
-        $avatarFile = ltrim($avatarFile, '/');
-
-        if (strpos($avatarFile, 'storage/') === 0) {
-            $avatarUrl = asset($avatarFile);
-        } else {
-            if (strpos($avatarFile, 'users-avatar/') === false) {
-                $avatarFile = 'users-avatar/'.$avatarFile;
-            }
-            $avatarUrl = asset('storage/'.$avatarFile);
-        }
-    } else {
-        $avatarUrl = asset('chatify/images/avatar.png');
-    }
-@endphp
-
 <table class="messenger-list-item" data-contact="{{ $user->id }}">
     <tr data-action="0">
         {{-- Avatar side --}}
         <td>
             <div class="avatar av-m"
-                 style="background-image: url('{{ $avatarUrl }}');">
+                 style="background-image: url('{{ $user->avatar }}');">
             </div>
         </td>
         {{-- center side --}}
@@ -126,5 +89,6 @@
 
 {{-- -------------------- Shared photos Item -------------------- --}}
 @if($get == 'sharedPhoto')
-    <div class="shared-photo chat-image" style="background-image: url('{{ $image }}')"></div>
+    <div class="shared-photo chat-image"
+         style="background-image: url('{{ $image }}')"></div>
 @endif
