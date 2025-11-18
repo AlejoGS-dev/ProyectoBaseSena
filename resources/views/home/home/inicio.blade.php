@@ -3,6 +3,10 @@
 @section('title', 'Inicio | Freeland')
 @section('menu-inicio', 'active')
 
+@push('styles')
+<link href="{{ asset('css/home/inicio.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 <div class="share-card">
   <div class="share-header">

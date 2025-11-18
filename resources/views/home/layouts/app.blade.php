@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@yield('title', 'Freeland | Dashboard')</title>
     <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet">
-    <link href="{{ asset('css/home/inicio.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/home/app.css') }}" rel="stylesheet">
+
     @stack('styles')
 </head>
 <body>

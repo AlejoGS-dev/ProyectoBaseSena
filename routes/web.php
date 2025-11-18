@@ -45,6 +45,10 @@ Route::get('/inicio', function () {
     return view('home.home.inicio');
 })->name('inicio');
 
+Route::get('/workspace-cliente', function () {
+    return view('home.home.workspace-cliente');
+})->name('workspace.cliente');
+
 
 
 
@@ -68,8 +72,6 @@ Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
     Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar.estado');
 
-    Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
-    Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
 
     Route::get('/carrito', [CarritoController::class, 'mostrar'])->name('carrito.mostrar');
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
@@ -91,6 +93,10 @@ Route::middleware('auth')->group(function(){
         Auth::logout();
         return redirect('/login');
     })->name('logout');
+
+    Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
+    Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
+
 
     Route::get('/403', function(){ return view('errors.403_view'); })->name('403');
 
