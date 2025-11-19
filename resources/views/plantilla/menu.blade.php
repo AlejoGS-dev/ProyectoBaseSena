@@ -84,7 +84,14 @@
                         @endcan
                     </ul>
                 </li>
-                @endcanany            
+                @endcanany   
+                <li class="nav-item">
+                    <a href="{{ url('chatify') }}" class="nav-link" id="mnuChat">
+                        <i class="nav-icon bi bi-chat-dots-fill"></i>
+                        <p>Chat</p>
+                    </a>
+                </li>
+         
             </ul>
             <!--end::Sidebar Menu-->
         </nav>

@@ -44,6 +44,87 @@
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{asset('css/adminlte.css')}}" />
     <!--end::Required Plugin(AdminLTE)-->
+
+    {{-- ✅ Estilos del chat flotante Freeland --}}
+    <style>
+      #chat-floating-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        background: #8a00ff;
+        color: #ffffff;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 26px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        z-index: 999999;
+      }
+
+      #chat-floating-window {
+        position: fixed;
+        bottom: 90px;
+        right: 25px;
+        width: 360px;
+        height: 480px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        overflow: hidden;
+        display: none;
+        flex-direction: column;
+        z-index: 999999;
+      }
+
+      #chat-floating-window .chat-header {
+        background: #8a00ff;
+        color: #ffffff;
+        padding: 10px 12px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+      }
+
+      #chat-floating-window .chat-header span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      #chat-floating-window .chat-header span::before {
+        content: '💬';
+      }
+
+      #chat-floating-window #chat-iframe {
+        border: none;
+        width: 100%;
+        height: calc(100% - 45px);
+      }
+
+      #chat-close {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        #chat-floating-window {
+          right: 10px;
+          width: calc(100% - 20px);
+          height: 60vh;
+        }
+      }
+    </style>
+
     @stack('estilos')
   </head>
   <!--end::Head-->
@@ -89,6 +170,20 @@
       <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
+
+    {{-- ✅ Chat flotante Freeland --}}
+    <div id="chat-floating-btn" title="Abrir chat">
+      💬
+    </div>
+
+    <div id="chat-floating-window">
+      <div class="chat-header">
+        <span>Freeland Chat</span>
+        <button id="chat-close">×</button>
+      </div>
+      <iframe id="chat-iframe" src="{{ route('chatify') }}"></iframe>
+    </div>
+
     <!--begin::Script-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script
@@ -129,6 +224,23 @@
             },
           });
         }
+      });
+
+      // ✅ Lógica del chat flotante
+      document.addEventListener('DOMContentLoaded', function () {
+        const btn = document.getElementById('chat-floating-btn');
+        const win = document.getElementById('chat-floating-window');
+        const closeBtn = document.getElementById('chat-close');
+
+        if (!btn || !win || !closeBtn) return;
+
+        btn.addEventListener('click', function () {
+          win.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', function () {
+          win.style.display = 'none';
+        });
       });
     </script>
     <!--end::OverlayScrollbars Configure-->
