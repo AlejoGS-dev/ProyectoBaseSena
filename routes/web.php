@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware('guest')->group(function(){
 */
 Route::middleware(['auth', 'role:cliente'])->group(function(){
 
+    Route::post('/posts', [PostController::class, 'store']);
 
 Route::get('/inicio', function () {
     return view('home.home.inicio');
