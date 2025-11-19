@@ -13,6 +13,7 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\InicioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,13 +44,16 @@ Route::middleware(['auth', 'role:cliente'])->group(function(){
 
     Route::post('/posts', [PostController::class, 'store']);
 
-Route::get('/inicio', function () {
-    return view('home.home.inicio');
-})->name('inicio');
+    Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
+
 
 Route::get('/workspace-cliente', function () {
     return view('home.home.workspace-cliente');
 })->name('workspace.cliente');
+
+    Route::get('/workspace-cliente', function () {
+        return view('home.home.workspace-cliente');
+    })->name('workspace.cliente');
 
 
 

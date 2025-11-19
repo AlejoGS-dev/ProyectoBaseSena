@@ -15,8 +15,8 @@
 @section('content')
 <div class="share-card">
   <div class="share-header">
-    <img src="https://ui-avatars.com/api/?name=Juan&background=ededed&color=363636" class="avatar-large" alt="Juan" />
-    <input type="text" id="post-text" class="share-input" placeholder="¿Qué quieres compartir, Juan?"/>
+    <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=ededed&color=363636" class="avatar-large" alt="{{ auth()->user()->name }}" />
+    <input type="text" id="post-text" class="share-input" placeholder="¿Qué quieres compartir, {{ auth()->user()->name }}?"/>
     <input type="file" id="post-image" accept="image/*" style="margin-top: 8px;">
     <button id="publish-btn" style="margin-top: 8px;">Publicar</button>
   </div>
@@ -58,5 +58,36 @@
 </template>
 
 <!-- Contenedor de posts -->
-<div id="feed" style="margin-top: 20px;"></div>
+<div id="feed" style="margin-top: 20px;">
+    {{-- Renderizamos posts existentes de la DB --}}
+    @foreach($posts as $post)
+        <div class="post-card">
+            <div class="post-header">
+                <div class="avatar">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&background=ededed&color=363636" alt="{{ $post->user->name }}">
+                </div>
+                <div class="user-info">
+                    <p class="user-name">{{ $post->user->name }}</p>
+                    <p class="timestamp">{{ $post->created_at->diffForHumans() }}</p>
+                </div>
+            </div>
+
+            <div class="post-content">
+                <p>{{ $post->content }}</p>
+            </div>
+
+            @if($post->image_path)
+            <div class="post-image">
+                <img src="{{ asset('storage/' . $post->image_path) }}" alt="Imagen publicación">
+            </div>
+            @endif
+
+            <div class="post-actions">
+                <button class="action-btn like-btn" data-likes="0">❤️ <span class="like-count">0</span></button>
+                <button class="action-btn message-btn">💬 Mensaje</button>
+                <button class="action-btn share-btn">🔄 Compartir</button>
+            </div>
+        </div>
+    @endforeach
+</div>
 @endsection
