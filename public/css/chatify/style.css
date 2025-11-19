@@ -1182,3 +1182,15 @@ div.loadingPlaceholder-date {
   border-radius: 4px;
   background: transparent;
 }
+
+.messenger-brand {
+  text-decoration: none;
+}
+
+.freeland-logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -37,38 +37,20 @@
         <div class="app-modal-card" data-name="settings" data-modal='0'>
             <form id="update-settings" action="{{ route('avatar.update') }}" enctype="multipart/form-data" method="POST">
                 @csrf
-
                 <div class="app-modal-body">
-                    {{-- Update profile avatar --}}
-                    @php
-                        $theUser = Chatify::getUserWithAvatar(Auth::user());
-                        $avatarFile = $theUser->avatar ?? null;
-
-                        if ($avatarFile) {
-                            $avatarFile = ltrim($avatarFile, '/');
-
-                            if ($avatarFile === 'avatar.png') {
-                                $avatarUrl = asset('chatify/images/avatar.png');
-                            } else {
-                                $avatarUrl = route('user.avatar', $avatarFile);
-                            }
-                        } else {
-                            $avatarUrl = asset('chatify/images/avatar.png');
-                        }
-                    @endphp
-
+                    {{-- Avatar --}}
                     <div class="avatar av-l upload-avatar-preview chatify-d-flex"
-                         style="background-image: url('{{ $avatarUrl }}');">
+                         style="background-image: url('{{ Chatify::getUserWithAvatar(Auth::user())->avatar }}');">
                     </div>
 
                     <p class="upload-avatar-details"></p>
 
-                    <label class="app-btn a-btn-primary update" style="background-color:{{ $messengerColor }}">
+                    <label class="app-btn a-btn-primary update">
                         Upload New
                         <input class="upload-avatar chatify-d-none" accept="image/*" name="avatar" type="file" />
                     </label>
 
-                    {{-- Dark/Light Mode  --}}
+                    {{-- Dark / Light Mode --}}
                     <p class="divider"></p>
                     <p class="app-modal-header">
                         Dark Mode
@@ -76,17 +58,7 @@
                               data-mode="{{ Auth::user()->dark_mode > 0 ? 1 : 0 }}">
                         </span>
                     </p>
-
-                    {{-- change messenger color  --}}
-                    <p class="divider"></p>
-                    <div class="update-messengerColor">
-                        @foreach (config('chatify.colors') as $color)
-                            <span style="background-color: {{ $color }}" data-color="{{ $color }}" class="color-btn"></span>
-                            @if (($loop->index + 1) % 5 == 0)
-                                <br/>
-                            @endif
-                        @endforeach
-                    </div>
+                    {{-- AQUÍ YA NO HAY SELECTOR DE COLORES --}}
                 </div>
 
                 <div class="app-modal-footer">
@@ -97,3 +69,4 @@
         </div>
     </div>
 </div>
+
