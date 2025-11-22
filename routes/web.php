@@ -51,9 +51,17 @@ Route::get('/workspace-cliente', function () {
     return view('home.home.workspace-cliente');
 })->name('workspace.cliente');
 
-    Route::get('/workspace-cliente', function () {
-        return view('home.home.workspace-cliente');
-    })->name('workspace.cliente');
+Route::get('/workspace-freelancer', function () {
+    return view('home.home.workspace-freelancer');
+})->name('workspace.freelancer');
+
+Route::get('/eventos-y-retos', function () {
+    return view('home.home.eventosyretos');
+})->name('eventos.y.retos');
+
+    Route::get('/ajustes', function () {
+        return view('home.home.ajustes');
+    })->name('ajustes');
 
 
 

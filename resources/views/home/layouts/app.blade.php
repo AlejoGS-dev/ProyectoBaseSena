@@ -11,14 +11,17 @@
     @stack('styles')
 </head>
 <body>
+
+
+
     @include('home.components.sidebar')
 
-    <div class="content-wrapper" style="margin-left:250px; padding:20px;">
-        @include('home.components.header')
+    <div class="content-wrapper">
 
         <main class="main-content">
             @yield('content')
         </main>
+
     </div>
 
     <script src="{{ asset('js/home/dropdown.js') }}"></script>

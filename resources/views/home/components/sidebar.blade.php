@@ -9,13 +9,13 @@
             <a href="{{ route('workspace.cliente') }}">Workspace Cliente</a>
         </li>
         <li class="@yield('menu-workspace-freelancer')">
-            <a href="{{ route('inicio') }}">Workspace Freelancer</a>
+            <a href="{{ route('workspace.freelancer') }}">Workspace Freelancer</a>
         </li>
         <li class="@yield('menu-eventos')">
-            <a href="{{ route('inicio') }}">Eventos / Retos</a>
+            <a href="{{ route('eventos.y.retos') }}">Eventos / Retos</a>
         </li>
         <li class="@yield('menu-ajustes')">
-            <a href="{{ route('inicio') }}">Ajustes</a>
+            <a href="{{ route('ajustes') }}">Ajustes</a>
         </li>
       </ul>
     </nav>
