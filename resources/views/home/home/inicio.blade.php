@@ -13,8 +13,29 @@
 @endpush
 
 @section('content')
+
+@php
+    // Evitamos errores si el controlador todavía no manda estas variables
+    $texto = $texto ?? '';
+    $users = $users ?? collect();
+@endphp
+
 <header class="top-bar">
-    <input type="text" class="search" placeholder="Buscar proyectos, personas, publicaciones..."/>
+    <form action="{{ route('inicio') }}" method="GET" class="search-form">
+        <div class="search-group">
+            <input
+                type="text"
+                name="texto"
+                class="search"
+                placeholder="Buscar proyectos, personas, publicaciones..."
+                value="{{ $texto }}"
+            />
+
+            <button type="submit" class="search-btn">
+                🔍
+            </button>
+        </div>
+    </form>
 
     <div class="profile">
         <span class="icon-bell">&#128276;</span>
@@ -32,7 +53,8 @@
 
             <div class="dropdown-menu">
                 <a href="{{ route('perfil.edit') }}" class="dropdown-item">Perfil</a>
-                <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="#" class="dropdown-item"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Cerrar sesión
                 </a>
                 <form action="{{ route('logout') }}" method="POST" id="logout-form" class="d-none">
@@ -88,9 +110,41 @@
     </div>
 </template>
 
+{{-- =============================
+    RESULTADOS DE BÚSQUEDA
+============================= --}}
+@if($texto !== '')
+    <section class="search-results" style="margin-top: 20px;">
+        <h2 class="search-title">
+            Resultados para: <span>{{ $texto }}</span>
+        </h2>
+
+        <div class="search-users" style="margin-top: 10px;">
+            <h3>Personas</h3>
+
+            @forelse($users as $user)
+                <div class="user-result" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=ededed&color=363636"
+                         class="avatar"
+                         alt="{{ $user->name }}">
+
+                    <div class="user-result-info">
+                        <p class="user-name" style="margin: 0; font-weight: 600;">{{ $user->name }}</p>
+                        <p class="user-email" style="margin: 0; font-size: 0.85rem; color: #666;">{{ $user->email }}</p>
+                        {{-- Aquí luego puedes poner link al perfil cuando lo tengas --}}
+                        {{-- <a href="{{ route('perfil.show', $user->id) }}" class="view-profile-link">Ver perfil</a> --}}
+                    </div>
+                </div>
+            @empty
+                <p style="margin-top: 8px;">No se encontraron personas que coincidan con la búsqueda.</p>
+            @endforelse
+        </div>
+    </section>
+@endif
+
 <!-- Contenedor de posts -->
 <div id="feed" style="margin-top: 20px;">
-    {{-- Renderizamos posts existentes de la DB --}}
+    {{-- Renderizamos posts existentes de la DB (ya filtrados si hay búsqueda) --}}
     @foreach($posts as $post)
         <div class="post-card">
             <div class="post-header">
@@ -120,7 +174,15 @@
             </div>
         </div>
     @endforeach
+
+    {{-- Paginación manteniendo el texto de búsqueda --}}
+    @if(method_exists($posts, 'links'))
+        <div class="pagination-wrapper" style="margin-top: 15px;">
+            {{ $posts->appends(['texto' => $texto])->links() }}
+        </div>
+    @endif
 </div>
+
 <!-- ============================
       CHAT FLOTANTE FREELAND
 ============================= -->
@@ -136,7 +198,7 @@
   </div>
 
   <iframe id="chat-iframe" src="{{ route('chatify') }}"></iframe>
-</div>}
+</div>
 
 @push('scripts')
 <script>

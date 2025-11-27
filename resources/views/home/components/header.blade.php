@@ -1,5 +1,19 @@
 <header class="top-bar">
-    <input type="text" class="search" placeholder="Buscar proyectos, personas, publicaciones..."/>
+    <form action="{{ route('inicio') }}" method="GET" class="search-form">
+        <div class="search-group">
+            <input
+                type="text"
+                name="texto"
+                class="search"
+                placeholder="Buscar proyectos, personas, publicaciones..."
+                value="{{ $texto ?? '' }}"
+            />
+
+            <button type="submit" class="search-btn">
+                🔍
+            </button>
+        </div>
+    </form>
 
     <div class="profile">
         <span class="icon-bell">&#128276;</span>
