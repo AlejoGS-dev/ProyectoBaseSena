@@ -117,3 +117,23 @@ Route::middleware('auth')->group(function(){
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| Ruta universal /home (redirige según rol)
+|--------------------------------------------------------------------------
+*/
+Route::get('/home', function () {
+    $user = Auth::user();
+
+    if (!$user) {
+        return redirect()->route('login');
+    }
+
+    // Spatie: si es admin
+    if ($user->hasRole('admin')) {
+        return redirect()->route('dashboard');   // ruta del admin
+    }
+
+    // Todo lo que no sea admin (cliente, freelancer, etc.)
+    return redirect()->route('inicio');          // ruta de inicio común
+})->name('home')->middleware('auth');

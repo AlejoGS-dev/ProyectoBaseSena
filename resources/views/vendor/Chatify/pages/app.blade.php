@@ -63,9 +63,16 @@
                 {{-- header buttons --}}
                 <nav class="m-header-right">
                     <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
-                    <a href="/"><i class="fas fa-home"></i></a>
+
+                    {{-- Abre el home en la ventana principal, no dentro del iframe --}}
+                    <a href="{{ route('home') }}" target="_top">
+                        <i class="fas fa-home"></i>
+                    </a>
+
                     <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>
                 </nav>
+
+
             </nav>
             {{-- Internet connection --}}
             <div class="internet-connection">
