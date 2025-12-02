@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Freeland · Vista funcional</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#7b1fa2; --accent:#e91e63; --highlight:#2196f3;
+      --bg:#ffffff; --card:#fdfdfd; --ink:#111; --muted:#666; --stroke:#ddd;
+      --radius:14px; --shadow:0 6px 18px rgba(0,0,0,.05);
+      --msg-from-bg:#f1f3f6; --msg-to-bg:#ece8ff;
+    }
+    [data-theme="dark"]{
+      --brand:#ba68c8; --accent:#f48fb1; --highlight:#64b5f6;
+      --bg:#0f1115; --card:#1a1d24; --ink:#e0e0e0; --muted:#9aa7bd; --stroke:#2c2f36;
+      --msg-from-bg:#2a2f39; --msg-to-bg:#2c2442;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .muted{color:var(--muted)} .m0{margin:0}
+    .hidden{display:none !important}
+
+    /* Header */
+    .header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(130%) blur(10px);background:color-mix(in oklab,var(--card),transparent 20%);border-bottom:1px solid var(--stroke)}
+    .header-inner{max-width:1152px;margin:auto;display:grid;grid-template-columns:220px 1fr auto;gap:16px;align-items:center;padding:10px 16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:inherit;text-decoration:none}
+    .brand .logo{height:34px;width:34px;border-radius:10px;background:var(--brand);display:grid;place-items:center;color:#fff}
+    .brand small{color:var(--muted);font-weight:600}
+    .search{position:relative}
+    .search input{width:100%;padding:10px 14px 10px 38px;border-radius:999px;border:1px solid var(--stroke);background:var(--bg);outline:none;color:var(--ink)}
+    .search i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
+
+    .top-actions{display:flex;gap:10px}
+    .icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;border:1px solid var(--stroke);background:var(--card);border-radius:12px;color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
+    .icon-btn i{font-size:18px;color:var(--muted)}
+    .icon-btn:hover{border-color:color-mix(in oklab,var(--brand),var(--stroke) 60%)}
+    .menu{position:relative}
+    .menu-popover{position:absolute;right:0;top:110%;min-width:200px;background:var(--card);border:1px solid var(--stroke);border-radius:12px;box-shadow:var(--shadow);padding:8px;display:none}
+    .menu-popover a,.menu-popover .linklike{display:block;padding:10px;border-radius:10px;color:inherit;text-decoration:none;background:transparent;border:none;text-align:left;width:100%;cursor:pointer}
+    .menu-popover a:hover,.menu-popover .linklike:hover{background:color-mix(in oklab,var(--brand),transparent 92%)}
+    .menu-popover.show{display:block}
+
+    /* Layout */
+    .container{max-width:1152px;margin:18px auto;display:grid;grid-template-columns:260px 1fr 320px;gap:18px;padding:0 16px}
+    .card{background:var(--card);border:1px solid var(--stroke);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+    /* Left */
+    .profile{padding:18px;text-align:center}
+    .avatar{width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--highlight));margin:8px auto 10px;display:grid;place-items:center;color:#fff;font-size:32px;font-weight:700}
+    .statbar{display:flex;justify-content:space-between;margin-top:12px;color:var(--muted)}
+    .list{border-top:1px dashed var(--stroke);margin-top:12px;padding-top:12px}
+    .list a{display:flex;justify-content:space-between;padding:8px;border-radius:10px;color:inherit;text-decoration:none}
+    .list a:hover{background:color-mix(in oklab,var(--brand),transparent 90%)}
+
+    /* Center */
+    .composer{padding:14px}
+    .composer .row{display:flex;gap:10px}
+    .composer input{flex:1;border:1px solid var(--stroke);border-radius:999px;padding:10px 14px;outline:none;background:var(--bg);color:var(--ink)}
+    .composer .actions{display:flex;gap:6px;margin-top:10px}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;border:1px solid var(--stroke);cursor:pointer;background:transparent}
+    .chip i{color:var(--muted)} .chip:hover{border-color:var(--brand)}
+    .feed{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+    .post{padding:14px}
+    .post .meta{display:flex;gap:10px;align-items:center}
+    .post .pic{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--highlight));display:grid;place-items:center;color:#fff;font-weight:700}
+    .post .name{font-weight:600}
+    .post .time{color:var(--muted);font-size:12px}
+    .post .body{margin:10px 0;color:#626b77}
+    .post .actions{display:flex;gap:12px;margin-top:8px;color:var(--muted)}
+    .action{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;cursor:pointer}
+    .action:hover{background:color-mix(in oklab,var(--brand),transparent 92%)}
+
+    /* Right */
+    .news{padding:14px}
+    .news h3{margin:6px 0 4px;font-size:16px}
+    .news ul{list-style:none;margin:0;padding:0}
+    .news li{display:flex;gap:8px;padding:10px;border-radius:12px}
+    .news li:hover{background:color-mix(in oklab,var(--brand),transparent 92%)}
+    .news i{margin-top:2px;color:var(--brand)}
+    .sticky{position:sticky;top:82px}
+
+    .footer{margin:18px auto 32px;max-width:1152px;color:var(--muted);font-size:12px;padding:0 16px}
+
+    /* Responsive */
+    @media (max-width:1100px){.container{grid-template-columns:240px 1fr}.right-col{display:none}}
+    @media (max-width:760px){.header-inner{grid-template-columns:1fr auto;gap:10px}.brand small,.search{display:none}.container{grid-template-columns:1fr}.left-col{display:none}}
+
+    /* Chat */
+    .chatbox{position:fixed;bottom:20px;right:20px;width:320px;height:400px;background:var(--card);border:1px solid var(--stroke);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .chatbox.hidden{display:none}
+    .chat-header{padding:10px;border-bottom:1px solid var(--stroke);display:flex;justify-content:space-between;align-items:center}
+    .chat-body{flex:1;display:flex}
+    .chat-list{width:110px;border-right:1px solid var(--stroke);overflow-y:auto}
+    .chat-user{display:flex;align-items:center;gap:8px;padding:8px;cursor:pointer;background:transparent;border:none;width:100%;text-align:left}
+    .chat-user:hover{background:color-mix(in oklab,var(--brand),transparent 92%)}
+    .avatar-small{width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:center;flex-shrink:0}
+    .chat-window{flex:1;display:flex;flex-direction:column}
+    .messages{flex:1;padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+    .msg{max-width:75%;padding:8px 12px;border-radius:18px;line-height:1.4;font-size:14px;position:relative;word-wrap:break-word}
+    .msg.from{align-self:flex-start;background:var(--msg-from-bg);border-bottom-left-radius:4px}
+    .msg.to{align-self:flex-end;background:var(--msg-to-bg);border-bottom-right-radius:4px}
+    .chat-input{display:flex;padding:6px;border-top:1px solid var(--stroke);gap:6px}
+    .chat-input input{flex:1;border:1px solid var(--stroke);border-radius:999px;padding:8px 12px;background:var(--bg);color:var(--ink);outline:none}
+    .chat-input button{border:1px solid var(--stroke);background:var(--card);border-radius:12px;padding:8px 12px;cursor:pointer}
+
+    /* Badge y popover */
+    .badge{display:inline-block;min-width:18px;height:18px;line-height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;vertical-align:top;margin-left:6px}
+    .popover{position:absolute;right:0;top:110%;width:360px;max-height:380px;overflow:auto;background:var(--card);border:1px solid var(--stroke);border-radius:12px;box-shadow:var(--shadow);padding:8px;display:none;z-index:60}
+    .popover.show{display:block}
+    .notif-item{display:flex;gap:8px;align-items:flex-start;padding:10px;border-radius:10px;cursor:pointer}
+    .notif-item:hover{background:color-mix(in oklab,var(--brand),transparent 92%)}
+    .notif-item.unread{background:color-mix(in oklab,var(--highlight),transparent 92%)}
+    .notif-item small{color:var(--muted)}
+    .notif-actions{margin-left:auto;display:flex;gap:6px}
+    .notif-actions .btn{padding:6px 8px;font-size:12px}
+    .popover .toolbar{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-bottom:1px solid var(--stroke);margin-bottom:6px}
+
+    /* Modal perfil */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:70}
+    .modal.hidden{display:none}
+    .modal .dialog{background:var(--card);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);width:min(720px,92vw);max-height:86vh;overflow:auto}
+    .dialog header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--stroke)}
+    .dialog .content{padding:16px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-grid label{font-size:12px;color:var(--muted)}
+    .form-grid input,.form-grid textarea{width:100%;border:1px solid var(--stroke);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink)}
+    .btn{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--stroke);background:var(--card);border-radius:10px;padding:10px 12px;cursor:pointer}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+
+    /* Foro */
+    #forumView .toolbar{display:flex;justify-content:space-between;align-items:center;padding:10px}
+    #forumView .threads{display:grid;gap:10px;padding:10px}
+    .thread{border:1px solid var(--stroke);border-radius:12px;padding:10px;background:var(--card)}
+    .thread h4{margin:0 0 6px}
+    .comments{display:grid;gap:6px;margin-top:8px}
+    .comment{border:1px dashed var(--stroke);border-radius:10px;padding:8px}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="brand" aria-label="Inicio Freeland">
+        <div class="logo"><i class="ri-seedling-fill" aria-hidden="true"></i></div>
+        <div>
+          <div>Freeland</div>
+          <small>Comunidad de freelancers</small>
+        </div>
+      </a>
+      <form class="search" onsubmit="event.preventDefault()">
+        <i class="ri-search-line" aria-hidden="true"></i>
+        <input name="q" placeholder="Buscar personas, servicios y grupos" autocomplete="off">
+      </form>
+      <nav class="top-actions" aria-label="Acciones principales">
+        <button class="icon-btn" id="themeToggle" title="Cambiar tema" type="button"><i class="ri-sun-line" aria-hidden="true"></i><span class="sr-only">Cambiar tema</span></button>
+        <button class="icon-btn" id="forumBtn" title="Foro" type="button"><i class="ri-group-line" aria-hidden="true"></i><span class="sr-only">Foro</span></button>
+        <button class="icon-btn" title="Mensajes" id="openChat" type="button"><i class="ri-message-3-line" aria-hidden="true"></i><span class="sr-only">Mensajes</span></button>
+        <button class="icon-btn" id="notifBtn" title="Notificaciones" type="button" style="position:relative">
+          <i class="ri-notification-3-line" aria-hidden="true"></i>
+          <span class="sr-only">Notificaciones</span>
+          <span id="notifBadge" class="badge" style="display:none">0</span>
+        </button>
+        <div class="menu">
+          <button class="icon-btn" id="profileMenuBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Perfil">
+            <i class="ri-user-3-line" aria-hidden="true"></i><span class="sr-only">Perfil</span>
+          </button>
+          <div class="menu-popover" id="profileMenu" role="menu">
+            <a role="menuitem" href="#" id="menuProfile">Mi perfil</a>
+            <a role="menuitem" href="#" id="menuSettings">Configuración</a>
+            <button class="linklike" role="menuitem" type="button" id="menuLogout">Cerrar sesión</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Left -->
+    <aside class="left-col">
+      <section class="card profile sticky">
+        <div id="leftAvatar" class="avatar">DF</div>
+        <h2 id="leftName" class="m0">Daniel Fonseca</h2>
+        <div id="leftTitle" class="muted">Freelancer</div>
+        <div class="statbar"><span>Contactos</span><strong>44</strong></div>
+        <nav class="list" aria-label="Atajos">
+          <a href="#"><span>Amplía tu red</span><i class="ri-arrow-right-up-line"></i></a>
+          <a href="#"><span>Elementos guardados</span><i class="ri-bookmark-line"></i></a>
+          <a href="#"><span>Ayuda</span><i class="ri-question-line"></i></a>
+        </nav>
+      </section>
+    </aside>
+
+    <!-- Center -->
+    <section class="center-col">
+      <!-- Home View -->
+      <div id="homeView">
+        <div class="card composer">
+          <form class="row" onsubmit="event.preventDefault(); createPost(document.getElementById('postBody').value); this.reset();">
+            <div id="composerAvatar" class="avatar" aria-hidden="true">DF</div>
+            <input id="postBody" placeholder="Crear publicación" required>
+            <button class="icon-btn" type="submit" aria-label="Publicar"><i class="ri-send-plane-2-line"></i></button>
+          </form>
+          <div class="actions">
+            <button class="chip" type="button"><i class="ri-image-2-line"></i>Foto</button>
+            <button class="chip" type="button"><i class="ri-video-line"></i>Video</button>
+            <button class="chip" type="button"><i class="ri-briefcase-line"></i>Empleo</button>
+            <button class="chip" type="button"><i class="ri-article-line"></i>Escribir artículo</button>
+          </div>
+        </div>
+
+        <div class="feed" id="feed">
+          <article class="card post">
+            <div class="meta">
+              <div class="pic">BT</div>
+              <div>
+                <div class="name">Bojan Tunguz, Ph.D.</div>
+                <div class="time muted">Hace 1 día · Ciencia de datos</div>
+              </div>
+            </div>
+            <div class="body">Consejo: antes de entrenar un modelo, entiende el aporte de cada feature. SHAP es tu amigo.</div>
+            <div class="actions">
+              <div class="action"><i class="ri-thumb-up-line"></i> Recomendar</div>
+              <div class="action"><i class="ri-chat-3-line"></i> Comentar</div>
+              <div class="action"><i class="ri-share-forward-line"></i> Compartir</div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Forum View -->
+      <div id="forumView" class="hidden">
+        <div class="card toolbar">
+          <strong>Foro</strong>
+          <div>
+            <button id="newThreadBtn" class="btn primary" type="button"><i class="ri-add-line"></i> Nuevo hilo</button>
+            <button id="backHomeBtn" class="btn" type="button"><i class="ri-home-5-line"></i> Inicio</button>
+          </div>
+        </div>
+        <div class="card" style="padding:10px">
+          <form id="threadForm" class="hidden" style="display:grid;gap:8px">
+            <input id="th_title" placeholder="Título del hilo" required>
+            <textarea id="th_body" placeholder="Escribe tu pregunta o tema" rows="4" required></textarea>
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+              <button id="th_cancel" class="btn" type="button">Cancelar</button>
+              <button class="btn primary" type="submit"><i class="ri-send-plane-2-line"></i> Publicar</button>
+            </div>
+          </form>
+        </div>
+        <div id="threadList" class="threads"></div>
+      </div>
+    </section>
+
+    <!-- Right -->
+    <aside class="right-col">
+      <section class="card news sticky">
+        <h3>Noticias</h3>
+        <ul>
+          <li><i class="ri-newspaper-line"></i><div>Convocatoria 2025-II abierta.</div></li>
+          <li><i class="ri-newspaper-line"></i><div>Talento Tech: nuevas becas.</div></li>
+          <li><i class="ri-newspaper-line"></i><div>Tips para tu portafolio.</div></li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="footer">© <span id="year"></span> Freeland · Vista funcional</footer>
+
+  <!-- Chat flotante -->
+  <div id="chatbox" class="chatbox hidden" aria-live="polite" aria-label="Chat">
+    <div class="chat-header">
+      <span id="chatTitle">Mensajes</span>
+      <button id="closeChat" type="button" title="Cerrar chat"><i class="ri-close-line"></i></button>
+    </div>
+    <div class="chat-body">
+      <div class="chat-list" aria-label="Contactos">
+        <button class="chat-user" data-user="Melissa"><img class="avatar-small" src="https://i.pravatar.cc/100?img=47" alt="Melissa"><span>Melissa</span></button>
+        <button class="chat-user" data-user="Efraín"><img class="avatar-small" src="https://i.pravatar.cc/100?img=12" alt="Efraín"><span>Efraín</span></button>
+        <button class="chat-user" data-user="Carlos"><img class="avatar-small" src="https://i.pravatar.cc/100?img=30" alt="Carlos"><span>Carlos</span></button>
+      </div>
+      <div class="chat-window">
+        <div class="messages"></div>
+        <form class="chat-input" id="chatForm" autocomplete="off">
+          <input type="text" id="chatText" placeholder="Escribe un mensaje…">
+          <button type="submit" aria-label="Enviar"><i class="ri-send-plane-2-line"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel de notificaciones -->
+  <div id="notifPanel" class="popover" role="dialog" aria-label="Notificaciones">
+    <div class="toolbar">
+      <strong>Notificaciones</strong>
+      <div>
+        <button id="notifSeed" class="btn" type="button"><i class="ri-lightbulb-flash-line"></i> Generar demo</button>
+        <button id="notifClear" class="btn" type="button"><i class="ri-delete-bin-6-line"></i> Limpiar</button>
+        <button id="notifReadAll" class="btn" type="button"><i class="ri-check-double-line"></i> Todo leído</button>
+      </div>
+    </div>
+    <div id="notifList" style="display:grid;gap:6px;padding:6px"></div>
+  </div>
+
+  <!-- Modal Perfil -->
+  <div id="profileModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Perfil">
+    <div class="dialog">
+      <header>
+        <strong>Perfil</strong>
+        <button id="closeProfile" class="btn" type="button"><i class="ri-close-line"></i> Cerrar</button>
+      </header>
+      <div class="content">
+        <form id="profileForm" class="form-grid">
+          <div>
+            <label>Nombre</label>
+            <input id="pf_name" placeholder="Tu nombre" required>
+          </div>
+          <div>
+            <label>Profesión</label>
+            <input id="pf_title" placeholder="Ej: Desarrollador Web">
+          </div>
+          <div style="grid-column:1/-1">
+            <label>Bio</label>
+            <textarea id="pf_bio" rows="4" placeholder="Cuéntanos de ti"></textarea>
+          </div>
+          <div style="grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end">
+            <button class="btn" type="button" id="pf_cancel">Cancelar</button>
+            <button class="btn primary" type="submit"><i class="ri-save-3-line"></i> Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Utilidades =====
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+    const initials = (name='') => name.trim().split(/\s+/).map(s=>s[0]).slice(0,2).join('').toUpperCase();
+
+    // ===== Toast =====
+    (function(){
+      const el = document.createElement('div'); el.id='toast'; el.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--card);color:var(--ink);border:1px solid var(--stroke);padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s;z-index:90';
+      document.body.appendChild(el); window.toast=(msg)=>{ el.textContent=msg; el.style.opacity=1; clearTimeout(el._t); el._t=setTimeout(()=> el.style.opacity=0,1800); };
+    })();
+
+    // ===== Año =====
+    $('#year').textContent = new Date().getFullYear();
+
+    // ===== Tema =====
+    (function(){
+      const root=document.documentElement, btn=$('#themeToggle'), key='freeland-theme';
+      const saved=localStorage.getItem(key)||root.getAttribute('data-theme')||'light'; root.setAttribute('data-theme', saved);
+      if (btn) btn.innerHTML = saved==='dark'?'<i class="ri-moon-line"></i>':'<i class="ri-sun-line"></i>';
+      btn?.addEventListener('click',()=>{ const now=root.getAttribute('data-theme')==='dark'?'light':'dark'; root.setAttribute('data-theme',now); localStorage.setItem(key,now); btn.innerHTML= now==='dark'?'<i class="ri-moon-line"></i>':'<i class="ri-sun-line"></i>'; root.style.transition='background .25s,color .25s'; });
+    })();
+
+    // ===== Router mínimo (Home/Foro) =====
+    (function(){
+      const home=$('#homeView'), forum=$('#forumView');
+      function showHome(){ home.classList.remove('hidden'); forum.classList.add('hidden'); location.hash = '#/home'; }
+      function showForum(){ forum.classList.remove('hidden'); home.classList.add('hidden'); location.hash = '#/foro'; renderThreads(); }
+      $('#forumBtn').addEventListener('click', showForum);
+      $('#backHomeBtn').addEventListener('click', showHome);
+      // hash routing on load
+      if (location.hash === '#/foro') showForum();
+    })();
+
+    // ===== Perfil (persistente y refleja en UI) =====
+    ;(function(){
+      const btn=$('#profileMenuBtn'), menu=$('#profileMenu'), modal=$('#profileModal');
+      const close=$('#closeProfile'), form=$('#profileForm');
+      const nameI=$('#pf_name'), titleI=$('#pf_title'), bioI=$('#pf_bio');
+      const leftName=$('#leftName'), leftTitle=$('#leftTitle'), leftAvatar=$('#leftAvatar'), compAvatar=$('#composerAvatar');
+      const KEY='freeland-profile';
+      const read=()=>{ try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}} };
+      const write=(d)=> localStorage.setItem(KEY, JSON.stringify(d));
+      const paint=()=>{ const d=read(); if(d.name){ leftName.textContent=d.name; leftAvatar.textContent=initials(d.name); compAvatar.textContent=initials(d.name);} if(d.title){ leftTitle.textContent=d.title; } };
+      const openModal=()=>{ const d=read(); nameI.value=d.name||leftName.textContent||''; titleI.value=d.title||leftTitle.textContent||''; bioI.value=d.bio||''; modal.classList.remove('hidden'); };
+      const closeModal=()=> modal.classList.add('hidden');
+      btn.addEventListener('click',()=>{ const open=menu.classList.toggle('menu-popover-open'); menu.classList.toggle('show', open); btn.setAttribute('aria-expanded', String(open)); });
+      document.addEventListener('click',(e)=>{ if(!menu.contains(e.target)&&!btn.contains(e.target)){ menu.classList.remove('show'); btn.setAttribute('aria-expanded','false'); }});
+      $('#menuProfile').addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
+      $('#menuSettings').addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
+      $('#menuLogout').addEventListener('click', (e)=>{ e.preventDefault(); toast('Cerrando sesión… (demo)'); });
+      close.addEventListener('click', closeModal);
+      $('#pf_cancel').addEventListener('click', closeModal);
+      form.addEventListener('submit', (e)=>{ e.preventDefault(); const d={name:nameI.value.trim(), title:titleI.value.trim(), bio:bioI.value.trim()}; write(d); paint(); toast('Perfil guardado'); closeModal(); });
+      paint();
+    })();
+
+    // ===== Buscador =====
+    (function(){ const form=document.querySelector('form.search'); form?.addEventListener('submit',(e)=>{ e.preventDefault(); const q=form.q.value.trim(); if(!q) return form.q.focus(); toast('Buscar: '+q); }); })();
+
+    // ===== Notificaciones CRUD =====
+    ;(function(){
+      const KEY='freeland-notifs';
+      const btn=$('#notifBtn'), panel=$('#notifPanel'), badge=$('#notifBadge'), list=$('#notifList');
+      const readAll=$('#notifReadAll'), clearBtn=$('#notifClear'), seedBtn=$('#notifSeed');
+      const read=()=>{ try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]} };
+      const write=(arr)=> localStorage.setItem(KEY, JSON.stringify(arr));
+      const unread=()=> read().filter(n=>!n.read).length;
+      const paintBadge=()=>{ const n=unread(); badge.textContent=n; badge.style.display = n>0? 'inline-block':'none'; };
+      const add=(text)=>{ const arr=read(); arr.push({id:Date.now()+Math.random(), text, read:false, ts:new Date().toISOString()}); write(arr); paintList(); paintBadge(); };
+      const seed=()=>{['Bienvenido a Freeland','Nueva respuesta en tu hilo','Actualiza tu perfil'].forEach(t=>add(t));};
+      const paintList=()=>{
+        const arr=read().sort((a,b)=> new Date(b.ts)-new Date(a.ts)); list.innerHTML='';
+        if(!arr.length){ const d=document.createElement('div'); d.className='muted'; d.style.padding='10px'; d.textContent='Sin notificaciones'; list.appendChild(d); return; }
+        for(const it of arr){ const row=document.createElement('div'); row.className='notif-item'+(it.read?'':' unread');
+          row.innerHTML = `<i class="ri-notification-3-line" aria-hidden="true"></i>
+            <div style="flex:1"><div>${it.text}</div><small>${new Date(it.ts).toLocaleString()}</small></div>
+            <div class="notif-actions">
+              <button class="btn" data-act="toggle">${it.read?'Marcar no leído':'Marcar leído'}</button>
+              <button class="btn" data-act="del"><i class="ri-delete-bin-line"></i></button>
+            </div>`;
+          row.querySelector('[data-act="toggle"]').addEventListener('click',()=>{ it.read=!it.read; write(arr); paintList(); paintBadge(); });
+          row.querySelector('[data-act="del"]').addEventListener('click',()=>{ const idx=arr.findIndex(n=>n.id===it.id); if(idx>-1){ arr.splice(idx,1); write(arr); paintList(); paintBadge(); }});
+          list.appendChild(row);
+        }
+      };
+      const position=()=>{ const rect=btn.getBoundingClientRect(); panel.style.right=(window.innerWidth-rect.right)+'px'; panel.style.top=(rect.bottom+8)+'px'; };
+      btn.addEventListener('click',()=>{ const open=panel.classList.toggle('show'); if(open){ position(); paintList(); } });
+      readAll.addEventListener('click',()=>{ const arr=read().map(n=>({...n, read:true})); write(arr); paintList(); paintBadge(); });
+      clearBtn.addEventListener('click',()=>{ write([]); paintList(); paintBadge(); });
+      seedBtn.addEventListener('click',()=> seed());
+      document.addEventListener('click',(e)=>{ if(!panel.contains(e.target)&&!btn.contains(e.target)) panel.classList.remove('show'); });
+      window.addEventListener('resize',()=>{ if(panel.classList.contains('show')) position(); });
+      window.pushNotif = add; // API pública
+      paintBadge();
+    })();
+
+    // ===== Feed =====
+    function createPost(text){ if(!text) return; const feed=$('#feed'); const el=document.createElement('article'); el.className='card post'; el.innerHTML = `
+        <div class=\"meta\"> <div class=\"pic\" id=\"postPic\">DF</div> <div> <div class=\"name\">Tú</div> <div class=\"time muted\">Ahora mismo · Publicación</div> </div> </div>
+        <div class=\"body\"></div>
+        <div class=\"actions\">
+          <button class=\"action\" type=\"button\"><i class=\"ri-thumb-up-line\"></i> Recomendar</button>
+          <button class=\"action\" type=\"button\"><i class=\"ri-chat-3-line\"></i> Comentar</button>
+          <button class=\"action\" type=\"button\"><i class=\"ri-share-forward-line\"></i> Compartir</button>
+        </div>`; el.querySelector('.body').textContent = text; feed.prepend(el); $$('#feed .post .action', el).forEach(a=> a.addEventListener('click', ()=> toast(a.textContent.trim()+': próximamente'))); if(window.pushNotif) window.pushNotif('Tu publicación fue creada.'); }
+
+    // ===== Chat persistente =====
+    ;(function(){
+      const open=$('#openChat'), box=$('#chatbox'), close=$('#closeChat');
+      const users=$$('.chat-user'), title=$('#chatTitle'); const messages=$('.messages'); const form=$('#chatForm'), input=$('#chatText');
+      const KP='freeland-chat-', KC='freeland-chat-current'; let current=localStorage.getItem(KC)||null;
+      const key=(u)=> KP+encodeURIComponent(u); const read=(u)=>{try{return JSON.parse(localStorage.getItem(key(u))||'[]')}catch{return[]}}; const write=(u,arr)=> localStorage.setItem(key(u), JSON.stringify(arr));
+      const paint=()=>{ messages.innerHTML=''; for(const m of read(current)) add(m.text,m.type); };
+      const add=(text,type='to')=>{ const d=document.createElement('div'); d.className=`msg ${type}`; d.textContent=text; messages.appendChild(d); messages.scrollTop=messages.scrollHeight; };
+      const switchTo=(u)=>{ current=u; localStorage.setItem(KC,u); title.textContent=`Chat con ${u}`; if(!read(u).length){ const w=`Has abierto la conversación con ${u}`; write(u,[{type:'from',text:w}]); } paint(); input.focus(); };
+      open?.addEventListener('click',()=> box.classList.toggle('hidden')); close?.addEventListener('click',()=> box.classList.add('hidden'));
+      users.forEach(u=> u.addEventListener('click',()=> switchTo(u.dataset.user)) );
+      form?.addEventListener('submit',(e)=>{ e.preventDefault(); if(!current) return; const t=input.value.trim(); if(!t) return; const arr=read(current); arr.push({type:'to',text:t}); write(current,arr); add(t,'to'); input.value=''; pushNotif?.('Nuevo mensaje enviado a '+current); });
+      if(current){ const btn=users.find(b=>b.dataset.user===current); if(btn) switchTo(current); }
+    })();
+
+    // ===== Foro (threads y comentarios con localStorage) =====
+    ;(function(){
+      const KT='freeland-threads';
+      const read=()=>{ try{return JSON.parse(localStorage.getItem(KT)||'[]')}catch{return[]} };
+      const write=(arr)=> localStorage.setItem(KT, JSON.stringify(arr));
+      const list=$('#threadList'); const nbtn=$('#newThreadBtn'); const form=$('#threadForm'); const titleI=$('#th_title'); const bodyI=$('#th_body'); const cancel=$('#th_cancel');
+      function toggleForm(show){ form.classList.toggle('hidden', !show); if(show) titleI.focus(); }
+      function render(){ const arr=read().sort((a,b)=> b.id-a.id); list.innerHTML=''; if(!arr.length){ const d=document.createElement('div'); d.className='muted'; d.style.padding='10px'; d.textContent='Sin hilos todavía.'; list.appendChild(d); return; }
+        for(const th of arr){ const el=document.createElement('article'); el.className='thread'; el.innerHTML=`
+            <h4>${th.title}</h4>
+            <div class="muted" style="font-size:12px">${new Date(th.id).toLocaleString()}</div>
+            <p style="margin:6px 0 8px">${th.body}</p>
+            <div class="comments"></div>
+            <form class="reply" style="display:flex;gap:6px;margin-top:8px">
+              <input class="rtext" placeholder="Agregar comentario" required>
+              <button class="btn" type="submit"><i class="ri-send-plane-2-line"></i></button>
+            </form>`;
+          const box=el.querySelector('.comments');
+          (th.comments||[]).forEach(c=>{ const cd=document.createElement('div'); cd.className='comment'; cd.textContent=c.text; box.appendChild(cd); });
+          el.querySelector('.reply').addEventListener('submit',(e)=>{ e.preventDefault(); const r=el.querySelector('.rtext'); const txt=r.value.trim(); if(!txt) return; th.comments = th.comments||[]; th.comments.push({text:txt, ts:Date.now()}); write(arr); const cd=document.createElement('div'); cd.className='comment'; cd.textContent=txt; box.appendChild(cd); r.value=''; pushNotif?.('Nuevo comentario en "'+th.title+'"'); });
+          list.appendChild(el);
+        }
+      }
+      nbtn.addEventListener('click', ()=> toggleForm(true));
+      cancel.addEventListener('click', ()=> toggleForm(false));
+      form.addEventListener('submit',(e)=>{ e.preventDefault(); const t=titleI.value.trim(), b=bodyI.value.trim(); if(!t||!b) return; const arr=read(); arr.push({id:Date.now(), title:t, body:b, comments:[]}); write(arr); titleI.value=''; bodyI.value=''; toggleForm(false); render(); pushNotif?.('Hilo creado: '+t); });
+      window.renderThreads = render; // usado por router
+      window.addEventListener('load', render);
+    })();
+
+    // ===== Accesibilidad foco =====
+    (function(){ function handleFirstTab(e){ if(e.key==='Tab'){ document.body.classList.add('user-tabbing'); window.removeEventListener('keydown', handleFirstTab);} } window.addEventListener('keydown', handleFirstTab); })();
+
+    // ====== QA ======
+    ;(function runTests(){
+      const results = [];
+      const ok=(name,cond)=> results.push({name, pass:!!cond});
+      try{
+        ok('Util $ definida una sola vez', typeof $==='function');
+        ok('Tema: botón existe', !!document.getElementById('themeToggle'));
+        ok('Perfil: modal existe', !!document.getElementById('profileModal'));
+        ok('Notificaciones: badge existe', !!document.getElementById('notifBadge'));
+        ok('Foro: vista existe', !!document.getElementById('forumView'));
+        // Crea hilo de prueba
+        if (window.renderThreads) {
+          const KT='freeland-threads'; localStorage.setItem(KT, JSON.stringify([{id:1,title:'Test',body:'Body',comments:[]}])) ; window.renderThreads();
+          ok('Foro: renderiza lista', document.querySelectorAll('#threadList .thread').length>=1);
+        }
+      }catch(e){ results.push({name:'Excepción en tests', pass:false, error:String(e)}); }
+      const passAll = results.every(r=>r.pass);
+      console.group('%cFreeland QA','color:#fff;background:#7b1fa2;padding:2px 6px;border-radius:6px');
+      results.forEach(r=> console[r.pass?'log':'error']((r.pass?'✔':'✖')+' '+r.name, r.error||''));
+      console.groupEnd();
+      if (!passAll) toast('Algunas pruebas fallaron. Revisa la consola.');
+    })();
+  </script>
+</body>
+</html>
