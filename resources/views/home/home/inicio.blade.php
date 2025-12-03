@@ -20,215 +20,206 @@
     $users = $users ?? collect();
 @endphp
 
-<header class="header">
-  <div class="header-inner">
-    {{-- Marca / Logo --}}
-    <a href="{{ route('inicio') }}" class="brand" aria-label="Inicio Freeland">
-      <div class="logo">
-        <i class="ri-seedling-fill" aria-hidden="true"></i>
-      </div>
-      <div>
-        <div>Freeland</div>
-        <small>Comunidad de freelancers</small>
-      </div>
-    </a>
+{{-- ============================
+     GRID PRINCIPAL (3 COLUMNAS)
+============================ --}}
+<div class="home-grid">
 
-    {{-- Buscador conectado a /inicio --}}
-    <form action="{{ route('inicio') }}" method="GET" class="search-form">
-      <div class="search-group">
-        <i class="ri-search-line" aria-hidden="true"></i>
-        <input
-          type="text"
-          name="texto"
-          class="search"
-          placeholder="Buscar proyectos, personas, publicaciones..."
-          autocomplete="off"
-          value="{{ $texto ?? '' }}"
-        >
-      </div>
-    </form>
-
-    {{-- Acciones + perfil --}}
-<nav class="top-actions" aria-label="Acciones principales">
-    {{-- Cambiar tema --}}
-    <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar tema">
-        <i class="ri-sun-line"></i>
-    </button>
-
-    {{-- Foro --}}
-    <button class="icon-btn" id="forumBtn" type="button" aria-label="Foro">
-        <i class="ri-group-line"></i>
-    </button>
-
-    {{-- Mensajes --}}
-    <button class="icon-btn" id="openChat" type="button" aria-label="Mensajes">
-        <i class="ri-message-3-line"></i>
-    </button>
-
-    {{-- Notificaciones --}}
-    <button class="icon-btn" id="notifBtn" type="button" aria-label="Notificaciones" style="position:relative">
-        <i class="ri-notification-3-line"></i>
-        <span id="notifBadge" class="badge" style="display:none">0</span>
-    </button>
-
-    {{-- Perfil (esto lo dejas tal cual lo tenías) --}}
-    @auth
-    <div class="profile">
-        <span class="icon-bell">&#128276;</span>
-
-        <div class="user-dropdown">
-            <img
-              src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=ededed&color=7c3aed"
-              class="avatar"
-              alt="{{ Auth::user()->name }}"
-            >
-
-            <div class="profile-info">
-                <span class="profile-name">{{ Auth::user()->name }}</span>
-                <span class="chevron">▾</span>
-            </div>
-
-            <div class="dropdown-menu">
-                <a href="{{ route('perfil.edit') }}" class="dropdown-item">Perfil</a>
-                <a href="#"
-                   class="dropdown-item"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Cerrar sesión
-                </a>
-                <form action="{{ route('logout') }}" method="POST" id="logout-form" class="d-none">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    </div>
-    @endauth
-</nav>
-  </div>
-</header>
-
-
-
-<div class="share-card">
-  <div class="share-header">
-    <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=ededed&color=363636" class="avatar-large" alt="{{ auth()->user()->name }}" />
-    <input type="text" id="post-text" class="share-input" placeholder="¿Qué quieres compartir, {{ auth()->user()->name }}?"/>
-    <input type="file" id="post-image" accept="image/*" style="margin-top: 8px;">
-    <button id="publish-btn" style="margin-top: 8px;">Publicar</button>
-  </div>
-  <div class="share-actions">
-    <button class="share-action"><span class="share-icon">&#128188;</span> Proyecto</button>
-    <button class="share-action"><span class="share-icon">&#127942;</span> Logro</button>
-    <button class="share-action"><span class="share-icon">&#128101;</span> Colaboración</button>
-    <button class="share-action"><span class="share-icon">&#128247;</span> Foto</button>
-  </div>
-</div>
-
-<!-- Template oculto para clonar -->
-<template id="post-template">
-    <div class="post-card">
-        <div class="post-header">
+    {{-- ASIDE IZQUIERDO: info rápida del usuario --}}
+    <aside class="home-left sticky">
+        <section class="card profile sticky">
             <div class="avatar">
-                <img src="" alt="Usuario">
+                {{ strtoupper(mb_substr(Auth::user()->name, 0, 2)) }}
             </div>
-            <div class="user-info">
-                <p class="user-name"></p>
-                <p class="timestamp"></p>
+            <h2 class="m0">{{ Auth::user()->name }}</h2>
+            <div class="muted">Freelancer</div>
+
+            <div class="statbar">
+                <span>Contactos</span>
+                <strong>44</strong> {{-- luego lo vuelves dinámico --}}
+            </div>
+
+            <nav class="list" aria-label="Atajos">
+                <a href="#">
+                    <span>Amplía tu red</span>
+                    <i class="ri-arrow-right-up-line"></i>
+                </a>
+                <a href="#">
+                    <span>Elementos guardados</span>
+                    <i class="ri-bookmark-line"></i>
+                </a>
+                <a href="#">
+                    <span>Ayuda</span>
+                    <i class="ri-question-line"></i>
+                </a>
+            </nav>
+        </section>
+    </aside>
+
+    {{-- COLUMNA CENTRAL: share-card + búsqueda + publicaciones --}}
+    <section class="home-center">
+
+        {{-- SHARE CARD (lo que ya tenías) --}}
+        <div class="share-card">
+            <div class="share-header">
+                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=ededed&color=363636"
+                     class="avatar-large"
+                     alt="{{ auth()->user()->name }}" />
+
+                <input type="text"
+                       id="post-text"
+                       class="share-input"
+                       placeholder="¿Qué quieres compartir, {{ auth()->user()->name }}?"/>
+
+                <input type="file" id="post-image" accept="image/*" style="margin-top: 8px;">
+                <button id="publish-btn" style="margin-top: 8px;">Publicar</button>
+            </div>
+
+            <div class="share-actions">
+                <button class="share-action"><span class="share-icon">&#128188;</span> Proyecto</button>
+                <button class="share-action"><span class="share-icon">&#127942;</span> Logro</button>
+                <button class="share-action"><span class="share-icon">&#128101;</span> Colaboración</button>
+                <button class="share-action"><span class="share-icon">&#128247;</span> Foto</button>
             </div>
         </div>
 
-        <div class="post-content">
-            <p></p>
-        </div>
-
-        <div class="post-image">
-            <img src="" alt="Imagen publicación">
-        </div>
-
-        <div class="post-actions">
-            <button class="action-btn like-btn" data-likes="0">❤️ <span class="like-count">0</span></button>
-            <button class="action-btn message-btn">💬 Mensaje</button>
-            <button class="action-btn share-btn">🔄 Compartir</button>
-        </div>
-    </div>
-</template>
-
-{{-- =============================
-    RESULTADOS DE BÚSQUEDA
-============================= --}}
-@if($texto !== '')
-    <section class="search-results" style="margin-top: 20px;">
-        <h2 class="search-title">
-            Resultados para: <span>{{ $texto }}</span>
-        </h2>
-
-        <div class="search-users" style="margin-top: 10px;">
-            <h3>Personas</h3>
-
-            @forelse($users as $user)
-                <div class="user-result" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=ededed&color=363636"
-                         class="avatar"
-                         alt="{{ $user->name }}">
-
-                    <div class="user-result-info">
-                        <p class="user-name" style="margin: 0; font-weight: 600;">{{ $user->name }}</p>
-                        <p class="user-email" style="margin: 0; font-size: 0.85rem; color: #666;">{{ $user->email }}</p>
-                        {{-- Aquí luego puedes poner link al perfil cuando lo tengas --}}
-                        {{-- <a href="{{ route('perfil.show', $user->id) }}" class="view-profile-link">Ver perfil</a> --}}
+        {{-- Template oculto para posts dinámicos --}}
+        <template id="post-template">
+            <div class="post-card">
+                <div class="post-header">
+                    <div class="avatar">
+                        <img src="" alt="Usuario">
+                    </div>
+                    <div class="user-info">
+                        <p class="user-name"></p>
+                        <p class="timestamp"></p>
                     </div>
                 </div>
-            @empty
-                <p style="margin-top: 8px;">No se encontraron personas que coincidan con la búsqueda.</p>
-            @endforelse
-        </div>
-    </section>
-@endif
 
-<!-- Contenedor de posts -->
-<div id="feed" style="margin-top: 20px;">
-    {{-- Renderizamos posts existentes de la DB (ya filtrados si hay búsqueda) --}}
-    @foreach($posts as $post)
-        <div class="post-card">
-            <div class="post-header">
-                <div class="avatar">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&background=ededed&color=363636" alt="{{ $post->user->name }}">
+                <div class="post-content">
+                    <p></p>
                 </div>
-                <div class="user-info">
-                    <p class="user-name">{{ $post->user->name }}</p>
-                    <p class="timestamp">{{ $post->created_at->diffForHumans() }}</p>
+
+                <div class="post-image">
+                    <img src="" alt="Imagen publicación">
+                </div>
+
+                <div class="post-actions">
+                    <button class="action-btn like-btn" data-likes="0">
+                        ❤️ <span class="like-count">0</span>
+                    </button>
+                    <button class="action-btn message-btn">💬 Mensaje</button>
+                    <button class="action-btn share-btn">🔄 Compartir</button>
                 </div>
             </div>
+        </template>
 
-            <div class="post-content">
-                <p>{{ $post->content }}</p>
-            </div>
+        {{-- =============================
+            RESULTADOS DE BÚSQUEDA
+        ============================= --}}
+        @if($texto !== '')
+            <section class="search-results" style="margin-top: 20px;">
+                <h2 class="search-title">
+                    Resultados para: <span>{{ $texto }}</span>
+                </h2>
 
-            @if($post->image_path)
-            <div class="post-image">
-                <img src="{{ asset('storage/' . $post->image_path) }}" alt="Imagen publicación">
-            </div>
+                <div class="search-users" style="margin-top: 10px;">
+                    <h3>Personas</h3>
+
+                    @forelse($users as $user)
+                        <div class="user-result"
+                             style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=ededed&color=363636"
+                                 class="avatar"
+                                 alt="{{ $user->name }}">
+
+                            <div class="user-result-info">
+                                <p class="user-name" style="margin: 0; font-weight: 600;">
+                                    {{ $user->name }}
+                                </p>
+                                <p class="user-email"
+                                   style="margin: 0; font-size: 0.85rem; color: #666;">
+                                    {{ $user->email }}
+                                </p>
+                            </div>
+                        </div>
+                    @empty
+                        <p style="margin-top: 8px;">No se encontraron personas que coincidan con la búsqueda.</p>
+                    @endforelse
+                </div>
+            </section>
+        @endif
+
+        {{-- CONTENEDOR DE POSTS --}}
+        <div id="feed" style="margin-top: 20px;">
+            @foreach($posts as $post)
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="avatar">
+                            <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&background=ededed&color=363636"
+                                 alt="{{ $post->user->name }}">
+                        </div>
+                        <div class="user-info">
+                            <p class="user-name">{{ $post->user->name }}</p>
+                            <p class="timestamp">{{ $post->created_at->diffForHumans() }}</p>
+                        </div>
+                    </div>
+
+                    <div class="post-content">
+                        <p>{{ $post->content }}</p>
+                    </div>
+
+                    @if($post->image_path)
+                        <div class="post-image">
+                            <img src="{{ asset('storage/' . $post->image_path) }}" alt="Imagen publicación">
+                        </div>
+                    @endif
+
+                    <div class="post-actions">
+                        <button class="action-btn like-btn" data-likes="0">
+                            ❤️ <span class="like-count">0</span>
+                        </button>
+                        <button class="action-btn message-btn">💬 Mensaje</button>
+                        <button class="action-btn share-btn">🔄 Compartir</button>
+                    </div>
+                </div>
+            @endforeach
+
+            @if(method_exists($posts, 'links'))
+                <div class="pagination-wrapper" style="margin-top: 15px;">
+                    {{ $posts->appends(['texto' => $texto])->links() }}
+                </div>
             @endif
-
-            <div class="post-actions">
-                <button class="action-btn like-btn" data-likes="0">❤️ <span class="like-count">0</span></button>
-                <button class="action-btn message-btn">💬 Mensaje</button>
-                <button class="action-btn share-btn">🔄 Compartir</button>
-            </div>
         </div>
-    @endforeach
 
-    {{-- Paginación manteniendo el texto de búsqueda --}}
-    @if(method_exists($posts, 'links'))
-        <div class="pagination-wrapper" style="margin-top: 15px;">
-            {{ $posts->appends(['texto' => $texto])->links() }}
-        </div>
-    @endif
-</div>
+    </section>
 
-<!-- ============================
+    {{-- ASIDE DERECHO: noticias / cosas recomendadas --}}
+    <aside class="home-right sticky">
+        <section class="card news sticky">
+            <h3>Noticias</h3>
+            <ul>
+                <li>
+                    <i class="ri-newspaper-line"></i>
+                    <div>Convocatoria 2025-II abierta.</div>
+                </li>
+                <li>
+                    <i class="ri-newspaper-line"></i>
+                    <div>Talento Tech: nuevas becas.</div>
+                </li>
+                <li>
+                    <i class="ri-newspaper-line"></i>
+                    <div>Tips para tu portafolio.</div>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+</div> {{-- cierre .home-grid --}}
+
+{{-- ============================
       CHAT FLOTANTE FREELAND
-============================= -->
-
+============================ --}}
 <div id="chat-floating-btn" title="Abrir chat">
   💬
 </div>

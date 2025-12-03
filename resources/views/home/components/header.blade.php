@@ -1,15 +1,6 @@
 <header class="header">
     <div class="header-inner">
         {{-- Marca / Logo --}}
-        <a href="{{ route('inicio') }}" class="brand" aria-label="Inicio Freeland">
-            <div class="logo">
-                <i class="ri-seedling-fill" aria-hidden="true"></i>
-            </div>
-            <div>
-                <div>Freeland</div>
-                <small>Comunidad de freelancers</small>
-            </div>
-        </a>
 
         {{-- Buscador --}}
         <form action="{{ route('inicio') }}" method="GET" class="search-form">

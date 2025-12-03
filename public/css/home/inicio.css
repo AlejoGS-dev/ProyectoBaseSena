@@ -15,10 +15,13 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
-  
 }
 
-/* TOP BAR (no se usa pero lo dejo estilado por si un día lo revives) */
+/* Utilidades */
+.m0 { margin: 0; }
+.muted { color: var(--text-light); font-size: 0.9rem; }
+
+/* TOP BAR (ya no se usa, pero lo dejo por si algún día resucita) */
 .top-bar {
   /* position: fixed; */
   left: 250px;
@@ -51,7 +54,7 @@ body {
   outline: none;
 }
 
-/* PERFIL */
+/* PERFIL (esto era para el header viejo, lo mantengo pero luego sobreescribo en el aside) */
 .profile {
   display: flex;
   align-items: center;
@@ -146,20 +149,21 @@ body {
   color: var(--primary);
 }
 
-/* MAIN CONTENT */
+/* MAIN CONTENT (zona derecha del sidebar) */
 .content-wrapper {
   margin-left: 250px;
-  margin-top: 68px;   /* debajo del header fijo */
-  padding: 0;
+  margin-top: 68px; /* espacio exacto del header */
 }
 
+
 .main-content {
-  padding-top: 0;  /* completamente arriba */
+  padding: 20px;
+  padding-top: 0;
 }
 
 /* SHARE CARD */
 .share-card {
-  width: 98%;
+  width: 100%;
   max-width: 780px;
   background: #fff;
   border-radius: var(--radius);
@@ -260,7 +264,7 @@ body {
 
 /* POSTS */
 .post-card {
-  width: 98%;
+  width: 100%;
   max-width: 780px;
   margin: 20px auto;
   background: #fff;
@@ -418,13 +422,9 @@ body {
 
 .header {
   width: 100%;
-  height: 68px;
   background: #fff;
   border-bottom: 1px solid var(--border);
-  position: fixed;      /* <-- clave */
-  top: 0;
-  left: 0;
-  z-index: 999;
+  display: block;
 }
 
 .header-inner {
@@ -434,6 +434,14 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 250px; /* el sidebar ya ocupa la izquierda */
+  right: 0;
+  z-index: 9999;
 }
 
 /* Marca / logo */
@@ -536,4 +544,143 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* ===================================================
+   LAYOUT 3 COLUMNAS (ASIDES + FEED) PARA INICIO
+=================================================== */
+
+.home-grid {
+  max-width: 1152px;
+  margin: 18px auto;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr) 320px; /* izquierda - centro - derecha */
+  gap: 18px;
+  padding: 0 16px;
+  align-items: flex-start;
+}
+
+/* Que cada columna se ajuste al alto de su contenido */
+.home-left,
+.home-center,
+.home-right {
+  align-self: flex-start;
+}
+
+/* Card genérica para los aside */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+}
+
+/* Override: perfil del ASIDE IZQUIERDO, no el del header */
+.home-left .profile {
+  display: block;
+  position: static;
+  text-align: center;
+  padding: 18px;
+}
+
+.home-left .profile .avatar {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--primary), #4f46e5);
+  margin: 8px auto 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.home-left .profile .statbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.home-left .profile .list {
+  border-top: 1px dashed var(--border);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.home-left .profile .list a {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.home-left .profile .list a:hover {
+  background: rgba(124, 58, 237, 0.06);
+}
+
+/* ASIDE DERECHO: noticias */
+.news {
+  padding: 14px;
+}
+
+.news h3 {
+  margin: 6px 0 4px;
+  font-size: 16px;
+}
+
+.news ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.news li {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.news li:hover {
+  background: rgba(124, 58, 237, 0.06);
+}
+
+.news i {
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+/* Sticky en escritorio para los paneles laterales */
+.sticky {
+  position: sticky;
+  top: 88px; /* un poco más que la altura del header */
+}
+
+/* Responsive: en pantallas pequeñas se apila todo */
+@media (max-width: 1100px) {
+  .home-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-left,
+  .home-right {
+    order: 2;
+  }
+
+  .home-center {
+    order: 1;
+  }
+
+  .share-card,
+  .post-card {
+    max-width: 100%;
+  }
 }
