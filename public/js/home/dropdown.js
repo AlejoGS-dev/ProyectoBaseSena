@@ -1,25 +1,36 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const dropdown = document.querySelector('.user-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    if (!dropdown || !menu) return;
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdowns = document.querySelectorAll('.user-dropdown');
 
-    let timeout;
+    if (!dropdowns.length) return;
 
-    dropdown.addEventListener('mouseenter', () => {
-        clearTimeout(timeout);
-        dropdown.classList.add('show');
+    // Abrir/cerrar al hacer click
+    dropdowns.forEach(dropdown => {
+
+        dropdown.addEventListener('click', (e) => {
+            e.stopPropagation(); // evita cerrar el menú al mismo click
+
+            const isOpen = dropdown.classList.contains('open');
+
+            // Cerrar todos
+            dropdowns.forEach(d => d.classList.remove('open'));
+
+            // Abrir este si estaba cerrado
+            if (!isOpen) {
+                dropdown.classList.add('open');
+            }
+        });
+
     });
 
-    dropdown.addEventListener('mouseleave', () => {
-        timeout = setTimeout(() => {
-            dropdown.classList.remove('show');
-        }, 2000);
+    // Cerrar si clickeas fuera
+    document.addEventListener('click', () => {
+        dropdowns.forEach(d => d.classList.remove('open'));
     });
 
-    menu.addEventListener('mouseenter', () => clearTimeout(timeout));
-    menu.addEventListener('mouseleave', () => {
-        timeout = setTimeout(() => {
-            dropdown.classList.remove('show');
-        }, 2000);
+    // Cerrar si presionas ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            dropdowns.forEach(d => d.classList.remove('open'));
+        }
     });
 });

@@ -129,11 +129,19 @@ body {
   z-index: 50;
 }
 
-.user-dropdown:hover .dropdown-menu {
+/* Se muestra SOLO cuando el padre tiene .open */
+.user-dropdown.open .dropdown-menu {
   opacity: 1;
   pointer-events: all;
   transform: translateY(0);
 }
+
+
+/*.user-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}*/
 
 .dropdown-item {
   padding: 10px 16px;
