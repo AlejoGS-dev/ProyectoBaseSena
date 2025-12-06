@@ -4,6 +4,7 @@
 @section('menu-workspace-cliente', 'active')
 
 @push('styles')
+<link href="{{ asset('css/home/inicio.css') }}" rel="stylesheet">
 <link href="{{ asset('css/home/workspacecliente.css') }}" rel="stylesheet">
 @endpush
 

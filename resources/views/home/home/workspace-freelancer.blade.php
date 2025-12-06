@@ -4,6 +4,7 @@
 @section('menu-workspace-freelancer', 'active')
 
 @push('styles')
+<link href="{{ asset('css/home/inicio.css') }}" rel="stylesheet">
 <link href="{{ asset('css/home/workspacefreelancer.css') }}" rel="stylesheet">
 @endpush
 

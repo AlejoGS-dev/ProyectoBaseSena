@@ -18,6 +18,15 @@
     // Evitamos errores si el controlador todavía no manda estas variables
     $texto = $texto ?? '';
     $users = $users ?? collect();
+
+    $currentUser    = Auth::user();
+    $avatarFolder   = config('chatify.user_avatar.folder', 'users-avatar');
+    $currentName    = $currentUser->name ?? 'Freeland User';
+
+    // Avatar principal del usuario logueado (mismo que usa Chatify)
+    $currentAvatarUrl = $currentUser && $currentUser->avatar
+        ? asset('storage/' . $avatarFolder . '/' . $currentUser->avatar)
+        : 'https://ui-avatars.com/api/?name=' . urlencode($currentName) . '&background=ededed&color=363636';
 @endphp
 
 {{-- ============================
@@ -29,9 +38,9 @@
     <aside class="home-left sticky">
         <section class="card profile sticky">
             <div class="avatar">
-                {{ strtoupper(mb_substr(Auth::user()->name, 0, 2)) }}
+                <img src="{{ $currentAvatarUrl }}" alt="{{ $currentName }}">
             </div>
-            <h2 class="m0">{{ Auth::user()->name }}</h2>
+            <h2 class="m0">{{ $currentName }}</h2>
             <div class="muted">Freelancer</div>
 
             <div class="statbar">
@@ -59,17 +68,17 @@
     {{-- COLUMNA CENTRAL: share-card + búsqueda + publicaciones --}}
     <section class="home-center">
 
-        {{-- SHARE CARD (lo que ya tenías) --}}
+        {{-- SHARE CARD --}}
         <div class="share-card">
             <div class="share-header">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=ededed&color=363636"
+                <img src="{{ $currentAvatarUrl }}"
                      class="avatar-large"
-                     alt="{{ auth()->user()->name }}" />
+                     alt="{{ $currentName }}" />
 
                 <input type="text"
                        id="post-text"
                        class="share-input"
-                       placeholder="¿Qué quieres compartir, {{ auth()->user()->name }}?"/>
+                       placeholder="¿Qué quieres compartir, {{ $currentName }}?"/>
 
                 <input type="file" id="post-image" accept="image/*" style="margin-top: 8px;">
                 <button id="publish-btn" style="margin-top: 8px;">Publicar</button>
@@ -127,15 +136,22 @@
                     <h3>Personas</h3>
 
                     @forelse($users as $user)
+                        @php
+                            $userName   = $user->name ?? 'Usuario';
+                            $userAvatar = $user->avatar
+                                ? asset('storage/' . $avatarFolder . '/' . $user->avatar)
+                                : 'https://ui-avatars.com/api/?name=' . urlencode($userName) . '&background=ededed&color=363636';
+                        @endphp
+
                         <div class="user-result"
                              style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=ededed&color=363636"
+                            <img src="{{ $userAvatar }}"
                                  class="avatar"
-                                 alt="{{ $user->name }}">
+                                 alt="{{ $userName }}">
 
                             <div class="user-result-info">
                                 <p class="user-name" style="margin: 0; font-weight: 600;">
-                                    {{ $user->name }}
+                                    {{ $userName }}
                                 </p>
                                 <p class="user-email"
                                    style="margin: 0; font-size: 0.85rem; color: #666;">
@@ -153,14 +169,22 @@
         {{-- CONTENEDOR DE POSTS --}}
         <div id="feed" style="margin-top: 20px;">
             @foreach($posts as $post)
+                @php
+                    $postUser      = $post->user;
+                    $postUserName  = $postUser->name ?? 'Usuario';
+                    $postUserAvatar = $postUser->avatar
+                        ? asset('storage/' . $avatarFolder . '/' . $postUser->avatar)
+                        : 'https://ui-avatars.com/api/?name=' . urlencode($postUserName) . '&background=ededed&color=363636';
+                @endphp
+
                 <div class="post-card">
                     <div class="post-header">
                         <div class="avatar">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode($post->user->name) }}&background=ededed&color=363636"
-                                 alt="{{ $post->user->name }}">
+                            <img src="{{ $postUserAvatar }}"
+                                 alt="{{ $postUserName }}">
                         </div>
                         <div class="user-info">
-                            <p class="user-name">{{ $post->user->name }}</p>
+                            <p class="user-name">{{ $postUserName }}</p>
                             <p class="timestamp">{{ $post->created_at->diffForHumans() }}</p>
                         </div>
                     </div>

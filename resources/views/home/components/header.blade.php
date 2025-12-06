@@ -1,3 +1,12 @@
+@php
+    $user = Auth::user();
+    $avatarFolder = config('chatify.user_avatar.folder', 'users-avatar');
+
+    $avatarUrl = $user && $user->avatar
+        ? asset('storage/' . $avatarFolder . '/' . $user->avatar)
+        : 'https://ui-avatars.com/api/?name=' . urlencode($user->name ?? 'Freeland User') . '&background=ededed&color=7c3aed';
+@endphp
+
 <header class="header">
     <div class="header-inner">
         {{-- Marca / Logo --}}
@@ -43,17 +52,16 @@
             {{-- Perfil --}}
             @auth
             <div class="profile">
-                <span class="icon-bell">&#128276;</span>
 
                 <div class="user-dropdown">
                     <img
-                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=ededed&color=7c3aed"
+                        src="{{ $avatarUrl }}"
                         class="avatar"
-                        alt="{{ Auth::user()->name }}"
+                        alt="{{ $user->name }}"
                     />
 
                     <div class="profile-info">
-                        <span class="profile-name">{{ Auth::user()->name }}</span>
+                        <span class="profile-name">{{ $user->name }}</span>
                         <span class="chevron">▾</span>
                     </div>
 
