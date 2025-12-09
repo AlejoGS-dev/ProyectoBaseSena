@@ -16,7 +16,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/dashbard.css')}}" rel="stylesheet" />
+        
         @stack('estilos')
+
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+        
     </head>
     <body>
         <!-- Navigation-->
@@ -33,5 +38,8 @@
         <!-- Core theme JS-->
         <script src="{{asset('js/scripts.js')}}"></script>
         @stack('scripts')
+        <script>
+            lucide.createIcons();
+        </script>
     </body>
 </html>
