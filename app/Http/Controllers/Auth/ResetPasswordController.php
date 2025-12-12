@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class ResetPasswordController extends Controller
 {
@@ -20,25 +21,40 @@ class ResetPasswordController extends Controller
 
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate(['email' => 'required|email|exists:users,email']);
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ]);
 
-        $token = Str::random(60);
+        $token = Str::random(64);
 
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $request->email],
-            ['token' => $token, 'created_at' => now()]
+            [
+                'token' => Hash::make($token),
+                'created_at' => Carbon::now()
+            ]
         );
 
-        Mail::send('emails.reset-password', ['token' => $token], function ($message) use ($request) {
-            $message->to($request->email)->subject('Recuperación de contraseña - IncanatoApps');
-        });
+        // Construir URL completa
+        $resetUrl = url('/password/reset/' . $token . '?email=' . urlencode($request->email));
 
-        return back()->with('mensaje', 'Te hemos enviado un enlace de recuperación.');
+        Mail::send('emails.reset-password', [
+    'url' => $resetUrl
+], function ($message) use ($request) {
+    $message->to($request->email)
+            ->subject('Recuperación de contraseña - Sistema');
+});
+
+return back()->with('mensaje', 'Te enviamos un enlace a tu correo.');
+
     }
 
-    public function showResetForm($token)
+    public function showResetForm(Request $request, $token)
     {
-        return view('autenticacion.reset', compact('token'));
+        return view('autenticacion.reset', [
+            'token' => $token,
+            'email' => $request->query('email')
+        ]);
     }
 
     public function resetPassword(Request $request)
@@ -49,17 +65,29 @@ class ResetPasswordController extends Controller
             'token' => 'required'
         ]);
 
-        $reset = DB::table('password_reset_tokens')->where('token', $request->token)->first();
+        $passwordReset = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
 
-        if (!$reset || $reset->email !== $request->email) {
+        if (!$passwordReset) {
             return back()->withErrors(['email' => 'Token inválido o expirado.']);
         }
 
-        User::where('email', $request->email)->update(['password' => Hash::make($request->input('password'))]);
+        if (!Hash::check($request->token, $passwordReset->token)) {
+            return back()->withErrors(['email' => 'Token inválido o expirado.']);
+        }
+
+        if (Carbon::parse($passwordReset->created_at)->addMinutes(60)->isPast()) {
+            DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            return back()->withErrors(['email' => 'El enlace expiró.']);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         DB::table('password_reset_tokens')->where('email', $request->email)->delete();
 
-        return redirect()->route('login')->with('mensaje', 'Tu contraseña ha sido restablecida.');
+        return redirect()->route('login')->with('mensaje', 'Tu contraseña fue cambiada.');
     }
-
 }
