@@ -63,7 +63,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 54px;
 }
 
 .logo {
@@ -294,9 +294,9 @@ body {
 
 /* Main Content */
 .main-content {
-    max-width: 1280px;
+     max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem 2rem;
 }
 
 .tab-content {
@@ -428,10 +428,7 @@ body {
 }
 
 .job-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
+    display: block;
 }
 
 .job-card-actions {
@@ -507,7 +504,10 @@ body {
     color: white;
     cursor: pointer;
     transition: all 0.2s;
+    margin-top: 0.5rem;
+    display: inline-flex;
 }
+
 
 .badge.proposals:hover {
     background: var(--purple-700);
