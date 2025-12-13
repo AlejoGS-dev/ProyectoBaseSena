@@ -1,12 +1,81 @@
 // Data Store
+// Acciones de invitaciones (Solicitudes de clientes a freelancers)
+function rejectInvitation(invitationId) {
+    const idx = appState.jobs.findIndex(j => j.id === invitationId);
+    const job = appState.jobs[idx];
+    if (!job) return;
+    if (confirm(`¿Deseas rechazar la invitación para el trabajo "${job.title}"?`)) {
+        appState.jobs.splice(idx, 1);
+        renderRequestsGrid();
+        alert('Invitación rechazada');
+    }
+}
+
+function acceptInvitation(invitationId) {
+    const idx = appState.jobs.findIndex(j => j.id === invitationId);
+    const job = appState.jobs[idx];
+    if (!job) return;
+    if (confirm(`¿Deseas aceptar la invitación para el trabajo "${job.title}"?`)) {
+        appState.jobs.splice(idx, 1);
+        renderRequestsGrid();
+        alert('¡Invitación aceptada!');
+    }
+}
+
+function openMeetingModal(clientInitials, invitationId) {
+    // Mostrar modal y guardar contexto
+    const job = appState.jobs.find(j => j.id === invitationId);
+    if (!job) return;
+    appState.currentJobForMeeting = job;
+    // Mostrar info del cliente y trabajo
+    document.getElementById('meetingClientInfo').innerHTML = `
+        <img src="${job.clientAvatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(job.client)}" alt="${job.client}" class="freelancer-avatar">
+        <div>
+            <p class="freelancer-label">Reunión con</p>
+            <p class="freelancer-name">${job.client}</p>
+            <p class="freelancer-job">${job.title}</p>
+        </div>
+    `;
+    // Setear fecha mínima hoy
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('meetingDate').min = today;
+    document.getElementById('meetingDate').value = '';
+    document.getElementById('meetingTime').value = '';
+    document.getElementById('meetingNotes').value = '';
+    document.getElementById('meetingModal').classList.add('active');
+}
+
+// Inicializar modal de reunión (debe llamarse en init)
+function initMeetingModal() {
+    const modal = document.getElementById('meetingModal');
+    const form = document.getElementById('meetingForm');
+    const closeBtn = document.getElementById('closeMeetingModal');
+    const cancelBtn = document.getElementById('cancelMeeting');
+
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const date = document.getElementById('meetingDate').value;
+            const time = document.getElementById('meetingTime').value;
+            const notes = document.getElementById('meetingNotes').value;
+            const job = appState.currentJobForMeeting;
+            if (!job) return;
+            alert(`Solicitud de reunión enviada a ${job.client}\nTrabajo: ${job.title}\nFecha: ${new Date(date).toLocaleDateString('es-ES')}\nHora: ${time}`);
+            modal.classList.remove('active');
+        });
+    }
+    if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    if (cancelBtn) cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+    if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+}
 const appState = {
     jobs: [
         {
             id: '1',
             title: 'Diseño de Landing Page Moderna',
             description: 'Necesito un diseñador web para crear una landing page moderna y responsive para mi startup de tecnología. Debe incluir animaciones suaves y ser mobile-first.',
-            client: 'María González',
-            clientAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+            client: 'Cliente',
+            clientAvatar: '',
             budget: 1200,
             duration: '2 semanas',
             skills: ['React', 'Tailwind CSS', 'Figma'],
@@ -250,18 +319,119 @@ function switchTab(tab) {
     
     const tabMap = {
         'explore': 'exploreTab',
+        'proposals': 'proposalsTab',
         'my-jobs': 'myJobsTab',
         'history': 'historyTab',
         'messages': 'messagesTab'
     };
-    
     document.getElementById(tabMap[tab]).classList.add('active');
-    
     // Render content
     if (tab === 'explore') renderExploreJobs();
+    if (tab === 'proposals') renderRequestsGrid();
     if (tab === 'my-jobs') renderMyJobs();
     if (tab === 'history') renderHistory();
     if (tab === 'messages') renderMessages();
+}
+// Renderiza las solicitudes (invitaciones) y empty state dinámicamente
+function renderRequestsGrid() {
+    const grid = document.getElementById('requestsGrid');
+    if (!grid) return;
+    const invitations = appState.jobs.filter(job => job.status === 'available');
+    if (invitations.length === 0) {
+        grid.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 0;">
+                <div class="empty-icon" style="margin-bottom: 1rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ede9fe; border-radius: 50%; width: 64px; height: 64px;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" fill="#ede9fe"/>
+                            <path d="M15.5 10a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" stroke="#a78bfa" stroke-width="2"/>
+                            <path d="M9 16c0-1.104.896-2 2-2s2 .896 2 2" stroke="#a78bfa" stroke-width="2"/>
+                        </svg>
+                    </span>
+                </div>
+                <h3 class="empty-title" style="color: #1e293b; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No hay solicitudes pendientes</h3>
+                <p class="empty-description" style="color: #475569;">Las invitaciones de clientes aparecerán aquí</p>
+            </div>
+        `;
+        return;
+    }
+    grid.innerHTML = invitations.map(job => `
+        <div class="proposal-card" data-invitation-id="${job.id}" style="display: flex; flex-direction: column; min-height: 260px; justify-content: space-between;">
+            <div>
+                <div class="proposal-card-header">
+                    <div class="proposal-user-info">
+                        <div class="proposal-avatar">${job.client ? job.client.split(' ').map(n => n[0]).join('').toUpperCase() : ''}</div>
+                        <div>
+                            <div class="proposal-user-name">${job.client || 'Cliente'}</div>
+                            <div class="proposal-job-title">${job.title}</div>
+                        </div>
+                    </div>
+                    <div class="proposal-invitation-budget">
+                        Presupuesto<br>
+                        <span class="proposal-invitation-budget-value">$${job.budget.toLocaleString()}</span>
+                    </div>
+                </div>
+                <div class="proposal-card-body" style="margin-bottom: 1.5rem; min-height: 60px;">
+                    <div class="proposal-cover-label">Mensaje del Cliente</div>
+                    <div class="proposal-cover-text" style="background: #f3f4f6; border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.5rem;">${job.description}</div>
+                </div>
+            </div>
+            <div class="proposal-card-actions" style="margin-top: auto;">
+                <button class="btn-secondary" onclick="rejectInvitation('${job.id}')">Rechazar</button>
+                <button class="btn-light" onclick="openMeetingModal('${job.client}', '${job.id}')">Solicitar Reunión</button>
+                <button class="btn-primary" onclick="acceptInvitation('${job.id}')">Aceptar</button>
+            </div>
+        </div>
+    `).join('');
+}
+// Render Proposals Tab (Solicitudes)
+function renderProposalsTab() {
+    const jobsGrid = document.getElementById('proposalsJobsGrid');
+    const availableJobs = appState.jobs.filter(job => job.status === 'available');
+    if (!jobsGrid) return;
+    if (availableJobs.length === 0) {
+        jobsGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </div>
+            <h3 class="empty-title">No hay solicitudes disponibles</h3>
+            <p class="empty-description">Vuelve más tarde para ver nuevas oportunidades</p>
+        </div>`;
+        return;
+    }
+    jobsGrid.innerHTML = availableJobs.map(job => `
+        <div class="job-card">
+            <div class="job-card-header">
+                <span class="job-card-title">${job.title}</span>
+            </div>
+            <div class="job-card-body">
+                <p class="job-card-description">${job.description}</p>
+                <div class="job-card-info">
+                    <span class="job-info-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        $${job.budget}
+                    </span>
+                    <span class="job-info-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        ${job.duration}
+                    </span>
+                    <span class="job-info-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg>
+                        Publicado ${formatDate(job.postedDate)}
+                    </span>
+                </div>
+                <div class="job-card-skills">
+                    ${job.skills.map(skill => `<span class="job-skill">${skill}</span>`).join('')}
+                </div>
+            </div>
+            <div class="job-card-footer">
+                <button class="btn-primary" onclick="openProposalModal('${job.id}')">Postularme</button>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Notifications
@@ -415,6 +585,18 @@ function renderExploreJobs() {
                     <div class="detail-content">
                         <p>Duración</p>
                         <p class="text-dark">${job.duration}</p>
+                    </div>
+                </div>
+                
+                <div class="job-detail">
+                    <div class="detail-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                    </div>
+                    <div class="detail-content">
+                        <p>Publicado</p>
+                        <p class="text-dark">${formatFullDate(job.postedDate)}</p>
                     </div>
                 </div>
             </div>
@@ -1067,9 +1249,10 @@ function init() {
     initProposalModal();
     initChatModal();
     initCompleteJobModal();
-    
+    initMeetingModal();
     // Render initial content
     renderExploreJobs();
+    renderProposalsTab();
     renderMyJobs();
     renderHistory();
     renderMessages();
