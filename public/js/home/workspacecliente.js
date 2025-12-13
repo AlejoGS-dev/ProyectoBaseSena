@@ -1,269 +1,461 @@
-// Data Store
+// ==========================================
+// WORKSPACE CLIENTE - DATOS REALES DE API
+// ==========================================
+
+// Estado de la aplicación
 const appState = {
-    jobs: [
-        {
-            id: '1',
-            title: 'Diseño de Landing Page Moderna',
-            description: 'Necesito un diseñador web para crear una landing page moderna y responsive para mi startup de tecnología. Debe incluir animaciones suaves y ser mobile-first.',
-            budget: 1200,
-            duration: '2 semanas',
-            category: 'Diseño y Creatividad',
-            skills: ['React', 'Tailwind CSS', 'Figma'],
-            postedDate: '2024-11-20',
-            status: 'published',
-            proposals: []
-        },
-        {
-            id: '2',
-            title: 'Desarrollo de API REST con Node.js',
-            description: 'Busco desarrollador backend para crear una API REST completa con autenticación, base de datos PostgreSQL y documentación.',
-            budget: 2500,
-            duration: '4 semanas',
-            category: 'Desarrollo Web',
-            skills: ['Node.js', 'PostgreSQL', 'Express'],
-            postedDate: '2024-11-19',
-            status: 'in-progress',
-            assignedFreelancer: {
-                id: 'f2',
-                name: 'Carlos Mendoza',
-                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop'
-            },
-            startDate: '2024-11-20'
-        },
-        {
-            id: '3',
-            title: 'App Móvil de E-commerce',
-            description: 'Desarrollo de aplicación móvil para iOS y Android con sistema de pagos integrado, catálogo de productos y carrito de compras.',
-            budget: 5000,
-            duration: '8 semanas',
-            category: 'Desarrollo Móvil',
-            skills: ['React Native', 'Firebase', 'Stripe'],
-            postedDate: '2024-10-15',
-            status: 'completed',
-            assignedFreelancer: {
-                id: 'f3',
-                name: 'Ana Rodríguez',
-                avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop'
-            },
-            startDate: '2024-10-18',
-            completedDate: '2024-11-18'
-        }
-    ],
-    proposals: [
-        {
-            id: 'p1',
-            jobId: '1',
-            freelancer: {
-                id: 'f1',
-                name: 'María González',
-                avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-                rating: 4.9,
-                completedJobs: 45
-            },
-            rate: 1200,
-            coverLetter: 'Tengo más de 5 años de experiencia en diseño web y he trabajado con múltiples startups tecnológicas. Mi enfoque es crear interfaces modernas, intuitivas y que conviertan visitantes en clientes. Puedo entregar el proyecto en el tiempo estimado con revisiones incluidas.',
-            submittedDate: '2024-11-21T10:00:00',
-            status: 'pending'
-        },
-        {
-            id: 'p2',
-            jobId: '1',
-            freelancer: {
-                id: 'f4',
-                name: 'Luis Martínez',
-                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-                rating: 4.7,
-                completedJobs: 32
-            },
-            rate: 1100,
-            coverLetter: 'Soy diseñador UI/UX especializado en landing pages de alto impacto. He trabajado con React y Tailwind CSS en numerosos proyectos. Mi portafolio incluye diseños para startups que han logrado aumentar sus conversiones en un 40%. Garantizo entregas puntuales y comunicación constante.',
-            submittedDate: '2024-11-21T14:30:00',
-            status: 'pending'
-        }
-    ],
-    freelancers: [
-        {
-            id: 'f1',
-            name: 'María González',
-            avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-            title: 'Diseñadora UI/UX & Frontend Developer',
-            bio: 'Diseñadora apasionada por crear experiencias digitales memorables. Especializada en React, Figma y design systems.',
-            skills: ['React', 'Figma', 'Tailwind CSS', 'UI/UX Design', 'Photoshop'],
-            rating: 4.9,
-            completedJobs: 45,
-            hourlyRate: 50
-        },
-        {
-            id: 'f2',
-            name: 'Carlos Mendoza',
-            avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
-            title: 'Backend Developer & DevOps Engineer',
-            bio: 'Desarrollador backend con 7 años de experiencia. Experto en Node.js, Python y arquitecturas escalables.',
-            skills: ['Node.js', 'PostgreSQL', 'Express', 'AWS', 'Docker'],
-            rating: 4.8,
-            completedJobs: 67,
-            hourlyRate: 65
-        },
-        {
-            id: 'f3',
-            name: 'Ana Rodríguez',
-            avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-            title: 'Mobile App Developer',
-            bio: 'Desarrolladora móvil especializada en React Native. Creando apps nativas de alto rendimiento desde 2018.',
-            skills: ['React Native', 'Firebase', 'Stripe', 'iOS', 'Android'],
-            rating: 5.0,
-            completedJobs: 38,
-            hourlyRate: 60
-        },
-        {
-            id: 'f4',
-            name: 'Luis Martínez',
-            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-            title: 'Full Stack Developer',
-            bio: 'Full stack developer con experiencia en MERN stack. Me encanta resolver problemas complejos con código limpio.',
-            skills: ['MongoDB', 'Express', 'React', 'Node.js', 'TypeScript'],
-            rating: 4.7,
-            completedJobs: 32,
-            hourlyRate: 55
-        },
-        {
-            id: 'f5',
-            name: 'Patricia Silva',
-            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
-            title: 'Digital Marketing Specialist',
-            bio: 'Especialista en marketing digital con enfoque en SEO y SEM. Ayudo a empresas a crecer en el mundo digital.',
-            skills: ['SEO', 'Google Ads', 'Analytics', 'Content Marketing', 'Social Media'],
-            rating: 4.9,
-            completedJobs: 51,
-            hourlyRate: 45
-        },
-        {
-            id: 'f6',
-            name: 'Roberto Díaz',
-            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-            title: 'Video Editor & Motion Designer',
-            bio: 'Editor de video y diseñador de motion graphics. Transformo ideas en contenido visual impactante.',
-            skills: ['Premiere Pro', 'After Effects', 'DaVinci Resolve', 'Motion Graphics', 'Color Grading'],
-            rating: 4.8,
-            completedJobs: 29,
-            hourlyRate: 48
-        }
-    ],
-    messages: [
-        {
-            id: 'm1',
-            jobId: '2',
-            freelancerId: 'f2',
-            sender: 'freelancer',
-            content: 'Hola, ya comencé con el diseño de la arquitectura de la API. ¿Podrías revisar el documento que te envié?',
-            timestamp: '2024-11-21T10:30:00'
-        },
-        {
-            id: 'm2',
-            jobId: '2',
-            freelancerId: 'f2',
-            sender: 'client',
-            content: 'Perfecto Carlos, revisaré el documento hoy mismo y te doy feedback. ¿Cuándo podrías tener lista la primera versión?',
-            timestamp: '2024-11-21T14:15:00'
-        },
-        {
-            id: 'm3',
-            jobId: '2',
-            freelancerId: 'f2',
-            sender: 'freelancer',
-            content: 'Excelente. Estimo tener la primera versión funcional en 3 días con los endpoints básicos implementados.',
-            timestamp: '2024-11-21T14:45:00'
-        }
-    ],
-    notifications: [
-        {
-            id: 'n1',
-            type: 'new_proposal',
-            jobTitle: 'Diseño de Landing Page Moderna',
-            message: 'María González envió una propuesta',
-            timestamp: '2024-11-21T10:00:00',
-            read: false
-        },
-        {
-            id: 'n2',
-            type: 'new_proposal',
-            jobTitle: 'Diseño de Landing Page Moderna',
-            message: 'Luis Martínez envió una propuesta',
-            timestamp: '2024-11-21T14:30:00',
-            read: false
-        },
-        {
-            id: 'n3',
-            type: 'new_message',
-            jobTitle: 'Desarrollo de API REST con Node.js',
-            message: 'Carlos Mendoza te envió un mensaje',
-            timestamp: '2024-11-21T14:45:00',
-            read: false
-        }
-    ],
+    trabajos: [],
+    propuestas: [],
+    freelancers: [],
+    categorias: [],
     currentTab: 'my-jobs',
-    currentJobForEdit: null,
-    currentJobToDelete: null,
-    currentJobToComplete: null,
-    currentJobForProposals: null,
-    currentFreelancerForMeeting: null,
-    currentJobForChat: null,
-    currentFreelancerForChat: null,
-    searchQuery: ''
+    loading: false
 };
 
-// Utility Functions
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
+document.addEventListener('DOMContentLoaded', function() {
+    initNavigation();
+    initSubtabs();
+    initNotifications();
+    loadInitialData();
+});
+
+function loadInitialData() {
+    cargarCategorias();
+    cargarMisTrabajos();
+    cargarPropuestasRecibidas();
+}
+
+// ==========================================
+// FUNCIONES DE API (DATOS REALES)
+// ==========================================
+
+async function cargarMisTrabajos() {
+    try {
+        const response = await fetch('/api/workspace/mis-trabajos');
+        const trabajos = await response.json();
+        appState.trabajos = trabajos;
+        renderTrabajosGrouped();
+    } catch (error) {
+        console.error('Error cargando trabajos:', error);
+        showNotification('Error al cargar trabajos', 'error');
+    }
+}
+
+async function cargarPropuestasRecibidas() {
+    try {
+        const response = await fetch('/api/workspace/propuestas-recibidas');
+        const propuestas = await response.json();
+        appState.propuestas = propuestas;
+        renderPropuestas();
+    } catch (error) {
+        console.error('Error cargando propuestas:', error);
+    }
+}
+
+async function cargarFreelancers(filtros = {}) {
+    try {
+        const params = new URLSearchParams(filtros);
+        const response = await fetch(`/api/workspace/freelancers?${params}`);
+        const freelancers = await response.json();
+        appState.freelancers = freelancers;
+        renderFreelancers();
+    } catch (error) {
+        console.error('Error cargando freelancers:', error);
+    }
+}
+
+async function cargarCategorias() {
+    try {
+        const response = await fetch('/api/workspace/categorias');
+        const categorias = await response.json();
+        appState.categorias = categorias;
+    } catch (error) {
+        console.error('Error cargando categorías:', error);
+    }
+}
+
+async function aceptarPropuesta(propuestaId) {
+    if (!confirm('¿Estás seguro de aceptar esta propuesta? Se rechazarán las demás propuestas automáticamente.')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/workspace/aceptar-propuesta/${propuestaId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Propuesta aceptada exitosamente', 'success');
+            cargarMisTrabajos();
+            cargarPropuestasRecibidas();
+        }
+    } catch (error) {
+        console.error('Error aceptando propuesta:', error);
+        showNotification('Error al aceptar propuesta', 'error');
+    }
+}
+
+async function crearCalificacion(trabajoId, evaluadoId, calificacionData) {
+    try {
+        const response = await fetch('/api/workspace/calificacion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                trabajo_id: trabajoId,
+                evaluado_id: evaluadoId,
+                ...calificacionData
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Calificación enviada exitosamente', 'success');
+            cargarMisTrabajos();
+        }
+    } catch (error) {
+        console.error('Error creando calificación:', error);
+        showNotification('Error al enviar calificación', 'error');
+    }
+}
+
+async function verPerfilFreelancer(freelancerId) {
+    try {
+        const response = await fetch(`/api/workspace/freelancer/${freelancerId}`);
+        const freelancer = await response.json();
+        mostrarModalPerfilFreelancer(freelancer);
+    } catch (error) {
+        console.error('Error cargando perfil:', error);
+    }
+}
+
+// ==========================================
+// RENDERIZADO DE TRABAJOS
+// ==========================================
+
+function renderTrabajosGrouped() {
+    const publicados = appState.trabajos.filter(t => t.estado === 'publicado');
+    const enProgreso = appState.trabajos.filter(t => ['en_progreso', 'en_revision', 'requiere_cambios'].includes(t.estado));
+    const completados = appState.trabajos.filter(t => t.estado === 'completado');
+
+    // Actualizar contadores
+    document.getElementById('publishedJobsCount').textContent = publicados.length;
+    document.getElementById('inProgressJobsCount').textContent = enProgreso.length;
+    document.getElementById('completedJobsCount').textContent = completados.length;
+
+    // Renderizar cada grupo
+    renderTrabajos('publishedJobsGrid', publicados);
+    renderTrabajos('inProgressJobsGrid', enProgreso);
+    renderTrabajos('completedJobsGrid', completados);
+}
+
+function renderTrabajos(containerId, trabajos) {
+    const container = document.getElementById(containerId);
+
+    if (trabajos.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <p>No hay trabajos en esta categoría</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = trabajos.map(trabajo => `
+        <div class="job-card">
+            <div class="job-card-header">
+                <div>
+                    <h3 class="job-title">${trabajo.titulo}</h3>
+                    <p class="job-meta">
+                        <span class="job-category">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 7h-9"></path>
+                                <path d="M14 17H5"></path>
+                                <circle cx="17" cy="17" r="3"></circle>
+                                <circle cx="7" cy="7" r="3"></circle>
+                            </svg>
+                            ${trabajo.categoria?.nombre || 'Sin categoría'}
+                        </span>
+                        <span class="job-date">${formatDate(trabajo.created_at)}</span>
+                    </p>
+                </div>
+                ${getBadgeEstado(trabajo.estado)}
+            </div>
+
+            <p class="job-description">${trabajo.descripcion.substring(0, 120)}...</p>
+
+            <div class="job-footer">
+                <div class="job-budget">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    $${formatMoney(trabajo.presupuesto_min || trabajo.presupuesto_max)}
+                </div>
+
+                ${trabajo.estado === 'publicado' ? `
+                    <button class="btn-outline-small" onclick="verPropuestasTrabajo(${trabajo.id})">
+                        Ver Propuestas (${trabajo.num_propuestas || 0})
+                    </button>
+                ` : ''}
+
+                ${trabajo.estado === 'en_progreso' && trabajo.freelancer ? `
+                    <div class="assigned-to">
+                        <span>Asignado a:</span>
+                        <strong>${trabajo.freelancer.name}</strong>
+                    </div>
+                ` : ''}
+
+                ${trabajo.estado === 'en_revision' ? `
+                    <button class="btn btn-primary btn-sm" onclick="abrirModalRevisarEntrega(${trabajo.id})">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        Revisar Entrega
+                    </button>
+                ` : ''}
+
+                ${trabajo.estado === 'requiere_cambios' ? `
+                    <button class="btn btn-secondary btn-sm" onclick="verHistorialEntregasCliente(${trabajo.id})">
+                        Ver Entregas
+                    </button>
+                ` : ''}
+
+                ${trabajo.estado === 'completado' ? `
+                    <button class="btn-primary-small" onclick="abrirModalCalificar(${trabajo.id}, ${trabajo.freelancer_id})">
+                        Calificar
+                    </button>
+                ` : ''}
+            </div>
+
+            ${trabajo.habilidades && trabajo.habilidades.length > 0 ? `
+                <div class="job-skills">
+                    ${trabajo.habilidades.slice(0, 3).map(h => `
+                        <span class="skill-tag">${h.nombre}</span>
+                    `).join('')}
+                    ${trabajo.habilidades.length > 3 ? `<span class="skill-tag">+${trabajo.habilidades.length - 3}</span>` : ''}
+                </div>
+            ` : ''}
+        </div>
+    `).join('');
+}
+
+function getBadgeEstado(estado) {
+    const badges = {
+        'publicado': '<span class="badge badge-blue">Publicado</span>',
+        'en_progreso': '<span class="badge badge-yellow">En Progreso</span>',
+        'en_revision': '<span class="badge badge-blue">En Revisión</span>',
+        'requiere_cambios': '<span class="badge badge-red">Requiere Cambios</span>',
+        'completado': '<span class="badge badge-green">Completado</span>',
+        'cancelado': '<span class="badge badge-red">Cancelado</span>'
+    };
+    return badges[estado] || '';
+}
+
+// ==========================================
+// RENDERIZADO DE PROPUESTAS
+// ==========================================
+
+function renderPropuestas() {
+    const container = document.getElementById('proposalsList');
+
+    if (appState.propuestas.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <polyline points="17 11 19 13 23 9"></polyline>
+                </svg>
+                <p>No has recibido propuestas aún</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Agrupar propuestas por trabajo
+    const propuestasPorTrabajo = {};
+    appState.propuestas.forEach(propuesta => {
+        const trabajoId = propuesta.trabajo_id;
+        if (!propuestasPorTrabajo[trabajoId]) {
+            propuestasPorTrabajo[trabajoId] = {
+                trabajo: propuesta.trabajo,
+                propuestas: []
+            };
+        }
+        propuestasPorTrabajo[trabajoId].propuestas.push(propuesta);
+    });
+
+    container.innerHTML = Object.values(propuestasPorTrabajo).map(grupo => `
+        <div class="proposal-group">
+            <div class="proposal-group-header">
+                <h3>${grupo.trabajo.titulo}</h3>
+                <span class="badge badge-blue">${grupo.propuestas.length} Propuestas</span>
+            </div>
+
+            <div class="proposals-list">
+                ${grupo.propuestas.map(propuesta => `
+                    <div class="proposal-card ${propuesta.estado === 'aceptada' ? 'accepted' : ''}">
+                        <div class="proposal-freelancer">
+                            <div class="freelancer-avatar">
+                                ${propuesta.freelancer.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="freelancer-info">
+                                <h4>${propuesta.freelancer.name}</h4>
+                                ${propuesta.freelancer.freelancer_perfil ? `
+                                    <p class="freelancer-title">${propuesta.freelancer.freelancer_perfil.titulo_profesional || ''}</p>
+                                    <div class="freelancer-stats">
+                                        ${renderStars(propuesta.freelancer.freelancer_perfil.calificacion_promedio || 0)}
+                                        <span class="stat">${propuesta.freelancer.freelancer_perfil.trabajos_completados || 0} trabajos</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="proposal-amount">
+                                <div class="amount-label">Propuesta</div>
+                                <div class="amount-value">$${formatMoney(propuesta.tarifa_propuesta)}</div>
+                                <div class="amount-time">${propuesta.tiempo_estimado} días</div>
+                            </div>
+                        </div>
+
+                        <div class="proposal-cover-letter">
+                            <p>${propuesta.carta_presentacion}</p>
+                        </div>
+
+                        <div class="proposal-actions">
+                            <button class="btn-outline-small" onclick="verPerfilFreelancer(${propuesta.freelancer_id})">
+                                Ver Perfil
+                            </button>
+                            ${propuesta.estado === 'pendiente' ? `
+                                <button class="btn-primary-small" onclick="aceptarPropuesta(${propuesta.id})">
+                                    Aceptar Propuesta
+                                </button>
+                            ` : ''}
+                            ${propuesta.estado === 'aceptada' ? `
+                                <span class="badge badge-green">✓ Aceptada</span>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// RENDERIZADO DE FREELANCERS
+// ==========================================
+
+function renderFreelancers() {
+    const container = document.getElementById('freelancersGrid');
+    const resultsCount = document.getElementById('freelancersResultsCount');
+
+    resultsCount.textContent = `${appState.freelancers.length} freelancers encontrados`;
+
+    if (appState.freelancers.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <p>No se encontraron freelancers</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = appState.freelancers.map(freelancer => {
+        const perfil = freelancer.freelancer_perfil || {};
+
+        return `
+            <div class="freelancer-card">
+                <div class="freelancer-header">
+                    <div class="freelancer-avatar-large">
+                        ${freelancer.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="freelancer-info-main">
+                        <h3>${freelancer.name}</h3>
+                        <p class="freelancer-title">${perfil.titulo_profesional || 'Freelancer'}</p>
+                        <div class="freelancer-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            ${perfil.ubicacion || 'No especificado'}
+                        </div>
+                    </div>
+                </div>
+
+                <p class="freelancer-bio">${(perfil.biografia || '').substring(0, 120)}...</p>
+
+                <div class="freelancer-stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">${renderStarsInline(perfil.calificacion_promedio || 0)}</div>
+                        <div class="stat-label">Calificación</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${perfil.trabajos_completados || 0}</div>
+                        <div class="stat-label">Trabajos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$${formatMoney(perfil.tarifa_por_hora || 0)}/h</div>
+                        <div class="stat-label">Tarifa</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary-full" onclick="verPerfilFreelancer(${freelancer.id})">
+                    Ver Perfil Completo
+                </button>
+            </div>
+        `;
+    }).join('');
+}
+
+// ==========================================
+// UTILIDADES
+// ==========================================
+
 function formatDate(dateString) {
     const date = new Date(dateString);
     const now = new Date();
     const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-    
+
     if (diffInDays === 0) return 'Hoy';
     if (diffInDays === 1) return 'Ayer';
-    return `Hace ${diffInDays} días`;
+    if (diffInDays < 7) return `Hace ${diffInDays} días`;
+    return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-function formatFullDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
-}
-
-function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffInMinutes = Math.floor((now - date) / (1000 * 60));
-    
-    if (diffInMinutes < 60) return `Hace ${diffInMinutes} min`;
-    if (diffInMinutes < 1440) return `Hace ${Math.floor(diffInMinutes / 60)} h`;
-    return `Hace ${Math.floor(diffInMinutes / 1440)} días`;
-}
-
-function formatTime(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-}
-
-function formatChatDate(timestamp) {
-    const date = new Date(timestamp);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    if (date.toDateString() === today.toDateString()) {
-        return 'Hoy';
-    } else if (date.toDateString() === yesterday.toDateString()) {
-        return 'Ayer';
-    } else {
-        return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-    }
+function formatMoney(amount) {
+    return new Intl.NumberFormat('es-ES', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
 }
 
 function renderStars(rating) {
     let html = '<div class="stars">';
     for (let i = 1; i <= 5; i++) {
-        const filled = i <= rating ? 'filled' : '';
+        const filled = i <= Math.round(rating) ? 'filled' : '';
         html += `
-            <svg class="star ${filled}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="star ${filled}" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
         `;
@@ -272,10 +464,17 @@ function renderStars(rating) {
     return html;
 }
 
-// Navigation
+function renderStarsInline(rating) {
+    return `<span class="rating-inline">${rating.toFixed(1)} ★</span>`;
+}
+
+// ==========================================
+// NAVEGACIÓN
+// ==========================================
+
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn, .nav-btn-mobile');
-    
+
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const tab = btn.getAttribute('data-tab');
@@ -286,7 +485,7 @@ function initNavigation() {
 
 function switchTab(tab) {
     appState.currentTab = tab;
-    
+
     // Update active nav buttons
     document.querySelectorAll('.nav-btn, .nav-btn-mobile').forEach(btn => {
         if (btn.getAttribute('data-tab') === tab) {
@@ -295,1116 +494,457 @@ function switchTab(tab) {
             btn.classList.remove('active');
         }
     });
-    
+
     // Show/hide tab content
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
-    
+
     const tabMap = {
         'my-jobs': 'myJobsTab',
         'proposals': 'proposalsTab',
         'freelancers': 'freelancersTab',
         'messages': 'messagesTab'
     };
-    
-    document.getElementById(tabMap[tab]).classList.add('active');
-    
-    // Render content
-    if (tab === 'my-jobs') renderMyJobs();
-    if (tab === 'proposals') renderProposals();
-    if (tab === 'freelancers') renderFreelancers();
-    if (tab === 'messages') renderMessages();
-}
 
-// Notifications
-function initNotifications() {
-    const notificationBtn = document.getElementById('notificationBtn');
-    const notificationsDropdown = document.getElementById('notificationsDropdown');
-    
-    notificationBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isVisible = notificationsDropdown.style.display === 'block';
-        notificationsDropdown.style.display = isVisible ? 'none' : 'block';
-        if (!isVisible) renderNotifications();
-    });
-    
-    document.addEventListener('click', (e) => {
-        if (!notificationsDropdown.contains(e.target) && e.target !== notificationBtn) {
-            notificationsDropdown.style.display = 'none';
-        }
-    });
-    
-    updateNotificationBadge();
-}
-
-function renderNotifications() {
-    const content = document.getElementById('notificationsContent');
-    
-    if (appState.notifications.length === 0) {
-        content.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--gray-500);">No tienes notificaciones</div>';
-        return;
+    const tabId = tabMap[tab];
+    if (tabId) {
+        document.getElementById(tabId).classList.add('active');
     }
-    
-    const getIcon = (type) => {
-        switch (type) {
-            case 'new_proposal': return '📝';
-            case 'proposal_accepted': return '✅';
-            case 'new_message': return '💬';
-            case 'job_completed': return '🎉';
-            default: return '🔔';
-        }
-    };
-    
-    content.innerHTML = appState.notifications.map(notif => `
-        <div class="notification-item ${!notif.read ? 'unread' : ''}" onclick="markNotificationRead('${notif.id}')">
-            <span class="notification-icon">${getIcon(notif.type)}</span>
-            <div class="notification-content">
-                <p class="notification-message">${notif.message}</p>
-                <p class="notification-job">${notif.jobTitle}</p>
-                <p class="notification-time">${formatTimestamp(notif.timestamp)}</p>
-            </div>
-            ${!notif.read ? '<div class="notification-unread-dot"></div>' : ''}
-        </div>
-    `).join('');
-}
 
-function markNotificationRead(id) {
-    const notif = appState.notifications.find(n => n.id === id);
-    if (notif) {
-        notif.read = true;
-        renderNotifications();
-        updateNotificationBadge();
+    // Cargar datos según tab
+    if (tab === 'freelancers' && appState.freelancers.length === 0) {
+        cargarFreelancers();
     }
 }
 
-function updateNotificationBadge() {
-    const badge = document.getElementById('notificationBadge');
-    const unreadCount = appState.notifications.filter(n => !n.read).length;
-    
-    if (unreadCount > 0) {
-        badge.textContent = unreadCount;
-        badge.style.display = 'flex';
-    } else {
-        badge.style.display = 'none';
-    }
-}
+function initSubtabs() {
+    const subtabButtons = document.querySelectorAll('.tab-btn');
 
-// My Jobs Tab
-function initMyJobsTab() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    
-    tabButtons.forEach(btn => {
+    subtabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const subtab = btn.getAttribute('data-subtab');
-            if (subtab) switchMyJobsSubtab(subtab);
-        });
-    });
-}
 
-function switchMyJobsSubtab(subtab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        if (btn.getAttribute('data-subtab') === subtab) {
+            // Update active subtab button
+            subtabButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-    
-    document.querySelectorAll('.subtab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    const contentMap = {
-        'published': 'publishedJobsContent',
-        'in-progress': 'inProgressJobsContent',
-        'completed': 'completedJobsContent'
-    };
-    
-    document.getElementById(contentMap[subtab]).classList.add('active');
-}
 
-function renderMyJobs() {
-    const publishedJobs = appState.jobs.filter(job => job.status === 'published');
-    const inProgressJobs = appState.jobs.filter(job => job.status === 'in-progress');
-    const completedJobs = appState.jobs.filter(job => job.status === 'completed');
-    
-    document.getElementById('publishedJobsCount').textContent = publishedJobs.length;
-    document.getElementById('inProgressJobsCount').textContent = inProgressJobs.length;
-    document.getElementById('completedJobsCount').textContent = completedJobs.length;
-    
-    renderPublishedJobs(publishedJobs);
-    renderInProgressJobs(inProgressJobs);
-    renderCompletedJobs(completedJobs);
-}
+            // Show/hide subtab content
+            document.querySelectorAll('.subtab-content').forEach(content => {
+                content.classList.remove('active');
+            });
 
-function renderPublishedJobs(jobs) {
-    const grid = document.getElementById('publishedJobsGrid');
-    
-    if (jobs.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No tienes trabajos publicados</h3>
-                <p class="empty-description">Publica tu primer trabajo para encontrar freelancers</p>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = jobs.map(job => {
-        const proposalCount = appState.proposals.filter(p => p.jobId === job.id && p.status === 'pending').length;
-        
-        return `
-            <div class="job-card">
-                <div class="job-card-header">
-                    <span class="badge category">${job.category}</span>
-                    <div class="job-card-actions">
-                        <button class="btn-icon" onclick="openEditJobModal('${job.id}')" title="Editar">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="btn-icon danger" onclick="openDeleteJobModal('${job.id}')" title="Eliminar">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                
-                <h2 class="job-title">${job.title}</h2>
-                <p class="job-description">${job.description}</p>
-                
-                <div class="job-details">
-                    <div class="job-detail">
-                        <div class="detail-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="12" y1="1" x2="12" y2="23"></line>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                            </svg>
-                        </div>
-                        <div class="detail-content">
-                            <p>Presupuesto</p>
-                            <p>$${job.budget.toLocaleString()}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="job-detail">
-                        <div class="detail-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <div class="detail-content">
-                            <p>Duración</p>
-                            <p class="text-dark">${job.duration}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="job-detail">
-                        <div class="detail-content">
-                            <p>Publicado</p>
-                            <p class="text-dark">${formatDate(job.postedDate)}</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="job-skills">
-                    <div class="skills-list">
-                        ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                    </div>
-                </div>
-                
-                ${proposalCount > 0 ? `
-                    <span class="badge proposals" onclick="viewJobProposals('${job.id}')">
-                        ${proposalCount} ${proposalCount === 1 ? 'Propuesta Recibida' : 'Propuestas Recibidas'}
-                    </span>
-                ` : `
-                    <p style="text-align: center; color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">
-                        Sin propuestas aún
-                    </p>
-                `}
-            </div>
-        `;
-    }).join('');
-}
-
-function renderInProgressJobs(jobs) {
-    const grid = document.getElementById('inProgressJobsGrid');
-    
-    if (jobs.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No tienes trabajos en progreso</h3>
-                <p class="empty-description">Los trabajos asignados aparecerán aquí</p>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = jobs.map(job => `
-        <div class="job-card">
-            <div class="job-card-header">
-                <span class="badge active">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    En Progreso
-                </span>
-            </div>
-            
-            <h2 class="job-title">${job.title}</h2>
-            <p class="job-description">${job.description}</p>
-            
-            <div class="freelancer-assigned">
-                <div class="freelancer-assigned-header">
-                    <img src="${job.assignedFreelancer.avatar}" alt="${job.assignedFreelancer.name}" class="freelancer-avatar">
-                    <div>
-                        <p class="freelancer-label">Freelancer Asignado</p>
-                        <p class="freelancer-name">${job.assignedFreelancer.name}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="job-details">
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Presupuesto</p>
-                        <p>$${job.budget.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="job-detail">
-                    <div class="detail-content">
-                        <p>Inicio</p>
-                        <p class="text-dark">${formatFullDate(job.startDate)}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="job-skills">
-                <div class="skills-list">
-                    ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                </div>
-            </div>
-            
-            <div class="job-actions">
-                <button class="btn-outline" onclick="openChatModal('${job.id}', '${job.assignedFreelancer.id}')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Chat
-                </button>
-                <button class="btn-outline" onclick="openMeetingModal('${job.assignedFreelancer.id}', '${job.id}')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    Reunión
-                </button>
-                <button class="btn-primary" onclick="openCompleteJobModal('${job.id}')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    Marcar Terminado
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function renderCompletedJobs(jobs) {
-    const grid = document.getElementById('completedJobsGrid');
-    
-    if (jobs.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No tienes trabajos completados</h3>
-                <p class="empty-description">Los trabajos finalizados aparecerán aquí</p>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = jobs.map(job => `
-        <div class="job-card">
-            <div class="job-card-header">
-                <span class="badge completed">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    Completado
-                </span>
-            </div>
-            
-            <h2 class="job-title">${job.title}</h2>
-            <p class="job-description">${job.description}</p>
-            
-            <div class="freelancer-assigned">
-                <div class="freelancer-assigned-header">
-                    <img src="${job.assignedFreelancer.avatar}" alt="${job.assignedFreelancer.name}" class="freelancer-avatar">
-                    <div>
-                        <p class="freelancer-label">Freelancer</p>
-                        <p class="freelancer-name">${job.assignedFreelancer.name}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="job-details">
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Presupuesto</p>
-                        <p>$${job.budget.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="job-detail">
-                    <div class="detail-content">
-                        <p>Completado</p>
-                        <p class="text-dark">${formatFullDate(job.completedDate)}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="job-skills">
-                <div class="skills-list">
-                    ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Job Modal (Create/Edit)
-function openCreateJobModal() {
-    appState.currentJobForEdit = null;
-    
-    document.getElementById('jobModalTitle').textContent = 'Publicar Trabajo';
-    document.getElementById('submitJobBtn').textContent = 'Publicar Trabajo';
-    
-    document.getElementById('jobTitle').value = '';
-    document.getElementById('jobDescription').value = '';
-    document.getElementById('jobBudget').value = '';
-    document.getElementById('jobDuration').value = '';
-    document.getElementById('jobCategory').value = '';
-    document.getElementById('jobSkills').value = '';
-    
-    document.getElementById('jobModal').classList.add('active');
-}
-
-function openEditJobModal(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobForEdit = job;
-    
-    document.getElementById('jobModalTitle').textContent = 'Editar Trabajo';
-    document.getElementById('submitJobBtn').textContent = 'Guardar Cambios';
-    
-    document.getElementById('jobTitle').value = job.title;
-    document.getElementById('jobDescription').value = job.description;
-    document.getElementById('jobBudget').value = job.budget;
-    document.getElementById('jobDuration').value = job.duration;
-    document.getElementById('jobCategory').value = job.category;
-    document.getElementById('jobSkills').value = job.skills.join(', ');
-    
-    document.getElementById('jobModal').classList.add('active');
-}
-
-function initJobModal() {
-    const modal = document.getElementById('jobModal');
-    const form = document.getElementById('jobForm');
-    const closeBtn = document.getElementById('closeJobModal');
-    const cancelBtn = document.getElementById('cancelJobModal');
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const jobData = {
-            title: document.getElementById('jobTitle').value,
-            description: document.getElementById('jobDescription').value,
-            budget: parseFloat(document.getElementById('jobBudget').value),
-            duration: document.getElementById('jobDuration').value,
-            category: document.getElementById('jobCategory').value,
-            skills: document.getElementById('jobSkills').value.split(',').map(s => s.trim()).filter(s => s)
-        };
-        
-        if (appState.currentJobForEdit) {
-            // Edit existing job
-            Object.assign(appState.currentJobForEdit, jobData);
-            alert('Trabajo actualizado exitosamente');
-        } else {
-            // Create new job
-            const newJob = {
-                ...jobData,
-                id: Date.now().toString(),
-                postedDate: new Date().toISOString().split('T')[0],
-                status: 'published',
-                proposals: []
+            const contentMap = {
+                'published': 'publishedJobsContent',
+                'in-progress': 'inProgressJobsContent',
+                'completed': 'completedJobsContent'
             };
-            appState.jobs.push(newJob);
-            alert('Trabajo publicado exitosamente');
-        }
-        
-        modal.classList.remove('active');
-        renderMyJobs();
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
 
-// Delete Job Modal
-function openDeleteJobModal(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobToDelete = job;
-    document.getElementById('deleteJobModal').classList.add('active');
-}
-
-function initDeleteJobModal() {
-    const modal = document.getElementById('deleteJobModal');
-    const closeBtn = document.getElementById('closeDeleteJobModal');
-    const cancelBtn = document.getElementById('cancelDeleteJob');
-    const confirmBtn = document.getElementById('confirmDeleteJob');
-    
-    confirmBtn.addEventListener('click', () => {
-        if (appState.currentJobToDelete) {
-            const index = appState.jobs.findIndex(j => j.id === appState.currentJobToDelete.id);
-            if (index !== -1) {
-                appState.jobs.splice(index, 1);
-                alert('Trabajo eliminado exitosamente');
-                renderMyJobs();
-            }
-        }
-        modal.classList.remove('active');
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
-
-// Complete Job Modal
-function openCompleteJobModal(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobToComplete = job;
-    
-    document.getElementById('completeJobDescription').textContent = 
-        `Esta acción marcará el trabajo "${job.title}" como terminado y lo moverá al historial de completados.`;
-    
-    document.getElementById('completeJobModal').classList.add('active');
-}
-
-function initCompleteJobModal() {
-    const modal = document.getElementById('completeJobModal');
-    const closeBtn = document.getElementById('closeCompleteJobModal');
-    const cancelBtn = document.getElementById('cancelCompleteJob');
-    const confirmBtn = document.getElementById('confirmCompleteJob');
-    
-    confirmBtn.addEventListener('click', () => {
-        if (appState.currentJobToComplete) {
-            appState.currentJobToComplete.status = 'completed';
-            appState.currentJobToComplete.completedDate = new Date().toISOString().split('T')[0];
-            alert('Trabajo marcado como terminado');
-            renderMyJobs();
-        }
-        modal.classList.remove('active');
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
-
-// Proposals
-function renderProposals() {
-    const list = document.getElementById('proposalsList');
-    const pendingProposals = appState.proposals.filter(p => p.status === 'pending');
-    
-    if (pendingProposals.length === 0) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="8.5" cy="7" r="4"></circle>
-                        <polyline points="17 11 19 13 23 9"></polyline>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No hay solicitudes pendientes</h3>
-                <p class="empty-description">Las propuestas de freelancers aparecerán aquí</p>
-            </div>
-        `;
-        return;
-    }
-    
-    list.innerHTML = pendingProposals.map(proposal => {
-        const job = appState.jobs.find(j => j.id === proposal.jobId);
-        
-        return `
-            <div class="proposal-card">
-                <div class="proposal-header">
-                    <div class="proposal-freelancer">
-                        <img src="${proposal.freelancer.avatar}" alt="${proposal.freelancer.name}" class="proposal-avatar">
-                        <div class="proposal-info">
-                            <h3 class="proposal-name">${proposal.freelancer.name}</h3>
-                            <p class="proposal-job">${job.title}</p>
-                            <div class="proposal-stats">
-                                <span>⭐ ${proposal.freelancer.rating}</span>
-                                <span>•</span>
-                                <span>${proposal.freelancer.completedJobs} trabajos completados</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="proposal-rate">
-                        <p>Tarifa Propuesta</p>
-                        <p>$${proposal.rate.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="proposal-cover">
-                    <p>Carta de Presentación</p>
-                    <p>${proposal.coverLetter}</p>
-                </div>
-                
-                <div class="proposal-actions">
-                    <button class="btn-secondary" onclick="rejectProposal('${proposal.id}')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                        Rechazar
-                    </button>
-                    <button class="btn-outline" onclick="openMeetingModal('${proposal.freelancer.id}', '${proposal.jobId}')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        Solicitar Reunión
-                    </button>
-                    <button class="btn-primary" onclick="acceptProposal('${proposal.id}')">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        Aceptar
-                    </button>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-function acceptProposal(proposalId) {
-    const proposal = appState.proposals.find(p => p.id === proposalId);
-    if (!proposal) return;
-    
-    const job = appState.jobs.find(j => j.id === proposal.jobId);
-    if (!job) return;
-    
-    if (confirm(`¿Deseas contratar a ${proposal.freelancer.name} para este trabajo?`)) {
-        proposal.status = 'accepted';
-        job.status = 'in-progress';
-        job.assignedFreelancer = {
-            id: proposal.freelancer.id,
-            name: proposal.freelancer.name,
-            avatar: proposal.freelancer.avatar
-        };
-        job.startDate = new Date().toISOString().split('T')[0];
-        
-        // Reject other proposals for this job
-        appState.proposals.forEach(p => {
-            if (p.jobId === proposal.jobId && p.id !== proposalId) {
-                p.status = 'rejected';
+            const contentId = contentMap[subtab];
+            if (contentId) {
+                document.getElementById(contentId).classList.add('active');
             }
         });
-        
-        alert('¡Freelancer contratado exitosamente!');
-        renderProposals();
-        renderMyJobs();
+    });
+}
+
+// ==========================================
+// NOTIFICACIONES
+// ==========================================
+
+function initNotifications() {
+    const notificationBtn = document.getElementById('notificationBtn');
+    const dropdown = document.getElementById('notificationsDropdown');
+
+    if (notificationBtn) {
+        notificationBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        });
+    }
+
+    document.addEventListener('click', () => {
+        if (dropdown) dropdown.style.display = 'none';
+    });
+}
+
+function showNotification(message, type = 'info') {
+    // Crear notificación toast
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// ==========================================
+// MODALES
+// ==========================================
+
+function abrirModalCalificar(trabajoId, freelancerId) {
+    // Por ahora, un modal simple
+    const rating = prompt('Calificación (1-5):');
+    const comentario = prompt('Comentario:');
+
+    if (rating && comentario) {
+        crearCalificacion(trabajoId, freelancerId, {
+            calificacion: parseInt(rating),
+            comentario: comentario,
+            comunicacion: parseInt(rating),
+            calidad_trabajo: parseInt(rating),
+            cumplimiento_plazo: parseInt(rating),
+            profesionalismo: parseInt(rating)
+        });
     }
 }
 
-function rejectProposal(proposalId) {
-    const proposal = appState.proposals.find(p => p.id === proposalId);
-    if (!proposal) return;
-    
-    if (confirm(`¿Deseas rechazar la propuesta de ${proposal.freelancer.name}?`)) {
-        proposal.status = 'rejected';
-        alert('Propuesta rechazada');
-        renderProposals();
-    }
+function mostrarModalPerfilFreelancer(freelancer) {
+    // TODO: Implementar modal completo
+    console.log('Perfil freelancer:', freelancer);
+    alert(`Perfil de ${freelancer.name}\n\n${freelancer.freelancer_perfil?.biografia || 'Sin biografía'}`);
 }
 
-function viewJobProposals(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobForProposals = job;
-    
-    document.getElementById('proposalsJobTitle').textContent = job.title;
-    
-    const jobProposals = appState.proposals.filter(p => p.jobId === jobId && p.status === 'pending');
-    const modalList = document.getElementById('proposalsListModal');
-    
-    if (jobProposals.length === 0) {
-        modalList.innerHTML = '<p style="text-align: center; padding: 2rem; color: var(--gray-500);">No hay propuestas para este trabajo</p>';
-    } else {
-        modalList.innerHTML = jobProposals.map(proposal => `
-            <div class="proposal-card">
-                <div class="proposal-header">
-                    <div class="proposal-freelancer">
-                        <img src="${proposal.freelancer.avatar}" alt="${proposal.freelancer.name}" class="proposal-avatar">
-                        <div class="proposal-info">
-                            <h3 class="proposal-name">${proposal.freelancer.name}</h3>
-                            <div class="proposal-stats">
-                                <span>⭐ ${proposal.freelancer.rating}</span>
-                                <span>•</span>
-                                <span>${proposal.freelancer.completedJobs} trabajos</span>
+function verPropuestasTrabajo(trabajoId) {
+    // Cambiar a tab de propuestas
+    switchTab('proposals');
+}
+
+// Búsqueda de freelancers
+const searchInput = document.getElementById('freelancerSearchInput');
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        if (query.length > 2) {
+            const filtered = appState.freelancers.filter(f =>
+                f.name.toLowerCase().includes(query) ||
+                (f.freelancer_perfil?.titulo_profesional || '').toLowerCase().includes(query) ||
+                (f.freelancer_perfil?.biografia || '').toLowerCase().includes(query)
+            );
+            renderFreelancersFiltered(filtered);
+        } else if (query.length === 0) {
+            renderFreelancers();
+        }
+    });
+}
+
+function renderFreelancersFiltered(filtered) {
+    const temp = appState.freelancers;
+    appState.freelancers = filtered;
+    renderFreelancers();
+    appState.freelancers = temp;
+}
+
+// ==========================================
+// MODAL REVISAR ENTREGA
+// ==========================================
+
+async function abrirModalRevisarEntrega(trabajoId) {
+    try {
+        const response = await fetch(`/api/workspace/entregas/${trabajoId}`);
+        const entregas = await response.json();
+
+        const entregaPendiente = entregas.find(e => e.estado === 'pendiente_revision');
+
+        if (!entregaPendiente) {
+            showNotification('No hay entregas pendientes de revisión', 'info');
+            return;
+        }
+
+        const trabajo = appState.trabajos.find(t => t.id === trabajoId);
+
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.id = 'modalRevisarEntrega';
+
+        modal.innerHTML = `
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>Revisar Entrega: ${trabajo.titulo}</h2>
+                    <button class="modal-close" onclick="cerrarModalRevisarEntrega()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="entrega-details">
+                        <div class="entrega-info">
+                            <p><strong>Freelancer:</strong> ${trabajo.freelancer?.name}</p>
+                            <p><strong>Revisión:</strong> #${entregaPendiente.revision}</p>
+                            <p><strong>Fecha de entrega:</strong> ${formatDate(entregaPendiente.created_at)}</p>
+                        </div>
+
+                        <div class="entrega-content">
+                            <h3>Mensaje del Freelancer</h3>
+                            <p class="entrega-mensaje">${entregaPendiente.mensaje}</p>
+                        </div>
+
+                        ${entregaPendiente.repositorio_url ? `
+                            <div class="entrega-link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                </svg>
+                                <strong>Repositorio:</strong>
+                                <a href="${entregaPendiente.repositorio_url}" target="_blank">${entregaPendiente.repositorio_url}</a>
+                            </div>
+                        ` : ''}
+
+                        ${entregaPendiente.demo_url ? `
+                            <div class="entrega-link">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                                </svg>
+                                <strong>Demo:</strong>
+                                <a href="${entregaPendiente.demo_url}" target="_blank">${entregaPendiente.demo_url}</a>
+                            </div>
+                        ` : ''}
+
+                        ${entregaPendiente.archivos && entregaPendiente.archivos.length > 0 ? `
+                            <div class="entrega-archivos">
+                                <h4>Archivos Adjuntos</h4>
+                                ${entregaPendiente.archivos.map(archivo => `
+                                    <div class="file-item">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                            <polyline points="13 2 13 9 20 9"></polyline>
+                                        </svg>
+                                        ${archivo.name || archivo}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
+                        <div class="revision-actions">
+                            <div class="action-section">
+                                <button class="btn btn-success" onclick="mostrarFormularioAprobar()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                    Aprobar Entrega
+                                </button>
+                                <button class="btn btn-danger" onclick="mostrarFormularioRechazar()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                    Solicitar Cambios
+                                </button>
+                            </div>
+
+                            <div id="formAprobar" style="display: none; margin-top: 20px;">
+                                <div class="alert alert-success">
+                                    <strong>¿Estás seguro de aprobar esta entrega?</strong>
+                                    <p>El trabajo se marcará como completado y podrás calificar al freelancer.</p>
+                                </div>
+                                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                    <button class="btn btn-secondary" onclick="ocultarFormularios()">Cancelar</button>
+                                    <button class="btn btn-success" onclick="aprobarEntrega(${entregaPendiente.id})">Confirmar Aprobación</button>
+                                </div>
+                            </div>
+
+                            <div id="formRechazar" style="display: none; margin-top: 20px;">
+                                <div class="alert alert-warning">
+                                    <strong>Solicitar Correcciones</strong>
+                                    <p>Por favor, describe detalladamente los cambios que necesitas que el freelancer realice.</p>
+                                </div>
+                                <textarea
+                                    id="feedbackCliente"
+                                    rows="5"
+                                    placeholder="Describe los cambios necesarios, problemas encontrados, mejoras solicitadas, etc."
+                                    style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"
+                                ></textarea>
+                                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                    <button class="btn btn-secondary" onclick="ocultarFormularios()">Cancelar</button>
+                                    <button class="btn btn-danger" onclick="rechazarEntrega(${entregaPendiente.id})">Enviar Feedback</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="proposal-rate">
-                        <p>Tarifa</p>
-                        <p>$${proposal.rate.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="proposal-cover">
-                    <p>Carta de Presentación</p>
-                    <p>${proposal.coverLetter}</p>
-                </div>
-                
-                <div class="proposal-actions">
-                    <button class="btn-secondary" onclick="rejectProposal('${proposal.id}'); closeViewProposalsModal();">Rechazar</button>
-                    <button class="btn-primary" onclick="acceptProposal('${proposal.id}'); closeViewProposalsModal();">Aceptar</button>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    document.getElementById('viewProposalsModal').classList.add('active');
-}
 
-function closeViewProposalsModal() {
-    document.getElementById('viewProposalsModal').classList.remove('active');
-    renderMyJobs();
-    renderProposals();
-}
-
-function initViewProposalsModal() {
-    const modal = document.getElementById('viewProposalsModal');
-    const closeBtn = document.getElementById('closeViewProposalsModal');
-    
-    closeBtn.addEventListener('click', closeViewProposalsModal);
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeViewProposalsModal();
-    });
-}
-
-// Freelancers Search
-function initFreelancersSearch() {
-    const searchInput = document.getElementById('freelancerSearchInput');
-    searchInput.addEventListener('input', (e) => {
-        appState.searchQuery = e.target.value.toLowerCase();
-        renderFreelancers();
-    });
-}
-
-function renderFreelancers() {
-    const filteredFreelancers = appState.freelancers.filter(freelancer => {
-        const query = appState.searchQuery;
-        return freelancer.name.toLowerCase().includes(query) ||
-               freelancer.title.toLowerCase().includes(query) ||
-               freelancer.bio.toLowerCase().includes(query) ||
-               freelancer.skills.some(skill => skill.toLowerCase().includes(query));
-    });
-    
-    const resultsCount = document.getElementById('freelancersResultsCount');
-    resultsCount.textContent = `${filteredFreelancers.length} ${filteredFreelancers.length === 1 ? 'freelancer encontrado' : 'freelancers encontrados'}`;
-    
-    const grid = document.getElementById('freelancersGrid');
-    
-    if (filteredFreelancers.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No se encontraron freelancers</h3>
-                <p class="empty-description">Intenta ajustar tu búsqueda</p>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = filteredFreelancers.map(freelancer => `
-        <div class="freelancer-card">
-            <img src="${freelancer.avatar}" alt="${freelancer.name}" class="freelancer-card-avatar">
-            
-            <h3 class="freelancer-card-name">${freelancer.name}</h3>
-            <p class="freelancer-card-title">${freelancer.title}</p>
-            
-            <div class="freelancer-card-stats">
-                <div class="freelancer-stat">
-                    <div class="freelancer-stat-value">${freelancer.rating}</div>
-                    <div class="freelancer-stat-label">Rating</div>
-                </div>
-                <div class="freelancer-stat">
-                    <div class="freelancer-stat-value">${freelancer.completedJobs}</div>
-                    <div class="freelancer-stat-label">Trabajos</div>
-                </div>
-                <div class="freelancer-stat">
-                    <div class="freelancer-stat-value">$${freelancer.hourlyRate}</div>
-                    <div class="freelancer-stat-label">Por hora</div>
-                </div>
-            </div>
-            
-            <div class="freelancer-card-skills">
-                <div class="skills-list">
-                    ${freelancer.skills.slice(0, 4).map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                </div>
-            </div>
-            
-            <p class="freelancer-card-bio">${freelancer.bio}</p>
-            
-            <button class="btn-primary" onclick="openMeetingModal('${freelancer.id}')">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                Solicitar Reunión
-            </button>
-        </div>
-    `).join('');
-}
-
-// Meeting Modal
-function openMeetingModal(freelancerId, jobId = null) {
-    const freelancer = appState.freelancers.find(f => f.id === freelancerId);
-    appState.currentFreelancerForMeeting = freelancer;
-    appState.currentJobForMeetingId = jobId;
-    
-    document.getElementById('meetingFreelancerInfo').innerHTML = `
-        <img src="${freelancer.avatar}" alt="${freelancer.name}" class="freelancer-avatar">
-        <div>
-            <p class="freelancer-label">Reunión con</p>
-            <p class="freelancer-name">${freelancer.name}</p>
-        </div>
-    `;
-    
-    // Set minimum date to today
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('meetingDate').min = today;
-    document.getElementById('meetingDate').value = '';
-    document.getElementById('meetingTime').value = '';
-    document.getElementById('meetingNotes').value = '';
-    
-    document.getElementById('meetingModal').classList.add('active');
-}
-
-function initMeetingModal() {
-    const modal = document.getElementById('meetingModal');
-    const form = document.getElementById('meetingForm');
-    const closeBtn = document.getElementById('closeMeetingModal');
-    const cancelBtn = document.getElementById('cancelMeetingModal');
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const date = document.getElementById('meetingDate').value;
-        const time = document.getElementById('meetingTime').value;
-        const notes = document.getElementById('meetingNotes').value;
-        
-        alert(`Solicitud de reunión enviada a ${appState.currentFreelancerForMeeting.name}\nFecha: ${new Date(date).toLocaleDateString('es-ES')}\nHora: ${time}`);
-        
-        modal.classList.remove('active');
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
-
-// Messages
-function renderMessages() {
-    const jobsWithMessages = appState.jobs.filter(job => 
-        job.assignedFreelancer && 
-        appState.messages.some(msg => msg.jobId === job.id)
-    );
-    
-    const grid = document.getElementById('messagesGrid');
-    
-    if (jobsWithMessages.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No tienes conversaciones</h3>
-                <p class="empty-description">Contrata freelancers para comenzar a comunicarte</p>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = jobsWithMessages.map(job => {
-        const jobMessages = appState.messages.filter(msg => msg.jobId === job.id);
-        const lastMessage = jobMessages[jobMessages.length - 1];
-        const unreadCount = jobMessages.filter(msg => msg.sender === 'freelancer').length;
-        
-        return `
-            <div class="message-card" onclick="openChatModal('${job.id}', '${job.assignedFreelancer.id}')">
-                <div class="message-card-content">
-                    <div class="message-avatar-wrapper">
-                        <img src="${job.assignedFreelancer.avatar}" alt="${job.assignedFreelancer.name}" class="message-avatar">
-                        ${unreadCount > 0 ? `<span class="message-unread-badge">${unreadCount}</span>` : ''}
-                    </div>
-                    
-                    <div class="message-info">
-                        <div class="message-header">
-                            <h3 class="message-name">${job.assignedFreelancer.name}</h3>
-                            ${lastMessage ? `<span class="message-time">${formatTimestamp(lastMessage.timestamp)}</span>` : ''}
-                        </div>
-                        
-                        <p class="message-job">${job.title}</p>
-                        
-                        ${lastMessage ? `
-                            <p class="message-preview ${lastMessage.sender === 'freelancer' && unreadCount > 0 ? 'unread' : ''}">
-                                ${lastMessage.sender === 'client' ? 'Tú: ' : ''}${lastMessage.content}
-                            </p>
+                        ${entregas.length > 1 ? `
+                            <div class="entregas-previas">
+                                <h3>Entregas Anteriores</h3>
+                                ${entregas.filter(e => e.id !== entregaPendiente.id).map(e => `
+                                    <div class="entrega-previa">
+                                        <div>
+                                            <strong>Revisión #${e.revision}</strong>
+                                            <span class="badge badge-${e.estado === 'aprobada' ? 'green' : 'red'}">
+                                                ${e.estado === 'aprobada' ? 'Aprobada' : 'Rechazada'}
+                                            </span>
+                                        </div>
+                                        <small>${formatDate(e.created_at)}</small>
+                                        ${e.feedback_cliente ? `<p><em>Feedback: ${e.feedback_cliente}</em></p>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
                         ` : ''}
                     </div>
-                    
-                    <div class="message-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModalRevisarEntrega()">Cerrar</button>
                 </div>
             </div>
         `;
-    }).join('');
+
+        document.body.appendChild(modal);
+        setTimeout(() => modal.classList.add('show'), 10);
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al cargar la entrega', 'error');
+    }
 }
 
-// Chat Modal
-function openChatModal(jobId, freelancerId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    const freelancer = appState.freelancers.find(f => f.id === freelancerId);
-    
-    appState.currentJobForChat = job;
-    appState.currentFreelancerForChat = freelancer;
-    
-    document.getElementById('chatHeaderInfo').innerHTML = `
-        <img src="${freelancer.avatar}" alt="${freelancer.name}" class="chat-header-avatar">
-        <div>
-            <div class="chat-header-name">${freelancer.name}</div>
-            <div class="chat-header-job">${job.title}</div>
-        </div>
-    `;
-    
-    renderChatMessages(jobId);
-    document.getElementById('chatModal').classList.add('active');
-    
-    // Scroll to bottom
-    setTimeout(() => {
-        const messagesContainer = document.getElementById('chatMessages');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 100);
+function mostrarFormularioAprobar() {
+    document.getElementById('formRechazar').style.display = 'none';
+    document.getElementById('formAprobar').style.display = 'block';
 }
 
-function initChatModal() {
-    const modal = document.getElementById('chatModal');
-    const form = document.getElementById('chatForm');
-    const closeBtn = document.getElementById('closeChatModal');
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('chatInput');
-        const content = input.value.trim();
-        
-        if (content && appState.currentJobForChat) {
-            sendMessage(appState.currentJobForChat.id, content);
-            input.value = '';
+function mostrarFormularioRechazar() {
+    document.getElementById('formAprobar').style.display = 'none';
+    document.getElementById('formRechazar').style.display = 'block';
+}
+
+function ocultarFormularios() {
+    document.getElementById('formAprobar').style.display = 'none';
+    document.getElementById('formRechazar').style.display = 'none';
+}
+
+async function aprobarEntrega(entregaId) {
+    try {
+        const response = await fetch(`/api/workspace/aprobar-entrega/${entregaId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Entrega aprobada exitosamente. El trabajo está completado.', 'success');
+            cerrarModalRevisarEntrega();
+            cargarMisTrabajos();
+        } else {
+            showNotification(data.message || 'Error al aprobar entrega', 'error');
         }
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al aprobar entrega', 'error');
+    }
 }
 
-function renderChatMessages(jobId) {
-    const messages = appState.messages.filter(msg => msg.jobId === jobId);
-    const container = document.getElementById('chatMessages');
-    
-    if (messages.length === 0) {
-        container.innerHTML = `
-            <div class="chat-empty">
-                <div class="chat-empty-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </div>
-                <p>No hay mensajes aún</p>
-                <p>Inicia la conversación con tu freelancer</p>
-            </div>
-        `;
+async function rechazarEntrega(entregaId) {
+    const feedback = document.getElementById('feedbackCliente').value.trim();
+
+    if (!feedback || feedback.length < 20) {
+        showNotification('Por favor, proporciona un feedback detallado (mínimo 20 caracteres)', 'error');
         return;
     }
-    
-    let html = '';
-    let lastDate = '';
-    
-    messages.forEach((msg) => {
-        const msgDate = formatChatDate(msg.timestamp);
-        
-        if (msgDate !== lastDate) {
-            html += `
-                <div class="chat-date-divider">
-                    <span class="chat-date-label">${msgDate}</span>
-                </div>
-            `;
-            lastDate = msgDate;
+
+    try {
+        const response = await fetch(`/api/workspace/rechazar-entrega/${entregaId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                feedback_cliente: feedback
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Feedback enviado. El freelancer realizará las correcciones.', 'success');
+            cerrarModalRevisarEntrega();
+            cargarMisTrabajos();
+        } else {
+            showNotification(data.message || 'Error al rechazar entrega', 'error');
         }
-        
-        const freelancer = appState.currentFreelancerForChat;
-        html += `
-            <div class="chat-message ${msg.sender}">
-                <div class="chat-message-content">
-                    ${msg.sender === 'freelancer' ? `<p class="chat-message-sender">${freelancer.name}</p>` : ''}
-                    <div class="chat-message-bubble">
-                        <p class="chat-message-text">${msg.content}</p>
-                    </div>
-                    <p class="chat-message-time">${formatTime(msg.timestamp)}</p>
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al enviar feedback', 'error');
+    }
+}
+
+function cerrarModalRevisarEntrega() {
+    const modal = document.getElementById('modalRevisarEntrega');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+async function verHistorialEntregasCliente(trabajoId) {
+    try {
+        const response = await fetch(`/api/workspace/entregas/${trabajoId}`);
+        const entregas = await response.json();
+
+        const trabajo = appState.trabajos.find(t => t.id === trabajoId);
+
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.id = 'modalHistorialEntregas';
+
+        modal.innerHTML = `
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>Historial de Entregas: ${trabajo.titulo}</h2>
+                    <button class="modal-close" onclick="cerrarModalHistorialCliente()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    ${entregas.length === 0 ? `
+                        <div class="empty-state">
+                            <p>No hay entregas registradas</p>
+                        </div>
+                    ` : entregas.map(entrega => `
+                        <div class="entrega-item ${entrega.estado}">
+                            <div class="entrega-header">
+                                <div>
+                                    <strong>Revisión #${entrega.revision}</strong>
+                                    <span class="badge badge-${entrega.estado === 'aprobada' ? 'green' : entrega.estado === 'rechazada' ? 'red' : 'blue'}">
+                                        ${entrega.estado === 'aprobada' ? 'Aprobada' : entrega.estado === 'rechazada' ? 'Rechazada' : 'Pendiente Revisión'}
+                                    </span>
+                                </div>
+                                <small>${formatDate(entrega.created_at)}</small>
+                            </div>
+                            <p><strong>Mensaje:</strong> ${entrega.mensaje}</p>
+                            ${entrega.repositorio_url ? `<p><strong>Repositorio:</strong> <a href="${entrega.repositorio_url}" target="_blank">${entrega.repositorio_url}</a></p>` : ''}
+                            ${entrega.demo_url ? `<p><strong>Demo:</strong> <a href="${entrega.demo_url}" target="_blank">${entrega.demo_url}</a></p>` : ''}
+                            ${entrega.feedback_cliente ? `
+                                <div class="feedback-cliente">
+                                    <strong>Tu Feedback:</strong>
+                                    <p>${entrega.feedback_cliente}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModalHistorialCliente()">Cerrar</button>
                 </div>
             </div>
         `;
-    });
-    
-    container.innerHTML = html;
+
+        document.body.appendChild(modal);
+        setTimeout(() => modal.classList.add('show'), 10);
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al cargar entregas', 'error');
+    }
 }
 
-function sendMessage(jobId, content) {
-    const newMessage = {
-        id: Date.now().toString(),
-        jobId,
-        freelancerId: appState.currentFreelancerForChat.id,
-        sender: 'client',
-        content,
-        timestamp: new Date().toISOString()
-    };
-    
-    appState.messages.push(newMessage);
-    renderChatMessages(jobId);
-    renderMessages();
-    
-    // Scroll to bottom
-    setTimeout(() => {
-        const messagesContainer = document.getElementById('chatMessages');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 100);
-}
-
-// Initialize App
-function init() {
-    initNavigation();
-    initNotifications();
-    initMyJobsTab();
-    initJobModal();
-    initDeleteJobModal();
-    initCompleteJobModal();
-    initViewProposalsModal();
-    initFreelancersSearch();
-    initMeetingModal();
-    initChatModal();
-    
-    // Render initial content
-    renderMyJobs();
-    renderProposals();
-    renderFreelancers();
-    renderMessages();
-}
-
-// Make functions available globally
-window.openCreateJobModal = openCreateJobModal;
-window.openEditJobModal = openEditJobModal;
-window.openDeleteJobModal = openDeleteJobModal;
-window.openCompleteJobModal = openCompleteJobModal;
-window.viewJobProposals = viewJobProposals;
-window.closeViewProposalsModal = closeViewProposalsModal;
-window.acceptProposal = acceptProposal;
-window.rejectProposal = rejectProposal;
-window.openMeetingModal = openMeetingModal;
-window.openChatModal = openChatModal;
-window.markNotificationRead = markNotificationRead;
-
-// Start app when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
+function cerrarModalHistorialCliente() {
+    const modal = document.getElementById('modalHistorialEntregas');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
+    }
 }

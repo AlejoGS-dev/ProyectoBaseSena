@@ -1,216 +1,583 @@
-// Data Store
+// ==========================================
+// WORKSPACE FREELANCER - DATOS REALES DE API
+// ==========================================
+
+// Estado de la aplicación
 const appState = {
-    jobs: [
-        {
-            id: '1',
-            title: 'Diseño de Landing Page Moderna',
-            description: 'Necesito un diseñador web para crear una landing page moderna y responsive para mi startup de tecnología. Debe incluir animaciones suaves y ser mobile-first.',
-            client: 'María González',
-            clientAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-            budget: 1200,
-            duration: '2 semanas',
-            skills: ['React', 'Tailwind CSS', 'Figma'],
-            postedDate: '2024-11-20',
-            status: 'available'
-        },
-        {
-            id: '2',
-            title: 'Desarrollo de API REST con Node.js',
-            description: 'Busco desarrollador backend para crear una API REST completa con autenticación, base de datos PostgreSQL y documentación.',
-            client: 'Carlos Mendoza',
-            clientAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
-            budget: 2500,
-            duration: '4 semanas',
-            skills: ['Node.js', 'PostgreSQL', 'Express'],
-            postedDate: '2024-11-19',
-            status: 'available'
-        },
-        {
-            id: '3',
-            title: 'App Móvil de E-commerce',
-            description: 'Desarrollo de aplicación móvil para iOS y Android con sistema de pagos integrado, catálogo de productos y carrito de compras.',
-            client: 'Ana Rodríguez',
-            clientAvatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-            budget: 5000,
-            duration: '8 semanas',
-            skills: ['React Native', 'Firebase', 'Stripe'],
-            postedDate: '2024-11-18',
-            status: 'available'
-        },
-        {
-            id: '4',
-            title: 'Ilustraciones para Libro Infantil',
-            description: 'Se requieren 20 ilustraciones digitales para un libro infantil. Estilo colorido y amigable para niños de 5-8 años.',
-            client: 'Luis Martínez',
-            clientAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-            budget: 1800,
-            duration: '6 semanas',
-            skills: ['Ilustración Digital', 'Procreate', 'Adobe Illustrator'],
-            postedDate: '2024-11-17',
-            status: 'pending',
-            proposalStatus: 'pending'
-        },
-        {
-            id: '5',
-            title: 'Optimización SEO para E-commerce',
-            description: 'Necesito mejorar el posicionamiento de mi tienda online. Incluye auditoría completa, keywords research y optimización on-page.',
-            client: 'Patricia Silva',
-            clientAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
-            budget: 900,
-            duration: '3 semanas',
-            skills: ['SEO', 'Google Analytics', 'Ahrefs'],
-            postedDate: '2024-11-16',
-            status: 'active',
-            proposalStatus: 'accepted',
-            startDate: '2024-11-18'
-        },
-        {
-            id: '6',
-            title: 'Sistema de Gestión de Inventario',
-            description: 'Desarrollo de software web para gestión de inventario con reportes, alertas de stock y múltiples usuarios.',
-            client: 'Roberto Díaz',
-            clientAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
-            budget: 3200,
-            duration: '5 semanas',
-            skills: ['Python', 'Django', 'MySQL'],
-            postedDate: '2024-11-15',
-            status: 'active',
-            proposalStatus: 'accepted',
-            startDate: '2024-11-17'
-        },
-        {
-            id: '7',
-            title: 'Edición de Videos para YouTube',
-            description: 'Editor de video para canal de tecnología. Se necesitan 8 videos mensuales con efectos, transiciones y subtítulos.',
-            client: 'Jorge Ramírez',
-            clientAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
-            budget: 1500,
-            duration: 'Mensual',
-            skills: ['Premiere Pro', 'After Effects', 'DaVinci Resolve'],
-            postedDate: '2024-10-20',
-            status: 'completed',
-            proposalStatus: 'accepted',
-            startDate: '2024-10-22',
-            completedDate: '2024-11-15',
-            rating: 5
-        },
-        {
-            id: '8',
-            title: 'Branding Completo para Startup',
-            description: 'Creación de identidad de marca: logo, paleta de colores, tipografía, manual de marca y aplicaciones.',
-            client: 'Sofía Herrera',
-            clientAvatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop',
-            budget: 2200,
-            duration: '4 semanas',
-            skills: ['Branding', 'Illustrator', 'InDesign'],
-            postedDate: '2024-09-10',
-            status: 'completed',
-            proposalStatus: 'accepted',
-            startDate: '2024-09-12',
-            completedDate: '2024-10-08',
-            rating: 4
-        }
-    ],
-    messages: [
-        {
-            id: '1',
-            jobId: '5',
-            sender: 'client',
-            content: 'Hola, me gustaría discutir los detalles del proyecto. ¿Tienes experiencia con tiendas Shopify?',
-            timestamp: '2024-11-18T11:00:00'
-        },
-        {
-            id: '2',
-            jobId: '5',
-            sender: 'freelancer',
-            content: 'Hola Patricia, sí tengo amplia experiencia con Shopify. He trabajado en más de 15 proyectos similares.',
-            timestamp: '2024-11-18T11:15:00'
-        },
-        {
-            id: '3',
-            jobId: '6',
-            sender: 'client',
-            content: '¿Podríamos ajustar el presupuesto a $3500? El proyecto incluye funcionalidades adicionales.',
-            timestamp: '2024-11-20T15:45:00'
-        }
-    ],
-    notifications: [
-        {
-            id: '1',
-            type: 'proposal_accepted',
-            jobTitle: 'Optimización SEO para E-commerce',
-            message: 'Tu propuesta ha sido aceptada',
-            timestamp: '2024-11-18T10:30:00',
-            read: false
-        },
-        {
-            id: '2',
-            type: 'new_message',
-            jobTitle: 'Sistema de Gestión de Inventario',
-            message: 'Roberto Díaz te ha enviado un mensaje',
-            timestamp: '2024-11-20T15:45:00',
-            read: false
-        }
-    ],
-    currentTab: 'explore',
-    currentJobForProposal: null,
-    currentJobForChat: null,
-    currentJobToComplete: null,
-    searchQuery: ''
+    trabajosDisponibles: [],
+    misPropuestas: [],
+    trabajosActivos: [],
+    trabajosCompletados: [],
+    categorias: [],
+    currentTab: 'explore-jobs',
+    loading: false
 };
 
-// Utility Functions
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
+document.addEventListener('DOMContentLoaded', function() {
+    initNavigation();
+    initSubtabs();
+    initNotifications();
+    loadInitialData();
+});
+
+function loadInitialData() {
+    cargarCategorias();
+    cargarTrabajosDisponibles();
+    cargarMisPropuestas();
+}
+
+// ==========================================
+// FUNCIONES DE API (DATOS REALES)
+// ==========================================
+
+async function cargarTrabajosDisponibles(filtros = {}) {
+    try {
+        const params = new URLSearchParams(filtros);
+        const response = await fetch(`/api/workspace/trabajos-disponibles?${params}`);
+        const trabajos = await response.json();
+        appState.trabajosDisponibles = trabajos;
+        renderTrabajosDisponibles();
+    } catch (error) {
+        console.error('Error cargando trabajos:', error);
+        showNotification('Error al cargar trabajos', 'error');
+    }
+}
+
+async function cargarMisPropuestas() {
+    try {
+        const response = await fetch('/api/workspace/mis-propuestas');
+        const propuestas = await response.json();
+        appState.misPropuestas = propuestas;
+        renderMisPropuestas();
+    } catch (error) {
+        console.error('Error cargando propuestas:', error);
+    }
+}
+
+async function cargarTrabajosActivos() {
+    try {
+        const response = await fetch('/api/workspace/trabajos-en-progreso');
+        const trabajos = await response.json();
+        appState.trabajosActivos = trabajos;
+        renderTrabajosActivos();
+    } catch (error) {
+        console.error('Error cargando trabajos activos:', error);
+    }
+}
+
+async function cargarTrabajosCompletados() {
+    try {
+        const response = await fetch('/api/workspace/trabajos-completados');
+        const trabajos = await response.json();
+        appState.trabajosCompletados = trabajos;
+        renderTrabajosCompletados();
+    } catch (error) {
+        console.error('Error cargando trabajos completados:', error);
+    }
+}
+
+async function cargarCategorias() {
+    try {
+        const response = await fetch('/api/workspace/categorias');
+        const categorias = await response.json();
+        appState.categorias = categorias;
+    } catch (error) {
+        console.error('Error cargando categorías:', error);
+    }
+}
+
+async function enviarPropuesta(trabajoId, propuestaData) {
+    try {
+        const response = await fetch('/api/workspace/enviar-propuesta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                trabajo_id: trabajoId,
+                ...propuestaData
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Propuesta enviada exitosamente', 'success');
+            cargarTrabajosDisponibles();
+            cargarMisPropuestas();
+            cerrarModalPropuesta();
+        }
+    } catch (error) {
+        console.error('Error enviando propuesta:', error);
+        showNotification('Error al enviar propuesta', 'error');
+    }
+}
+
+async function crearCalificacion(trabajoId, evaluadoId, calificacionData) {
+    try {
+        const response = await fetch('/api/workspace/calificacion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                trabajo_id: trabajoId,
+                evaluado_id: evaluadoId,
+                ...calificacionData
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Calificación enviada exitosamente', 'success');
+            cargarTrabajosCompletados();
+        }
+    } catch (error) {
+        console.error('Error creando calificación:', error);
+        showNotification('Error al enviar calificación', 'error');
+    }
+}
+
+// ==========================================
+// RENDERIZADO DE TRABAJOS DISPONIBLES
+// ==========================================
+
+function renderTrabajosDisponibles() {
+    const container = document.getElementById('availableJobsGrid');
+    const resultsCount = document.getElementById('jobsResultsCount');
+
+    if (resultsCount) {
+        resultsCount.textContent = `${appState.trabajosDisponibles.length} trabajos disponibles`;
+    }
+
+    if (appState.trabajosDisponibles.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <p>No hay trabajos disponibles en este momento</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = appState.trabajosDisponibles.map(trabajo => `
+        <div class="job-card" onclick="abrirModalTrabajo(${trabajo.id})">
+            <div class="job-card-header">
+                <div>
+                    <h3 class="job-title">${trabajo.titulo}</h3>
+                    <p class="job-meta">
+                        <span class="job-category">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 7h-9"></path>
+                                <path d="M14 17H5"></path>
+                                <circle cx="17" cy="17" r="3"></circle>
+                                <circle cx="7" cy="7" r="3"></circle>
+                            </svg>
+                            ${trabajo.categoria?.nombre || 'Sin categoría'}
+                        </span>
+                        <span class="job-date">${formatDate(trabajo.created_at)}</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="client-info">
+                <div class="client-avatar">
+                    ${trabajo.cliente?.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                    <div class="client-name">${trabajo.cliente?.name}</div>
+                    <div class="client-stats">${trabajo.num_propuestas || 0} propuestas recibidas</div>
+                </div>
+            </div>
+
+            <p class="job-description">${trabajo.descripcion.substring(0, 150)}...</p>
+
+            <div class="job-footer">
+                <div class="job-budget">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    $${formatMoney(trabajo.presupuesto_min || trabajo.presupuesto_max)}
+                    ${trabajo.tipo_presupuesto === 'por_hora' ? '/hora' : ''}
+                </div>
+                ${trabajo.duracion_estimada ? `
+                    <div class="job-duration">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        ${trabajo.duracion_estimada} días
+                    </div>
+                ` : ''}
+            </div>
+
+            ${trabajo.habilidades && trabajo.habilidades.length > 0 ? `
+                <div class="job-skills">
+                    ${trabajo.habilidades.slice(0, 4).map(h => `
+                        <span class="skill-tag">${h.nombre}</span>
+                    `).join('')}
+                    ${trabajo.habilidades.length > 4 ? `<span class="skill-tag">+${trabajo.habilidades.length - 4}</span>` : ''}
+                </div>
+            ` : ''}
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// RENDERIZADO DE MIS PROPUESTAS
+// ==========================================
+
+function renderMisPropuestas() {
+    const container = document.getElementById('myProposalsGrid');
+
+    if (appState.misPropuestas.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <p>No has enviado propuestas aún</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = appState.misPropuestas.map(propuesta => {
+        const estadoClass = {
+            'pendiente': 'status-pending',
+            'aceptada': 'status-accepted',
+            'rechazada': 'status-rejected'
+        }[propuesta.estado] || '';
+
+        const estadoTexto = {
+            'pendiente': 'Pendiente',
+            'aceptada': 'Aceptada',
+            'rechazada': 'Rechazada'
+        }[propuesta.estado] || propuesta.estado;
+
+        return `
+            <div class="proposal-card ${estadoClass}">
+                <div class="proposal-header">
+                    <div>
+                        <h3 class="proposal-job-title">${propuesta.trabajo.titulo}</h3>
+                        <div class="proposal-client">
+                            <div class="client-avatar-small">
+                                ${propuesta.trabajo.cliente?.name.charAt(0).toUpperCase()}
+                            </div>
+                            <span>${propuesta.trabajo.cliente?.name}</span>
+                        </div>
+                    </div>
+                    <div class="proposal-status">
+                        <span class="badge badge-${propuesta.estado}">${estadoTexto}</span>
+                    </div>
+                </div>
+
+                <div class="proposal-details">
+                    <div class="proposal-detail-item">
+                        <span class="detail-label">Tu propuesta:</span>
+                        <span class="detail-value">$${formatMoney(propuesta.tarifa_propuesta)}</span>
+                    </div>
+                    <div class="proposal-detail-item">
+                        <span class="detail-label">Tiempo estimado:</span>
+                        <span class="detail-value">${propuesta.tiempo_estimado} días</span>
+                    </div>
+                    <div class="proposal-detail-item">
+                        <span class="detail-label">Enviada:</span>
+                        <span class="detail-value">${formatDate(propuesta.created_at)}</span>
+                    </div>
+                </div>
+
+                <div class="proposal-letter">
+                    <p>${propuesta.carta_presentacion.substring(0, 200)}...</p>
+                </div>
+
+                ${propuesta.estado === 'aceptada' ? `
+                    <div class="proposal-accepted-info">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <span>¡Felicidades! Tu propuesta fue aceptada</span>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }).join('');
+}
+
+// ==========================================
+// RENDERIZADO DE TRABAJOS ACTIVOS
+// ==========================================
+
+function renderTrabajosActivos() {
+    const container = document.getElementById('activeJobsGrid');
+
+    if (!appState.trabajosActivos || appState.trabajosActivos.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <p>No tienes trabajos en progreso</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = appState.trabajosActivos.map(trabajo => {
+        const estadoBadge = getEstadoBadge(trabajo.estado);
+        const puedeEntregar = ['en_progreso', 'requiere_cambios'].includes(trabajo.estado);
+        const enRevision = trabajo.estado === 'en_revision';
+
+        return `
+        <div class="job-card active">
+            <div class="job-card-header">
+                <div>
+                    <h3 class="job-title">${trabajo.titulo}</h3>
+                    <p class="job-meta">
+                        <span class="job-category">${trabajo.categoria?.nombre || 'Sin categoría'}</span>
+                        ${estadoBadge}
+                    </p>
+                </div>
+            </div>
+
+            <div class="client-info">
+                <div class="client-avatar">
+                    ${trabajo.cliente?.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                    <div class="client-name">${trabajo.cliente?.name}</div>
+                    <div class="client-stats">Iniciado: ${formatDate(trabajo.asignado_en || trabajo.created_at)}</div>
+                </div>
+            </div>
+
+            <p class="job-description">${trabajo.descripcion.substring(0, 120)}...</p>
+
+            <div class="job-footer">
+                <div class="job-budget">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    $${formatMoney(trabajo.presupuesto_min || trabajo.presupuesto_max)}
+                </div>
+                <div class="job-actions">
+                    ${enRevision ? `
+                        <button class="btn btn-secondary btn-sm" disabled>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            En Revisión
+                        </button>
+                    ` : puedeEntregar ? `
+                        <button class="btn btn-primary btn-sm" onclick="abrirModalEntregarTrabajo(${trabajo.id})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Entregar Trabajo
+                        </button>
+                    ` : ''}
+                    <button class="btn btn-secondary btn-sm" onclick="verHistorialEntregas(${trabajo.id})">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Ver Entregas
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    }).join('');
+}
+
+// ==========================================
+// RENDERIZADO DE TRABAJOS COMPLETADOS
+// ==========================================
+
+function renderTrabajosCompletados() {
+    const container = document.getElementById('completedJobsGrid');
+
+    if (!appState.trabajosCompletados || appState.trabajosCompletados.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <p>No tienes trabajos completados</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = appState.trabajosCompletados.map(trabajo => {
+        const miCalificacion = trabajo.calificaciones?.find(c => c.evaluador_id === trabajo.freelancer_id);
+        const calificacionCliente = trabajo.calificaciones?.find(c => c.evaluado_id === trabajo.cliente_id);
+
+        return `
+            <div class="job-card completed">
+                <div class="job-card-header">
+                    <div>
+                        <h3 class="job-title">${trabajo.titulo}</h3>
+                        <p class="job-meta">
+                            <span class="job-category">${trabajo.categoria?.nombre || 'Sin categoría'}</span>
+                            <span class="badge badge-green">Completado</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="client-info">
+                    <div class="client-avatar">
+                        ${trabajo.cliente?.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                        <div class="client-name">${trabajo.cliente?.name}</div>
+                        <div class="client-stats">Completado: ${formatDate(trabajo.completado_en)}</div>
+                    </div>
+                </div>
+
+                ${miCalificacion ? `
+                    <div class="rating-received">
+                        <div class="rating-header">Calificación recibida:</div>
+                        <div class="rating-stars">${renderStars(miCalificacion.calificacion)}</div>
+                        ${miCalificacion.comentario ? `<p class="rating-comment">"${miCalificacion.comentario}"</p>` : ''}
+                    </div>
+                ` : ''}
+
+                <div class="job-footer">
+                    <div class="job-budget">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        $${formatMoney(trabajo.presupuesto_min || trabajo.presupuesto_max)}
+                    </div>
+                    ${!calificacionCliente ? `
+                        <button class="btn-primary-small" onclick="abrirModalCalificar(${trabajo.id}, ${trabajo.cliente_id})">
+                            Calificar Cliente
+                        </button>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ==========================================
+// MODALES
+// ==========================================
+
+function abrirModalTrabajo(trabajoId) {
+    const trabajo = appState.trabajosDisponibles.find(t => t.id === trabajoId);
+    if (!trabajo) return;
+
+    // Guardar trabajo actual
+    window.currentJobId = trabajoId;
+
+    // Mostrar modal de detalles del trabajo
+    const modal = document.getElementById('jobDetailModal');
+    if (modal) {
+        // Actualizar contenido del modal
+        document.getElementById('modalJobTitle').textContent = trabajo.titulo;
+        document.getElementById('modalJobDescription').textContent = trabajo.descripcion;
+        document.getElementById('modalJobBudget').textContent = `$${formatMoney(trabajo.presupuesto_min || trabajo.presupuesto_max)}`;
+        document.getElementById('modalJobCategory').textContent = trabajo.categoria?.nombre || 'Sin categoría';
+
+        modal.style.display = 'block';
+    }
+}
+
+function abrirModalPropuesta() {
+    const modal = document.getElementById('proposalModal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+function cerrarModalPropuesta() {
+    const modal = document.getElementById('proposalModal');
+    if (modal) {
+        modal.style.display = 'none';
+        // Limpiar formulario
+        document.getElementById('proposalForm')?.reset();
+    }
+}
+
+function submitPropuesta(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const propuestaData = {
+        carta_presentacion: formData.get('carta_presentacion'),
+        tarifa_propuesta: parseFloat(formData.get('tarifa_propuesta')),
+        tiempo_estimado: parseInt(formData.get('tiempo_estimado')),
+        tipo_tarifa: formData.get('tipo_tarifa') || 'fijo'
+    };
+
+    enviarPropuesta(window.currentJobId, propuestaData);
+}
+
+function abrirModalCalificar(trabajoId, clienteId) {
+    const rating = prompt('Calificación (1-5):');
+    const comentario = prompt('Comentario:');
+
+    if (rating && comentario) {
+        crearCalificacion(trabajoId, clienteId, {
+            calificacion: parseInt(rating),
+            comentario: comentario,
+            comunicacion: parseInt(rating),
+            calidad_trabajo: parseInt(rating),
+            cumplimiento_plazo: parseInt(rating),
+            profesionalismo: parseInt(rating)
+        });
+    }
+}
+
+// ==========================================
+// UTILIDADES
+// ==========================================
+
 function formatDate(dateString) {
+    if (!dateString) return '';
     const date = new Date(dateString);
     const now = new Date();
     const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-    
+
     if (diffInDays === 0) return 'Hoy';
     if (diffInDays === 1) return 'Ayer';
-    return `Hace ${diffInDays} días`;
+    if (diffInDays < 7) return `Hace ${diffInDays} días`;
+    return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-function formatFullDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
-}
-
-function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffInMinutes = Math.floor((now - date) / (1000 * 60));
-    
-    if (diffInMinutes < 60) return `Hace ${diffInMinutes} min`;
-    if (diffInMinutes < 1440) return `Hace ${Math.floor(diffInMinutes / 60)} h`;
-    return `Hace ${Math.floor(diffInMinutes / 1440)} días`;
-}
-
-function formatTime(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-}
-
-function formatChatDate(timestamp) {
-    const date = new Date(timestamp);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    if (date.toDateString() === today.toDateString()) {
-        return 'Hoy';
-    } else if (date.toDateString() === yesterday.toDateString()) {
-        return 'Ayer';
-    } else {
-        return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-    }
+function formatMoney(amount) {
+    return new Intl.NumberFormat('es-ES', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
 }
 
 function renderStars(rating) {
     let html = '<div class="stars">';
     for (let i = 1; i <= 5; i++) {
-        const filled = i <= rating ? 'filled' : '';
+        const filled = i <= Math.round(rating) ? 'filled' : '';
         html += `
-            <svg class="star ${filled}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="star ${filled}" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
         `;
@@ -219,10 +586,13 @@ function renderStars(rating) {
     return html;
 }
 
-// Navigation
+// ==========================================
+// NAVEGACIÓN
+// ==========================================
+
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-btn, .nav-btn-mobile');
-    
+
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const tab = btn.getAttribute('data-tab');
@@ -233,7 +603,7 @@ function initNavigation() {
 
 function switchTab(tab) {
     appState.currentTab = tab;
-    
+
     // Update active nav buttons
     document.querySelectorAll('.nav-btn, .nav-btn-mobile').forEach(btn => {
         if (btn.getAttribute('data-tab') === tab) {
@@ -242,842 +612,365 @@ function switchTab(tab) {
             btn.classList.remove('active');
         }
     });
-    
+
     // Show/hide tab content
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
-    
+
     const tabMap = {
-        'explore': 'exploreTab',
-        'my-jobs': 'myJobsTab',
-        'history': 'historyTab',
+        'explore-jobs': 'exploreJobsTab',
+        'my-proposals': 'myProposalsTab',
+        'active-jobs': 'activeJobsTab',
+        'completed-jobs': 'completedJobsTab',
         'messages': 'messagesTab'
     };
-    
-    document.getElementById(tabMap[tab]).classList.add('active');
-    
-    // Render content
-    if (tab === 'explore') renderExploreJobs();
-    if (tab === 'my-jobs') renderMyJobs();
-    if (tab === 'history') renderHistory();
-    if (tab === 'messages') renderMessages();
-}
 
-// Notifications
-function initNotifications() {
-    const notificationBtn = document.getElementById('notificationBtn');
-    const notificationsDropdown = document.getElementById('notificationsDropdown');
-    
-    notificationBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isVisible = notificationsDropdown.style.display === 'block';
-        notificationsDropdown.style.display = isVisible ? 'none' : 'block';
-        if (!isVisible) renderNotifications();
-    });
-    
-    document.addEventListener('click', (e) => {
-        if (!notificationsDropdown.contains(e.target) && e.target !== notificationBtn) {
-            notificationsDropdown.style.display = 'none';
-        }
-    });
-    
-    updateNotificationBadge();
-}
-
-function renderNotifications() {
-    const content = document.getElementById('notificationsContent');
-    
-    if (appState.notifications.length === 0) {
-        content.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--gray-500);">No tienes notificaciones</div>';
-        return;
+    const tabId = tabMap[tab];
+    if (tabId) {
+        document.getElementById(tabId)?.classList.add('active');
     }
-    
-    const getIcon = (type) => {
-        switch (type) {
-            case 'proposal_accepted': return '✅';
-            case 'proposal_rejected': return '❌';
-            case 'new_message': return '💬';
-            default: return '🔔';
-        }
-    };
-    
-    content.innerHTML = appState.notifications.map(notif => `
-        <div class="notification-item ${!notif.read ? 'unread' : ''}" onclick="markNotificationRead('${notif.id}')">
-            <span class="notification-icon">${getIcon(notif.type)}</span>
-            <div class="notification-content">
-                <p class="notification-message">${notif.message}</p>
-                <p class="notification-job">${notif.jobTitle}</p>
-                <p class="notification-time">${formatTimestamp(notif.timestamp)}</p>
-            </div>
-            ${!notif.read ? '<div class="notification-unread-dot"></div>' : ''}
-        </div>
-    `).join('');
-}
 
-function markNotificationRead(id) {
-    const notif = appState.notifications.find(n => n.id === id);
-    if (notif) {
-        notif.read = true;
-        renderNotifications();
-        updateNotificationBadge();
+    // Cargar datos según tab
+    if (tab === 'active-jobs' && appState.trabajosActivos.length === 0) {
+        cargarTrabajosActivos();
+    }
+    if (tab === 'completed-jobs' && appState.trabajosCompletados.length === 0) {
+        cargarTrabajosCompletados();
     }
 }
 
-function updateNotificationBadge() {
-    const badge = document.getElementById('notificationBadge');
-    const unreadCount = appState.notifications.filter(n => !n.read).length;
-    
-    if (unreadCount > 0) {
-        badge.textContent = unreadCount;
-        badge.style.display = 'flex';
-    } else {
-        badge.style.display = 'none';
-    }
-}
+function initSubtabs() {
+    const subtabButtons = document.querySelectorAll('.tab-btn');
 
-// Explore Jobs
-function initExploreJobs() {
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        appState.searchQuery = e.target.value.toLowerCase();
-        renderExploreJobs();
-    });
-}
-
-function renderExploreJobs() {
-    const availableJobs = appState.jobs.filter(job => job.status === 'available');
-    const filteredJobs = availableJobs.filter(job => {
-        const query = appState.searchQuery;
-        return job.title.toLowerCase().includes(query) ||
-               job.description.toLowerCase().includes(query) ||
-               job.skills.some(skill => skill.toLowerCase().includes(query));
-    });
-    
-    const resultsCount = document.getElementById('resultsCount');
-    resultsCount.textContent = `${filteredJobs.length} ${filteredJobs.length === 1 ? 'trabajo disponible' : 'trabajos disponibles'}`;
-    
-    const jobsGrid = document.getElementById('jobsGrid');
-    
-    if (filteredJobs.length === 0) {
-        jobsGrid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No se encontraron trabajos</h3>
-                <p class="empty-description">Intenta ajustar tu búsqueda o filtros</p>
-            </div>
-        `;
-        return;
-    }
-    
-    jobsGrid.innerHTML = filteredJobs.map(job => `
-        <div class="job-card">
-            <div class="job-card-header">
-                <div class="job-client">
-                    <img src="${job.clientAvatar}" alt="${job.client}" class="client-avatar">
-                    <div class="client-info">
-                        <h3>Cliente</h3>
-                        <p>${job.client}</p>
-                    </div>
-                </div>
-                <span class="badge date">${formatDate(job.postedDate)}</span>
-            </div>
-            
-            <h2 class="job-title">${job.title}</h2>
-            <p class="job-description">${job.description}</p>
-            
-            <div class="job-details">
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Presupuesto</p>
-                        <p>$${job.budget.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Duración</p>
-                        <p class="text-dark">${job.duration}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="job-skills">
-                <p class="skills-label">Habilidades requeridas</p>
-                <div class="skills-list">
-                    ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                </div>
-            </div>
-            
-            <button class="btn-primary" onclick="openProposalModal('${job.id}')">
-                Enviar Propuesta
-            </button>
-        </div>
-    `).join('');
-}
-
-// Proposal Modal
-function openProposalModal(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobForProposal = job;
-    
-    document.getElementById('proposalJobTitle').textContent = job.title;
-    document.getElementById('proposalJobSummary').innerHTML = `
-        <div class="summary-client">
-            <img src="${job.clientAvatar}" alt="${job.client}" class="summary-avatar">
-            <div class="summary-info">
-                <p>Cliente</p>
-                <p>${job.client}</p>
-            </div>
-        </div>
-        <p class="summary-budget">Presupuesto sugerido: <span>$${job.budget.toLocaleString()}</span></p>
-    `;
-    
-    document.getElementById('proposalRate').value = job.budget;
-    document.getElementById('proposalCover').value = '';
-    document.getElementById('coverLetterCount').textContent = '0';
-    
-    document.getElementById('proposalModal').classList.add('active');
-}
-
-function initProposalModal() {
-    const modal = document.getElementById('proposalModal');
-    const form = document.getElementById('proposalForm');
-    const coverInput = document.getElementById('proposalCover');
-    const closeBtn = document.getElementById('closeProposalModal');
-    const cancelBtn = document.getElementById('cancelProposal');
-    
-    coverInput.addEventListener('input', (e) => {
-        document.getElementById('coverLetterCount').textContent = e.target.value.length;
-    });
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const rate = parseFloat(document.getElementById('proposalRate').value);
-        const cover = document.getElementById('proposalCover').value;
-        
-        submitProposal(appState.currentJobForProposal.id, { rate, cover });
-        modal.classList.remove('active');
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
-
-function submitProposal(jobId, proposal) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    if (job) {
-        job.status = 'pending';
-        job.proposalStatus = 'pending';
-        renderExploreJobs();
-        renderMyJobs();
-        
-        // Show success message
-        alert('¡Propuesta enviada exitosamente!');
-    }
-}
-
-// My Jobs
-function initMyJobs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    
-    tabButtons.forEach(btn => {
+    subtabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const subtab = btn.getAttribute('data-subtab');
-            switchMyJobsTab(subtab);
+
+            // Update active subtab button
+            subtabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Show/hide subtab content
+            document.querySelectorAll('.subtab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const contentId = document.getElementById(`${subtab}Content`);
+            if (contentId) {
+                contentId.classList.add('active');
+            }
         });
     });
 }
 
-function switchMyJobsTab(subtab) {
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        if (btn.getAttribute('data-subtab') === subtab) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
+// ==========================================
+// NOTIFICACIONES
+// ==========================================
+
+function initNotifications() {
+    const notificationBtn = document.getElementById('notificationBtn');
+    const dropdown = document.getElementById('notificationsDropdown');
+
+    if (notificationBtn) {
+        notificationBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (dropdown) {
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+    }
+
+    document.addEventListener('click', () => {
+        if (dropdown) dropdown.style.display = 'none';
+    });
+}
+
+function showNotification(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Búsqueda de trabajos
+const searchInput = document.getElementById('jobSearchInput');
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        if (query.length > 2) {
+            const filtered = appState.trabajosDisponibles.filter(t =>
+                t.titulo.toLowerCase().includes(query) ||
+                t.descripcion.toLowerCase().includes(query) ||
+                (t.categoria?.nombre || '').toLowerCase().includes(query)
+            );
+            renderTrabajosFiltered(filtered);
+        } else if (query.length === 0) {
+            renderTrabajosDisponibles();
         }
     });
-    
-    document.querySelectorAll('.subtab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    const contentMap = {
-        'active': 'activeJobsContent',
-        'pending': 'pendingJobsContent'
+}
+
+function renderTrabajosFiltered(filtered) {
+    const temp = appState.trabajosDisponibles;
+    appState.trabajosDisponibles = filtered;
+    renderTrabajosDisponibles();
+    appState.trabajosDisponibles = temp;
+}
+
+// ==========================================
+// HELPER FUNCTIONS
+// ==========================================
+
+function getEstadoBadge(estado) {
+    const badges = {
+        'en_progreso': '<span class="badge badge-yellow">En Progreso</span>',
+        'en_revision': '<span class="badge badge-blue">En Revisión</span>',
+        'requiere_cambios': '<span class="badge badge-red">Requiere Cambios</span>',
+        'completado': '<span class="badge badge-green">Completado</span>',
+        'publicado': '<span class="badge badge-blue">Publicado</span>',
+        'cancelado': '<span class="badge badge-gray">Cancelado</span>'
     };
-    
-    document.getElementById(contentMap[subtab]).classList.add('active');
+    return badges[estado] || '<span class="badge badge-gray">' + estado + '</span>';
 }
 
-function renderMyJobs() {
-    const activeJobs = appState.jobs.filter(job => job.proposalStatus === 'accepted');
-    const pendingJobs = appState.jobs.filter(job => job.proposalStatus === 'pending');
-    
-    document.getElementById('activeJobsCount').textContent = activeJobs.length;
-    document.getElementById('pendingJobsCount').textContent = pendingJobs.length;
-    
-    renderActiveJobs(activeJobs);
-    renderPendingJobs(pendingJobs);
-}
+// ==========================================
+// MODAL ENTREGAR TRABAJO
+// ==========================================
 
-function renderActiveJobs(jobs) {
-    const grid = document.getElementById('activeJobsGrid');
-    
-    if (jobs.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No tienes trabajos activos</h3>
-                <p class="empty-description">Explora trabajos disponibles y envía propuestas</p>
+function abrirModalEntregarTrabajo(trabajoId) {
+    const trabajo = appState.trabajosActivos.find(t => t.id === trabajoId);
+    if (!trabajo) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'modalEntregarTrabajo';
+
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Entregar Trabajo: ${trabajo.titulo}</h2>
+                <button class="modal-close" onclick="cerrarModalEntregarTrabajo()">&times;</button>
             </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = jobs.map(job => `
-        <div class="job-card">
-            <div class="job-card-header">
-                <div class="job-client">
-                    <img src="${job.clientAvatar}" alt="${job.client}" class="client-avatar">
-                    <div class="client-info">
-                        <h3>Cliente</h3>
-                        <p>${job.client}</p>
-                    </div>
-                </div>
-                <span class="badge active">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    Activo
-                </span>
-            </div>
-            
-            <h2 class="job-title">${job.title}</h2>
-            <p class="job-description">${job.description}</p>
-            
-            <div class="job-details">
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Valor</p>
-                        <p>$${job.budget.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Duración</p>
-                        <p class="text-dark">${job.duration}</p>
-                    </div>
-                </div>
-                
-                ${job.startDate ? `
-                    <div class="job-detail">
-                        <div class="detail-content">
-                            <p>Inicio</p>
-                            <p class="text-dark">${formatFullDate(job.startDate)}</p>
-                        </div>
+            <div class="modal-body">
+                ${trabajo.estado === 'requiere_cambios' ? `
+                    <div class="alert alert-warning">
+                        <strong>Correcciones Solicitadas</strong>
+                        <p>El cliente ha solicitado cambios en tu entrega anterior.</p>
                     </div>
                 ` : ''}
-            </div>
-            
-            <div class="job-skills">
-                <div class="skills-list">
-                    ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                </div>
-            </div>
-            
-            <div class="job-actions">
-                <button class="btn-outline" onclick="openChatModal('${job.id}')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    Chat
-                </button>
-                <button class="btn-primary" onclick="openCompleteJobModal('${job.id}')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                    Marcar Completado
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
+                <form id="formEntregarTrabajo">
+                    <div class="form-group">
+                        <label for="entregaMensaje">Mensaje de Entrega *</label>
+                        <textarea
+                            id="entregaMensaje"
+                            name="mensaje"
+                            rows="4"
+                            required
+                            minlength="20"
+                            placeholder="Describe lo que has implementado, características principales, etc."
+                        ></textarea>
+                        <small>Mínimo 20 caracteres</small>
+                    </div>
 
-function renderPendingJobs(jobs) {
-    const grid = document.getElementById('pendingJobsGrid');
-    
-    if (jobs.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                </div>
-                <h3 class="empty-title">No tienes propuestas pendientes</h3>
-                <p class="empty-description">Envía propuestas a trabajos que te interesen</p>
-            </div>
-        `;
-        return;
-    }
-    
-    grid.innerHTML = jobs.map(job => `
-        <div class="job-card">
-            <div class="job-card-header">
-                <div class="job-client">
-                    <img src="${job.clientAvatar}" alt="${job.client}" class="client-avatar">
-                    <div class="client-info">
-                        <h3>Cliente</h3>
-                        <p>${job.client}</p>
+                    <div class="form-group">
+                        <label for="entregaRepositorio">URL del Repositorio</label>
+                        <input
+                            type="url"
+                            id="entregaRepositorio"
+                            name="repositorio_url"
+                            placeholder="https://github.com/usuario/proyecto"
+                        />
+                        <small>GitHub, GitLab, Bitbucket, etc.</small>
                     </div>
-                </div>
-                <span class="badge pending">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    Pendiente
-                </span>
-            </div>
-            
-            <h2 class="job-title">${job.title}</h2>
-            <p class="job-description">${job.description}</p>
-            
-            <div class="job-details">
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Valor</p>
-                        <p>$${job.budget.toLocaleString()}</p>
-                    </div>
-                </div>
-                
-                <div class="job-detail">
-                    <div class="detail-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <div class="detail-content">
-                        <p>Duración</p>
-                        <p class="text-dark">${job.duration}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="job-skills">
-                <div class="skills-list">
-                    ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                </div>
-            </div>
-            
-            <div class="pending-alert">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <div class="pending-alert-content">
-                    <p>Propuesta enviada</p>
-                    <p>Esperando respuesta del cliente</p>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
 
-// Chat Modal
-function openChatModal(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobForChat = job;
-    
-    document.getElementById('chatHeaderInfo').innerHTML = `
-        <img src="${job.clientAvatar}" alt="${job.client}" class="chat-header-avatar">
-        <div>
-            <div class="chat-header-client">${job.client}</div>
-            <div class="chat-header-job">${job.title}</div>
+                    <div class="form-group">
+                        <label for="entregaDemo">URL de Demo</label>
+                        <input
+                            type="url"
+                            id="entregaDemo"
+                            name="demo_url"
+                            placeholder="https://miproyecto.com"
+                        />
+                        <small>Link al proyecto en vivo (opcional)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Archivos Adjuntos (opcional)</label>
+                        <div class="file-upload-area">
+                            <p>Arrastra archivos aquí o haz clic para seleccionar</p>
+                            <input type="file" id="entregaArchivos" multiple style="display: none;" />
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('entregaArchivos').click()">
+                                Seleccionar Archivos
+                            </button>
+                        </div>
+                        <div id="archivosSeleccionados"></div>
+                    </div>
+
+                    <input type="hidden" id="trabajoId" value="${trabajoId}" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="cerrarModalEntregarTrabajo()">Cancelar</button>
+                <button class="btn btn-primary" onclick="submitEntregarTrabajo()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Enviar Entrega
+                </button>
+            </div>
         </div>
     `;
-    
-    renderChatMessages(jobId);
-    document.getElementById('chatModal').classList.add('active');
-    
-    // Scroll to bottom
-    setTimeout(() => {
-        const messagesContainer = document.getElementById('chatMessages');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 100);
-}
 
-function initChatModal() {
-    const modal = document.getElementById('chatModal');
-    const form = document.getElementById('chatForm');
-    const closeBtn = document.getElementById('closeChatModal');
-    
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('chatInput');
-        const content = input.value.trim();
-        
-        if (content && appState.currentJobForChat) {
-            sendMessage(appState.currentJobForChat.id, content);
-            input.value = '';
-        }
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('show'), 10);
 
-function renderChatMessages(jobId) {
-    const messages = appState.messages.filter(msg => msg.jobId === jobId);
-    const container = document.getElementById('chatMessages');
-    
-    if (messages.length === 0) {
-        container.innerHTML = `
-            <div class="chat-empty">
-                <div class="chat-empty-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </div>
-                <p>No hay mensajes aún</p>
-                <p>Inicia la conversación con el cliente</p>
+    // Manejar archivos
+    document.getElementById('entregaArchivos').addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        const container = document.getElementById('archivosSeleccionados');
+        container.innerHTML = files.map(f => `
+            <div class="file-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                </svg>
+                ${f.name} (${(f.size / 1024).toFixed(1)} KB)
             </div>
-        `;
+        `).join('');
+    });
+}
+
+function cerrarModalEntregarTrabajo() {
+    const modal = document.getElementById('modalEntregarTrabajo');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+async function submitEntregarTrabajo() {
+    const form = document.getElementById('formEntregarTrabajo');
+    if (!form.checkValidity()) {
+        form.reportValidity();
         return;
     }
-    
-    let html = '';
-    let lastDate = '';
-    
-    messages.forEach((msg, index) => {
-        const msgDate = formatChatDate(msg.timestamp);
-        
-        if (msgDate !== lastDate) {
-            html += `
-                <div class="chat-date-divider">
-                    <span class="chat-date-label">${msgDate}</span>
-                </div>
-            `;
-            lastDate = msgDate;
+
+    const trabajoId = document.getElementById('trabajoId').value;
+    const mensaje = document.getElementById('entregaMensaje').value;
+    const repositorioUrl = document.getElementById('entregaRepositorio').value;
+    const demoUrl = document.getElementById('entregaDemo').value;
+    const archivos = Array.from(document.getElementById('entregaArchivos').files || [])
+        .map(f => ({ name: f.name, size: f.size }));
+
+    try {
+        const response = await fetch('/api/workspace/entregar-trabajo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                trabajo_id: trabajoId,
+                mensaje: mensaje,
+                repositorio_url: repositorioUrl || null,
+                demo_url: demoUrl || null,
+                archivos: archivos.length > 0 ? archivos : null
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Trabajo entregado exitosamente. El cliente será notificado para revisar.', 'success');
+            cerrarModalEntregarTrabajo();
+            cargarTrabajosActivos();
+        } else {
+            showNotification(data.message || 'Error al entregar trabajo', 'error');
         }
-        
-        const job = appState.currentJobForChat;
-        html += `
-            <div class="chat-message ${msg.sender}">
-                <div class="chat-message-content">
-                    ${msg.sender === 'client' ? `<p class="chat-message-sender">${job.client}</p>` : ''}
-                    <div class="chat-message-bubble">
-                        <p class="chat-message-text">${msg.content}</p>
-                    </div>
-                    <p class="chat-message-time">${formatTime(msg.timestamp)}</p>
-                </div>
-            </div>
-        `;
-    });
-    
-    container.innerHTML = html;
-}
-
-function sendMessage(jobId, content) {
-    const newMessage = {
-        id: Date.now().toString(),
-        jobId,
-        sender: 'freelancer',
-        content,
-        timestamp: new Date().toISOString()
-    };
-    
-    appState.messages.push(newMessage);
-    renderChatMessages(jobId);
-    renderMessages();
-    
-    // Scroll to bottom
-    setTimeout(() => {
-        const messagesContainer = document.getElementById('chatMessages');
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 100);
-}
-
-// Complete Job Modal
-function openCompleteJobModal(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    appState.currentJobToComplete = job;
-    
-    document.getElementById('completeJobDescription').textContent = 
-        `Esta acción moverá el trabajo "${job.title}" a tu historial. Asegúrate de que el cliente esté satisfecho antes de marcarlo como completado.`;
-    
-    document.getElementById('completeJobModal').classList.add('active');
-}
-
-function initCompleteJobModal() {
-    const modal = document.getElementById('completeJobModal');
-    const closeBtn = document.getElementById('closeCompleteJobModal');
-    const cancelBtn = document.getElementById('cancelCompleteJob');
-    const confirmBtn = document.getElementById('confirmCompleteJob');
-    
-    confirmBtn.addEventListener('click', () => {
-        if (appState.currentJobToComplete) {
-            completeJob(appState.currentJobToComplete.id);
-            modal.classList.remove('active');
-        }
-    });
-    
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-    });
-}
-
-function completeJob(jobId) {
-    const job = appState.jobs.find(j => j.id === jobId);
-    if (job) {
-        job.status = 'completed';
-        job.completedDate = new Date().toISOString();
-        job.rating = Math.floor(Math.random() * 2) + 4; // Random rating 4-5
-        
-        renderMyJobs();
-        renderHistory();
-        
-        alert('¡Trabajo marcado como completado!');
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al entregar trabajo', 'error');
     }
 }
 
-// History
-function renderHistory() {
-    const completedJobs = appState.jobs.filter(job => job.status === 'completed');
-    
-    const totalEarnings = completedJobs.reduce((sum, job) => sum + job.budget, 0);
-    const ratingsAvg = completedJobs.filter(job => job.rating).reduce((sum, job) => sum + (job.rating || 0), 0) / completedJobs.filter(job => job.rating).length || 0;
-    
-    document.getElementById('completedJobsCount').textContent = completedJobs.length;
-    document.getElementById('totalEarnings').textContent = `$${totalEarnings.toLocaleString()}`;
-    document.getElementById('averageRating').textContent = ratingsAvg.toFixed(1);
-    
-    const list = document.getElementById('historyJobsList');
-    
-    if (completedJobs.length === 0) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
+// ==========================================
+// VER HISTORIAL DE ENTREGAS
+// ==========================================
+
+async function verHistorialEntregas(trabajoId) {
+    try {
+        const response = await fetch(`/api/workspace/entregas/${trabajoId}`);
+        const entregas = await response.json();
+
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.id = 'modalHistorialEntregas';
+
+        modal.innerHTML = `
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>Historial de Entregas</h2>
+                    <button class="modal-close" onclick="cerrarModalHistorial()">&times;</button>
                 </div>
-                <h3 class="empty-title">Sin historial aún</h3>
-                <p class="empty-description">Completa tus primeros trabajos para verlos aquí</p>
-            </div>
-        `;
-        return;
-    }
-    
-    list.innerHTML = completedJobs.map(job => `
-        <div class="history-job-card">
-            <div class="history-job-content">
-                <div class="history-job-left">
-                    <div class="job-client" style="margin-bottom: 0.75rem;">
-                        <img src="${job.clientAvatar}" alt="${job.client}" class="client-avatar" style="width: 40px; height: 40px;">
-                        <div class="client-info">
-                            <p style="font-weight: 600; color: var(--gray-900);">${job.client}</p>
-                            <p style="font-size: 0.875rem; color: var(--gray-600);">Cliente</p>
+                <div class="modal-body">
+                    ${entregas.length === 0 ? `
+                        <div class="empty-state">
+                            <p>No hay entregas registradas para este trabajo</p>
                         </div>
-                    </div>
-                    
-                    <h3 class="job-title" style="font-size: 1.125rem; margin-bottom: 0.75rem;">${job.title}</h3>
-                    
-                    <div class="skills-list" style="margin-bottom: 0.75rem;">
-                        ${job.skills.map(skill => `<span class="skill-badge">${skill}</span>`).join('')}
-                    </div>
-                    
-                    <div class="history-dates">
-                        ${job.startDate ? `
-                            <div class="history-date">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                                Inicio: ${formatFullDate(job.startDate)}
+                    ` : entregas.map(entrega => `
+                        <div class="entrega-item ${entrega.estado}">
+                            <div class="entrega-header">
+                                <div>
+                                    <strong>Revisión #${entrega.revision}</strong>
+                                    <span class="badge badge-${entrega.estado === 'aprobada' ? 'green' : entrega.estado === 'rechazada' ? 'red' : 'blue'}">
+                                        ${entrega.estado === 'aprobada' ? 'Aprobada' : entrega.estado === 'rechazada' ? 'Rechazada' : 'Pendiente Revisión'}
+                                    </span>
+                                </div>
+                                <small>${formatDate(entrega.created_at)}</small>
                             </div>
-                        ` : ''}
-                        ${job.completedDate ? `
-                            <div class="history-date">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                                Finalizado: ${formatFullDate(job.completedDate)}
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-                
-                <div class="history-job-right">
-                    <span class="badge completed">Completado</span>
-                    
-                    <div class="history-earnings">
-                        <p>Ganancia</p>
-                        <p>$${job.budget.toLocaleString()}</p>
-                    </div>
-                    
-                    ${job.rating ? `
-                        <div class="rating">
-                            <p>Calificación</p>
-                            ${renderStars(job.rating)}
+                            <p><strong>Mensaje:</strong> ${entrega.mensaje}</p>
+                            ${entrega.repositorio_url ? `<p><strong>Repositorio:</strong> <a href="${entrega.repositorio_url}" target="_blank">${entrega.repositorio_url}</a></p>` : ''}
+                            ${entrega.demo_url ? `<p><strong>Demo:</strong> <a href="${entrega.demo_url}" target="_blank">${entrega.demo_url}</a></p>` : ''}
+                            ${entrega.feedback_cliente ? `
+                                <div class="feedback-cliente">
+                                    <strong>Feedback del Cliente:</strong>
+                                    <p>${entrega.feedback_cliente}</p>
+                                </div>
+                            ` : ''}
                         </div>
-                    ` : ''}
+                    `).join('')}
                 </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Messages
-function renderMessages() {
-    const jobsWithMessages = appState.jobs.filter(job => 
-        appState.messages.some(msg => msg.jobId === job.id) &&
-        (job.status === 'active' || job.status === 'pending')
-    );
-    
-    const grid = document.getElementById('messagesGrid');
-    
-    if (jobsWithMessages.length === 0) {
-        grid.innerHTML = `
-            <div class="empty-state" style="grid-column: 1 / -1;">
-                <div class="empty-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModalHistorial()">Cerrar</button>
                 </div>
-                <h3 class="empty-title">No tienes conversaciones</h3>
-                <p class="empty-description">Inicia un chat desde tus trabajos activos</p>
             </div>
         `;
-        return;
+
+        document.body.appendChild(modal);
+        setTimeout(() => modal.classList.add('show'), 10);
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error al cargar entregas', 'error');
     }
-    
-    grid.innerHTML = jobsWithMessages.map(job => {
-        const jobMessages = appState.messages.filter(msg => msg.jobId === job.id);
-        const lastMessage = jobMessages[jobMessages.length - 1];
-        const unreadCount = jobMessages.filter(msg => msg.sender === 'client').length;
-        
-        return `
-            <div class="message-card" onclick="openChatModal('${job.id}')">
-                <div class="message-card-content">
-                    <div class="message-avatar-wrapper">
-                        <img src="${job.clientAvatar}" alt="${job.client}" class="message-avatar">
-                        ${unreadCount > 0 ? `<span class="message-unread-badge">${unreadCount}</span>` : ''}
-                    </div>
-                    
-                    <div class="message-info">
-                        <div class="message-header">
-                            <h3 class="message-client">${job.client}</h3>
-                            ${lastMessage ? `<span class="message-time">${formatTimestamp(lastMessage.timestamp)}</span>` : ''}
-                        </div>
-                        
-                        <p class="message-job">${job.title}</p>
-                        
-                        ${lastMessage ? `
-                            <p class="message-preview ${lastMessage.sender === 'client' && unreadCount > 0 ? 'unread' : ''}">
-                                ${lastMessage.sender === 'freelancer' ? 'Tú: ' : ''}${lastMessage.content}
-                            </p>
-                        ` : ''}
-                    </div>
-                    
-                    <div class="message-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
 }
 
-// Initialize App
-function init() {
-    initNavigation();
-    initNotifications();
-    initExploreJobs();
-    initMyJobs();
-    initProposalModal();
-    initChatModal();
-    initCompleteJobModal();
-    
-    // Render initial content
-    renderExploreJobs();
-    renderMyJobs();
-    renderHistory();
-    renderMessages();
-}
-
-// Start app when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
+function cerrarModalHistorial() {
+    const modal = document.getElementById('modalHistorialEntregas');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
+    }
 }

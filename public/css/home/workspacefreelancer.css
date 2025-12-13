@@ -1360,3 +1360,444 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--purple-600);
 }
+
+/* Workspace Container */
+.workspace-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.workspace-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--purple-600), var(--violet-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Tabs Header */
+.tabs-header {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    border-bottom: 2px solid var(--purple-100);
+    padding-bottom: 0.5rem;
+}
+
+.tabs-header .tab-btn {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gray-600);
+    white-space: nowrap;
+    margin-bottom: -0.5rem;
+}
+
+.tabs-header .tab-btn:hover {
+    color: var(--purple-600);
+    background: var(--purple-50);
+    border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.tabs-header .tab-btn.active {
+    color: var(--purple-600);
+    border-bottom-color: var(--purple-600);
+    font-weight: 600;
+}
+
+/* Trabajos Grid */
+.trabajos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.trabajo-card {
+    background: white;
+    border: 1px solid var(--purple-100);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.trabajo-card:hover {
+    box-shadow: 0 10px 25px rgba(147, 51, 234, 0.15);
+    border-color: var(--purple-300);
+    transform: translateY(-2px);
+}
+
+.trabajo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.trabajo-header h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin: 0;
+    flex: 1;
+}
+
+.trabajo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+}
+
+.trabajo-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.trabajo-meta i {
+    color: var(--purple-600);
+}
+
+.trabajo-descripcion {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.trabajo-habilidades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-tag {
+    padding: 0.25rem 0.75rem;
+    background: var(--purple-50);
+    border: 1px solid var(--purple-200);
+    color: var(--purple-700);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.trabajo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--purple-100);
+}
+
+.presupuesto {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--purple-600);
+}
+
+.presupuesto-grande {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--purple-600);
+}
+
+.propuestas-info {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+}
+
+.propuestas-info i {
+    color: var(--purple-600);
+}
+
+.trabajo-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border: 2px dashed var(--purple-200);
+    border-radius: 0.75rem;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: var(--purple-300);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--gray-600);
+    margin-bottom: 1.5rem;
+}
+
+/* Trabajo Info Box in Modal */
+.trabajo-info-box {
+    background: var(--purple-50);
+    border: 1px solid var(--purple-200);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.trabajo-info-box h4 {
+    color: var(--gray-900);
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.trabajo-info-box .muted {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.trabajo-info-box .presupuesto-info {
+    color: var(--purple-600);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Alert Info */
+.alert-info {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--violet-50);
+    border: 1px solid var(--violet-600);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-info i {
+    color: var(--violet-600);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.alert-info p {
+    color: var(--gray-700);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Button block */
+.btn-block {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Success Buttons */
+.btn-success-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: var(--emerald-500);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-success-sm:hover {
+    background: var(--green-500);
+}
+
+.btn-success-sm i {
+    font-size: 1rem;
+}
+
+.btn-secondary-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    color: var(--gray-700);
+    border: 1px solid var(--gray-300);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-secondary-sm:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-400);
+}
+
+.btn-secondary-sm i {
+    font-size: 1rem;
+}
+
+/* Propuestas Enviadas */
+.propuestas-enviadas {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.propuesta-card {
+    background: white;
+    border: 1px solid var(--purple-200);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.2s;
+}
+
+.propuesta-card:hover {
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
+    transform: translateY(-2px);
+}
+
+.propuesta-card h4 {
+    color: var(--gray-900);
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.propuesta-detalles {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--gray-50);
+    border-radius: 0.5rem;
+}
+
+.propuesta-detalles p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+.propuesta-detalles p:last-child {
+    margin-bottom: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-pendiente {
+    background: var(--amber-100);
+    color: var(--amber-900);
+}
+
+.badge-aceptada {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-rechazada {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Trabajos Activos List */
+.trabajos-activos-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.trabajo-activo-card {
+    background: white;
+    border: 1px solid var(--purple-200);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.2s;
+}
+
+.trabajo-activo-card:hover {
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
+    transform: translateY(-2px);
+}
+
+.trabajo-activo-card h4 {
+    color: var(--gray-900);
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.trabajo-progreso {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--gray-50);
+    border-radius: 0.5rem;
+}
+
+.trabajo-progreso p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+.trabajo-progreso p:last-child {
+    margin-bottom: 0;
+}
+
+.trabajo-acciones {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--purple-100);
+}
+
+/* Empty State Small */
+.empty-state-sm {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: white;
+    border: 2px dashed var(--purple-200);
+    border-radius: 0.75rem;
+}
+
+.empty-state-sm p {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}

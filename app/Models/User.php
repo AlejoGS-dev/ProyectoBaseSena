@@ -51,4 +51,40 @@ class User extends Authenticatable
     public function entradas(){
         return $this->hasMany(Entrada::class);
     }
+
+    // Workspace relationships
+    public function freelancerProfile()
+    {
+        return $this->hasOne(FreelancerPerfil::class, 'user_id');
+    }
+
+    public function trabajosComoCliente()
+    {
+        return $this->hasMany(Trabajo::class, 'cliente_id');
+    }
+
+    public function trabajosComoFreelancer()
+    {
+        return $this->hasMany(Trabajo::class, 'freelancer_id');
+    }
+
+    public function propuestas()
+    {
+        return $this->hasMany(Propuesta::class, 'freelancer_id');
+    }
+
+    public function portfolioItems()
+    {
+        return $this->hasMany(PortfolioItem::class, 'user_id');
+    }
+
+    public function calificacionesDadas()
+    {
+        return $this->hasMany(Calificacion::class, 'evaluador_id');
+    }
+
+    public function calificacionesRecibidas()
+    {
+        return $this->hasMany(Calificacion::class, 'evaluado_id');
+    }
 }

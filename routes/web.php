@@ -14,6 +14,9 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\WorkspaceClienteController;
+use App\Http\Controllers\WorkspaceFreelancerController;
+use App\Http\Controllers\WorkspaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,25 +49,51 @@ Route::middleware(['auth', 'role:cliente'])->group(function(){
 
     Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
+    // Workspace Cliente
+    Route::get('/workspace-cliente', [WorkspaceClienteController::class, 'index'])->name('workspace.cliente');
+    Route::post('/workspace-cliente/trabajos', [WorkspaceClienteController::class, 'crearTrabajo'])->name('trabajos.crear');
+    Route::get('/workspace-cliente/trabajos/{id}/propuestas', [WorkspaceClienteController::class, 'verPropuestas'])->name('trabajos.propuestas');
+    Route::post('/workspace-cliente/propuestas/{id}/aceptar', [WorkspaceClienteController::class, 'aceptarPropuesta'])->name('propuestas.aceptar');
+    Route::patch('/workspace-cliente/trabajos/{id}/completar', [WorkspaceClienteController::class, 'completarTrabajo'])->name('trabajos.completar');
+    Route::delete('/workspace-cliente/trabajos/{id}', [WorkspaceClienteController::class, 'eliminarTrabajo'])->name('trabajos.eliminar');
 
-Route::get('/workspace-cliente', function () {
-    return view('home.home.workspace-cliente');
-})->name('workspace.cliente');
+    // Workspace Freelancer
+    Route::get('/workspace-freelancer', [WorkspaceFreelancerController::class, 'index'])->name('workspace.freelancer');
+    Route::get('/workspace-freelancer/buscar', [WorkspaceFreelancerController::class, 'buscarTrabajos'])->name('trabajos.buscar');
+    Route::get('/workspace-freelancer/trabajos/{id}', [WorkspaceFreelancerController::class, 'verTrabajo'])->name('trabajos.ver');
+    Route::post('/workspace-freelancer/trabajos/{id}/propuesta', [WorkspaceFreelancerController::class, 'enviarPropuesta'])->name('propuestas.enviar');
+    Route::patch('/workspace-freelancer/trabajos/{id}/completar', [WorkspaceFreelancerController::class, 'marcarCompletado'])->name('freelancer.trabajos.completar');
+    Route::delete('/workspace-freelancer/propuestas/{id}', [WorkspaceFreelancerController::class, 'retirarPropuesta'])->name('propuestas.retirar');
 
-Route::get('/workspace-freelancer', function () {
-    return view('home.home.workspace-freelancer');
-})->name('workspace.freelancer');
-
-Route::get('/eventos-y-retos', function () {
-    return view('home.home.eventosyretos');
-})->name('eventos.y.retos');
+    Route::get('/eventos-y-retos', function () {
+        return view('home.home.eventosyretos');
+    })->name('eventos.y.retos');
 
     Route::get('/ajustes', function () {
         return view('home.home.ajustes');
     })->name('ajustes');
 
+    // API Workspace (disponible para clientes y freelancers)
+    Route::prefix('api/workspace')->group(function() {
+        Route::get('/mis-trabajos', [WorkspaceController::class, 'getMisTrabajos']);
+        Route::get('/propuestas-recibidas', [WorkspaceController::class, 'getPropuestasRecibidas']);
+        Route::get('/freelancers', [WorkspaceController::class, 'getFreelancers']);
+        Route::get('/trabajos-disponibles', [WorkspaceController::class, 'getTrabajosDisponibles']);
+        Route::get('/mis-propuestas', [WorkspaceController::class, 'getMisPropuestas']);
+        Route::get('/trabajos-en-progreso', [WorkspaceController::class, 'getTrabajosEnProgreso']);
+        Route::get('/trabajos-completados', [WorkspaceController::class, 'getTrabajosCompletados']);
+        Route::get('/freelancer/{id}', [WorkspaceController::class, 'getFreelancerProfile']);
+        Route::get('/categorias', [WorkspaceController::class, 'getCategorias']);
+        Route::post('/enviar-propuesta', [WorkspaceController::class, 'enviarPropuesta']);
+        Route::post('/aceptar-propuesta/{id}', [WorkspaceController::class, 'aceptarPropuesta']);
+        Route::post('/calificacion', [WorkspaceController::class, 'crearCalificacion']);
 
-
+        // Endpoints para el sistema de entregas
+        Route::get('/entregas/{trabajoId}', [WorkspaceController::class, 'getEntregas']);
+        Route::post('/entregar-trabajo', [WorkspaceController::class, 'entregarTrabajo']);
+        Route::post('/aprobar-entrega/{id}', [WorkspaceController::class, 'aprobarEntrega']);
+        Route::post('/rechazar-entrega/{id}', [WorkspaceController::class, 'rechazarEntrega']);
+    });
 
 });
 

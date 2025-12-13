@@ -13,6 +13,7 @@
 @endpush
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <header class="header">
         <div class="header-container">
