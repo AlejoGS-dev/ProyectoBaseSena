@@ -164,74 +164,7 @@
                     <p class="section-subtitle">Revisa y gestiona las solicitudes que los clientes te han enviado para participar en sus proyectos</p>
                 </div>
                 <div class="jobs-grid" id="requestsGrid">
-                    <!-- Ejemplo de invitaciones de clientes a freelancers -->
-                    <div class="proposal-card" data-invitation-id="1">
-                        <div class="proposal-card-header">
-                            <div class="proposal-user-info">
-                                <div class="proposal-avatar">TC</div>
-                                <div>
-                                    <div class="proposal-user-name">Tomás Castillo</div>
-                                    <div class="proposal-job-title">Landing Page para Startup</div>
-                                    <div class="proposal-job-meta">
-                                        <span class="proposal-job-rating">
-                                            <svg width="16" height="16" fill="#FFD700" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                            4.8
-                                        </span>
-                                        <span class="proposal-job-completed">32 trabajos publicados</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="proposal-invitation-budget">
-                                Presupuesto<br>
-                                <span class="proposal-invitation-budget-value">$1,200</span>
-                            </div>
-                        </div>
-                        <div class="proposal-card-body">
-                            <div class="proposal-cover-label">Mensaje del Cliente</div>
-                            <div class="proposal-cover-text">
-                                ¡Hola! Me gustaría invitarte a participar en el desarrollo de una landing page moderna para mi startup. Busco un diseño atractivo y funcional que ayude a captar clientes potenciales. ¿Te interesa?
-                            </div>
-                        </div>
-                        <div class="proposal-card-actions">
-                            <button class="btn-secondary" onclick="rejectInvitation('1')">Rechazar</button>
-                            <button class="btn-light" onclick="openMeetingModal('Tomás Castillo', '1')">Solicitar Reunión</button>
-                            <button class="btn-primary" onclick="acceptInvitation('1')">Aceptar</button>
-                        </div>
-                    </div>
-
-                    <div class="proposal-card" data-invitation-id="2">
-                        <div class="proposal-card-header">
-                            <div class="proposal-user-info">
-                                <div class="proposal-avatar">MC</div>
-                                <div>
-                                    <div class="proposal-user-name">María Camacho</div>
-                                    <div class="proposal-job-title">Rediseño de Logo Corporativo</div>
-                                    <div class="proposal-job-meta">
-                                        <span class="proposal-job-rating">
-                                            <svg width="16" height="16" fill="#FFD700" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                            5.0
-                                        </span>
-                                        <span class="proposal-job-completed">18 trabajos publicados</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="proposal-invitation-budget">
-                                Presupuesto<br>
-                                <span class="proposal-invitation-budget-value">$800</span>
-                            </div>
-                        </div>
-                        <div class="proposal-card-body">
-                            <div class="proposal-cover-label">Mensaje del Cliente</div>
-                            <div class="proposal-cover-text">
-                                ¡Hola! Estoy buscando un freelancer creativo para rediseñar el logo de mi empresa. Si tienes experiencia en branding, me encantaría trabajar contigo.
-                            </div>
-                        </div>
-                        <div class="proposal-card-actions">
-                            <button class="btn-secondary" onclick="rejectInvitation('2')">Rechazar</button>
-                            <button class="btn-light" onclick="openMeetingModal('María Camacho', '2')">Solicitar Reunión</button>
-                            <button class="btn-primary" onclick="acceptInvitation('2')">Aceptar</button>
-                        </div>
-                    </div>
+                    <!-- Las solicitudes se renderizan dinámicamente por JS -->
                 </div>
             </div>
 

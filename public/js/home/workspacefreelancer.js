@@ -6,9 +6,7 @@ function rejectInvitation(invitationId) {
     if (!job) return;
     if (confirm(`¿Deseas rechazar la invitación para el trabajo "${job.title}"?`)) {
         appState.jobs.splice(idx, 1);
-        // Eliminar la tarjeta del DOM directamente
-        const card = document.querySelector(`[data-invitation-id="${invitationId}"]`);
-        if (card) card.remove();
+        renderRequestsGrid();
         alert('Invitación rechazada');
     }
 }
@@ -19,9 +17,7 @@ function acceptInvitation(invitationId) {
     if (!job) return;
     if (confirm(`¿Deseas aceptar la invitación para el trabajo "${job.title}"?`)) {
         appState.jobs.splice(idx, 1);
-        // Eliminar la tarjeta del DOM directamente
-        const card = document.querySelector(`[data-invitation-id="${invitationId}"]`);
-        if (card) card.remove();
+        renderRequestsGrid();
         alert('¡Invitación aceptada!');
     }
 }
@@ -331,10 +327,63 @@ function switchTab(tab) {
     document.getElementById(tabMap[tab]).classList.add('active');
     // Render content
     if (tab === 'explore') renderExploreJobs();
-    if (tab === 'proposals') renderProposalsTab();
+    if (tab === 'proposals') renderRequestsGrid();
     if (tab === 'my-jobs') renderMyJobs();
     if (tab === 'history') renderHistory();
     if (tab === 'messages') renderMessages();
+}
+// Renderiza las solicitudes (invitaciones) y empty state dinámicamente
+function renderRequestsGrid() {
+    const grid = document.getElementById('requestsGrid');
+    if (!grid) return;
+    const invitations = appState.jobs.filter(job => job.status === 'available');
+    if (invitations.length === 0) {
+        grid.innerHTML = `
+            <div class="empty-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 0;">
+                <div class="empty-icon" style="margin-bottom: 1rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; background: #ede9fe; border-radius: 50%; width: 64px; height: 64px;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" fill="#ede9fe"/>
+                            <path d="M15.5 10a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" stroke="#a78bfa" stroke-width="2"/>
+                            <path d="M9 16c0-1.104.896-2 2-2s2 .896 2 2" stroke="#a78bfa" stroke-width="2"/>
+                        </svg>
+                    </span>
+                </div>
+                <h3 class="empty-title" style="color: #1e293b; font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No hay solicitudes pendientes</h3>
+                <p class="empty-description" style="color: #475569;">Las invitaciones de clientes aparecerán aquí</p>
+            </div>
+        `;
+        return;
+    }
+    grid.innerHTML = invitations.map(job => `
+        <div class="proposal-card" data-invitation-id="${job.id}" style="display: flex; flex-direction: column; min-height: 260px; justify-content: space-between;">
+            <div>
+                <div class="proposal-card-header">
+                    <div class="proposal-user-info">
+                        <div class="proposal-avatar">${job.client ? job.client.split(' ').map(n => n[0]).join('').toUpperCase() : ''}</div>
+                        <div>
+                            <div class="proposal-user-name">${job.client || 'Cliente'}</div>
+                            <div class="proposal-job-title">${job.title}</div>
+                        </div>
+                    </div>
+                    <div class="proposal-invitation-budget">
+                        Presupuesto<br>
+                        <span class="proposal-invitation-budget-value">$${job.budget.toLocaleString()}</span>
+                    </div>
+                </div>
+                <div class="proposal-card-body" style="margin-bottom: 1.5rem; min-height: 60px;">
+                    <div class="proposal-cover-label">Mensaje del Cliente</div>
+                    <div class="proposal-cover-text" style="background: #f3f4f6; border-radius: 8px; padding: 0.75rem 1rem; margin-top: 0.5rem;">${job.description}</div>
+                </div>
+            </div>
+            <div class="proposal-card-actions" style="margin-top: auto;">
+                <button class="btn-secondary" onclick="rejectInvitation('${job.id}')">Rechazar</button>
+                <button class="btn-light" onclick="openMeetingModal('${job.client}', '${job.id}')">Solicitar Reunión</button>
+                <button class="btn-primary" onclick="acceptInvitation('${job.id}')">Aceptar</button>
+            </div>
+        </div>
+    `).join('');
+}
 // Render Proposals Tab (Solicitudes)
 function renderProposalsTab() {
     const jobsGrid = document.getElementById('proposalsJobsGrid');
@@ -383,7 +432,6 @@ function renderProposalsTab() {
             </div>
         </div>
     `).join('');
-}
 }
 
 // Notifications
@@ -537,6 +585,18 @@ function renderExploreJobs() {
                     <div class="detail-content">
                         <p>Duración</p>
                         <p class="text-dark">${job.duration}</p>
+                    </div>
+                </div>
+                
+                <div class="job-detail">
+                    <div class="detail-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                    </div>
+                    <div class="detail-content">
+                        <p>Publicado</p>
+                        <p class="text-dark">${formatFullDate(job.postedDate)}</p>
                     </div>
                 </div>
             </div>
